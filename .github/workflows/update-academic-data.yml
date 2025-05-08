@@ -360,6 +360,7 @@ jobs:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
         run: node update-data.js
 
+
       - name: Send email notification
         if: success()
         uses: dawidd6/action-send-mail@v5
