@@ -325,4 +325,30 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
-        run: node update-data.js 
+        run: node update-data.js
+
+      - name: Send email notification
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.office365.com
+          server_port: 587
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: 学术周报已更新 - ${{ github.repository }}
+          body: |
+            您好，
+            
+            您的学术周报已成功更新！新的学术论文已经添加到数据库中。
+            
+            您可以通过以下链接访问您的学术周报：
+            https://jannhsu.github.io/paper_summary/
+            
+            更新时间：${{ github.event.repository.updated_at }}
+            仓库：${{ github.repository }}
+            
+            此邮件由GitHub Actions自动发送，请勿回复。
+          to: zhengxu22@m.fudan.edu.cn
+          from: 学术周报自动更新 <eisenx123@outlook.com>
+          attachments: "" 
