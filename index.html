@@ -214,7 +214,7 @@
                         <p id="last-updated"><span class="font-semibold">上次内容获取时间:</span> <span id="last-updated-time" class="text-sky-700">正在加载...</span></p>
                         <p id="next-scheduled-update"><span class="font-semibold">下次计划自动获取:</span> <span id="next-update-time" class="text-sky-700">正在计算...</span></p>
                         <button id="manual-refresh-button" class="mt-4 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
-                            手动刷新 (调用API获取)
+                            手动刷新 (仅关键词变更时调用API)
                         </button>
                     </div>
                 </section>
@@ -262,6 +262,7 @@
         let activeKeywords = []; 
         let intersectionObserver;
         let autoUpdateInterval;
+        let keywordsModified = false;
 
         const PERPLEXITY_API_KEY = ""; // 已移除密钥，使用GitHub Secrets中设置的密钥
         const LOCAL_STORAGE_PAPERS_KEY = 'academicReportPapersData';
@@ -419,6 +420,7 @@
                 if (data.lastAutoUpdateDate) {
                     localStorage.setItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY, data.lastAutoUpdateDate);
                 }
+                keywordsModified = false;
                 updateTimestamps(false);
                 return data;
             }
@@ -450,7 +452,8 @@
                 saveActiveKeywordsToLocalStorage();
                 renderActiveKeywords();
                 console.log("Keywords changed, fetching new papers.");
-                await loadOrFetchPapers(true); // Force API fetch when keywords change
+                keywordsModified = true;
+                await loadOrFetchPapers(true);
             }
             keywordInput.value = '';
         }
@@ -460,7 +463,8 @@
             saveActiveKeywordsToLocalStorage();
             renderActiveKeywords();
             console.log("Keywords changed, fetching new papers.");
-            await loadOrFetchPapers(true); // Force API fetch when keywords change
+            keywordsModified = true;
+            await loadOrFetchPapers(true);
         }
 
         function loadActiveKeywordsFromLocalStorage() {
@@ -1006,7 +1010,32 @@
 
         manualRefreshButton.addEventListener('click', async () => {
             console.log("Manual refresh triggered.");
-            await loadOrFetchPapers(true); 
+            if (keywordsModified) {
+                console.log("Keywords were modified, fetching new papers from API.");
+                await loadOrFetchPapers(true);
+                keywordsModified = false;
+            } else {
+                console.log("Keywords not modified, loading from cached data.");
+                const storedPapersJSON = localStorage.getItem(LOCAL_STORAGE_PAPERS_KEY);
+                if (storedPapersJSON) {
+                    try {
+                        const storedPapers = JSON.parse(storedPapersJSON);
+                        if (storedPapers && storedPapers.length > 0) {
+                            console.log("Refreshing display with cached papers.");
+                            await renderReport(storedPapers);
+                            updateTimestamps(false);
+                            return;
+                        }
+                    } catch (e) {
+                        console.error("Error parsing stored papers:", e);
+                    }
+                }
+                
+                loadingMessage.textContent = '请先添加或修改关键词后再刷新，或等待每日自动更新。';
+                loadingMessageContainer.style.display = 'flex';
+                reportContentDiv.innerHTML = '';
+                reportContentDiv.appendChild(loadingMessageContainer);
+            }
         });
 
         // --- Initialization ---
@@ -1034,7 +1063,8 @@
             
             // Fall back to localStorage if GitHub fails or is disabled
             loadActiveKeywordsFromLocalStorage(); 
-            renderActiveKeywords(); 
+            keywordsModified = false; // 初始化时重置关键词修改状态
+            renderActiveKeywords();
             await loadOrFetchPapers(false); 
             startAutoUpdateScheduler(); 
         }
