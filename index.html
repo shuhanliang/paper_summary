@@ -197,8 +197,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 15px;
+            margin-top: -10px; /* Move up from previous position */
             gap: 8px;
+            position: relative;
+            z-index: 10;
         }
         .pagination-count {
             font-size: 0.9rem;
@@ -386,6 +388,10 @@
         const devApiKeyInput = document.getElementById('dev-api-key');
         const devDebugModeToggle = document.getElementById('dev-debug-mode');
         const applyDevSettingsBtn = document.getElementById('apply-dev-settings');
+
+        // Touch/swipe navigation variables
+        let touchStartX = 0;
+        let touchEndX = 0;
 
         // --- State ---
         let userKeywords = ["通信", "AI 6G", "Agent", "LLM", "语义通信"]; 
@@ -1047,6 +1053,7 @@
 
 
             setupIntersectionObserver();
+            setupTouchNavigation(); // Set up touch/swipe navigation
             const firstCard = reportContentDiv.querySelector('.report-card-poster');
             if (firstCard) {
                 setTimeout(() => {
@@ -1376,6 +1383,58 @@
             const cards = reportContentDiv.querySelectorAll('.report-card-poster');
             if (index >= 0 && index < cards.length) {
                 cards[index].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        // Add new function for touch/swipe navigation
+        function setupTouchNavigation() {
+            // Add event listeners for touch events
+            reportContentDiv.addEventListener('touchstart', handleTouchStart, false);
+            reportContentDiv.addEventListener('touchend', handleTouchEnd, false);
+            
+            // Add event listeners for mouse events (for desktop)
+            reportContentDiv.addEventListener('mousedown', handleMouseDown, false);
+            reportContentDiv.addEventListener('mouseup', handleMouseUp, false);
+        }
+        
+        function handleTouchStart(event) {
+            touchStartX = event.touches[0].clientX;
+        }
+        
+        function handleTouchEnd(event) {
+            touchEndX = event.changedTouches[0].clientX;
+            handleSwipe();
+        }
+        
+        function handleMouseDown(event) {
+            touchStartX = event.clientX;
+        }
+        
+        function handleMouseUp(event) {
+            touchEndX = event.clientX;
+            handleSwipe();
+        }
+        
+        function handleSwipe() {
+            const swipeThreshold = 50; // Minimum distance to consider a swipe
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) < swipeThreshold) return; // Not a significant swipe
+            
+            // Get current active card
+            const activeCard = reportContentDiv.querySelector('.report-card-poster.is-active');
+            if (!activeCard) return;
+            
+            const currentIndex = parseInt(activeCard.dataset.index);
+            const totalCards = reportContentDiv.querySelectorAll('.report-card-poster').length;
+            
+            // Swipe right (previous)
+            if (swipeDistance > 0 && currentIndex > 0) {
+                navigateToCard(currentIndex - 1);
+            }
+            // Swipe left (next)
+            else if (swipeDistance < 0 && currentIndex < totalCards - 1) {
+                navigateToCard(currentIndex + 1);
             }
         }
     </script>
