@@ -45,7 +45,7 @@
         }
         #report-content {
             display: flex; 
-            overflow-x: hidden; /* Changed back to hidden since we're controlling scrolling */
+            overflow-x: auto; /* Changed back to auto to allow smooth scrolling transitions */
             overflow-y: hidden; 
             scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
@@ -1385,29 +1385,32 @@
         function navigateToCard(index) {
             const cards = reportContentDiv.querySelectorAll('.report-card-poster');
             if (index >= 0 && index < cards.length) {
-                // Use scrollIntoView for smooth scrolling
+                // Use native scrolling with smooth behavior for better transition effect
                 cards[index].scrollIntoView({ 
                     behavior: 'smooth', 
                     block: 'nearest', 
                     inline: 'center' 
                 });
                 
-                // Also update active status immediately for better feedback
-                cards.forEach(c => c.classList.remove('is-active'));
-                cards[index].classList.add('is-active');
-                
-                // Update dots
-                const dots = document.querySelectorAll('.pagination-dot');
-                dots.forEach(dot => dot.classList.remove('active'));
-                if (dots[index]) {
-                    dots[index].classList.add('active');
-                }
-                
-                // Update counter
-                const countIndicator = document.getElementById('pagination-count');
-                if (countIndicator) {
-                    countIndicator.textContent = `${index + 1}/${cards.length}`;
-                }
+                // Give time for the scroll animation to start before updating active classes
+                setTimeout(() => {
+                    // Update active status for better visual effect
+                    cards.forEach(c => c.classList.remove('is-active'));
+                    cards[index].classList.add('is-active');
+                    
+                    // Update dots
+                    const dots = document.querySelectorAll('.pagination-dot');
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    if (dots[index]) {
+                        dots[index].classList.add('active');
+                    }
+                    
+                    // Update counter
+                    const countIndicator = document.getElementById('pagination-count');
+                    if (countIndicator) {
+                        countIndicator.textContent = `${index + 1}/${cards.length}`;
+                    }
+                }, 50); // Short delay to let scroll start
             }
         }
 
@@ -1427,9 +1430,8 @@
             // Initialize scrollAccumulator for threshold-based scrolling
             reportContentDiv.scrollAccumulator = 0;
             
-            // Make container behavior explicit but prevent natural scrolling
-            // We'll handle scroll behavior ourselves for better control
-            reportContentDiv.style.overflowX = 'hidden'; 
+            // Allow scrolling for smooth transitions
+            reportContentDiv.style.overflowX = 'auto'; 
             reportContentDiv.style.scrollSnapType = 'x mandatory';
             reportContentDiv.style.scrollBehavior = 'smooth';
         }
