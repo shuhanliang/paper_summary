@@ -15,19 +15,17 @@
             padding: 0;
         }
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 0px; /* Hide vertical scrollbar */
+            height: 0px; /* Hide horizontal scrollbar */
         }
         ::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.05);
-            border-radius: 10px;
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb {
-            background: #94a3b8;
-            border-radius: 10px;
+            background: transparent;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
+            background: transparent;
         }
         .keyword-tag {
             transition: all 0.2s ease-in-out;
@@ -42,11 +40,10 @@
             height: calc(100vh - 300px);
             min-height: 600px;
             margin: 0 auto;
-            overflow: hidden; /* Contain the scrolling effect */
         }
         #report-content {
             display: flex; 
-            overflow-x: auto; 
+            overflow-x: auto; /* Allow scrolling but hide the scrollbar */
             overflow-y: hidden; 
             scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
@@ -54,10 +51,6 @@
             height: 100%;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE and Edge */
-            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition for programmatic scrolling */
-        }
-        #report-content::-webkit-scrollbar {
-            display: none; /* Chrome, Safari and Opera */
         }
         .report-card-poster {
             scroll-snap-align: center; 
@@ -67,7 +60,7 @@
             border-radius: 16px; 
             background-color: #ffffff;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0,0,0,0.04);
-            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease-out;
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease-out;
             transform-style: preserve-3d;
             opacity: 0.7;
             transform: scale(0.9) rotateY(25deg) translateX(10px); 
@@ -390,13 +383,6 @@
         const devApiKeyInput = document.getElementById('dev-api-key');
         const devDebugModeToggle = document.getElementById('dev-debug-mode');
         const applyDevSettingsBtn = document.getElementById('apply-dev-settings');
-
-        // Touch/swipe navigation variables
-        let touchStartX = 0;
-        let touchEndX = 0;
-        let isScrolling = false;  // Flag to track if we're in an active scroll
-        let scrollCooldown = false; // Prevent rapid consecutive scrolls
-        let lastScrollTime = 0;  // Track when the last scroll happened
 
         // --- State ---
         let userKeywords = ["通信", "AI 6G", "Agent", "LLM", "语义通信"]; 
@@ -1058,7 +1044,6 @@
 
 
             setupIntersectionObserver();
-            setupTouchNavigation(); // Set up touch/swipe navigation
             const firstCard = reportContentDiv.querySelector('.report-card-poster');
             if (firstCard) {
                 setTimeout(() => {
@@ -1083,22 +1068,23 @@
             intersectionObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        // Update active card
                         cards.forEach(c => c.classList.remove('is-active'));
                         entry.target.classList.add('is-active');
                         
-                        // Update pagination dots
-                        const currentIndex = parseInt(entry.target.dataset.index);
+                        // Update pagination dots and counter if they exist
+                        const currentIndex = Array.from(cards).indexOf(entry.target);
                         const dots = document.querySelectorAll('.pagination-dot');
-                        dots.forEach(dot => dot.classList.remove('active'));
-                        if (dots[currentIndex]) {
-                            dots[currentIndex].classList.add('active');
-                        }
-                        
-                        // Update count indicator
-                        const countIndicator = document.getElementById('pagination-count');
-                        if (countIndicator) {
-                            countIndicator.textContent = `${currentIndex + 1}/${cards.length}`;
+                        if (dots.length > 0) {
+                            dots.forEach(dot => dot.classList.remove('active'));
+                            if (dots[currentIndex]) {
+                                dots[currentIndex].classList.add('active');
+                            }
+                            
+                            // Update counter
+                            const countIndicator = document.getElementById('pagination-count');
+                            if (countIndicator) {
+                                countIndicator.textContent = `${currentIndex + 1}/${cards.length}`;
+                            }
                         }
                     }
                 });
@@ -1387,226 +1373,11 @@
         function navigateToCard(index) {
             const cards = reportContentDiv.querySelectorAll('.report-card-poster');
             if (index >= 0 && index < cards.length) {
-                // Use manual scroll positioning for better control of the animation
-                const card = cards[index];
-                const container = reportContentDiv;
-                const containerWidth = container.offsetWidth;
-                const cardRect = card.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
-                
-                // Calculate the scroll position to center the card
-                // This creates a more visible sliding animation
-                const scrollLeft = card.offsetLeft - (containerWidth - cardRect.width) / 2;
-                
-                // Animate the scroll with a CSS transition
-                container.style.transition = 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)';
-                container.scrollLeft = scrollLeft;
-                
-                // Wait for the scroll animation to complete before updating active status
-                setTimeout(() => {
-                    // Update active status for visual effect
-                    cards.forEach(c => c.classList.remove('is-active'));
-                    card.classList.add('is-active');
-                    
-                    // Update dots
-                    const dots = document.querySelectorAll('.pagination-dot');
-                    dots.forEach(dot => dot.classList.remove('active'));
-                    if (dots[index]) {
-                        dots[index].classList.add('active');
-                    }
-                    
-                    // Update counter
-                    const countIndicator = document.getElementById('pagination-count');
-                    if (countIndicator) {
-                        countIndicator.textContent = `${index + 1}/${cards.length}`;
-                    }
-                }, 300); // Longer delay to let scroll animation become visible
-            }
-        }
-
-        // Add new function for touch/swipe navigation
-        function setupTouchNavigation() {
-            // Add event listeners for touch events
-            reportContentDiv.addEventListener('touchstart', handleTouchStart, false);
-            reportContentDiv.addEventListener('touchend', handleTouchEnd, false);
-            
-            // Add event listeners for mouse events (for desktop)
-            reportContentDiv.addEventListener('mousedown', handleMouseDown, false);
-            reportContentDiv.addEventListener('mouseup', handleMouseUp, false);
-            
-            // Add event listener for wheel/scroll events with more control
-            reportContentDiv.addEventListener('wheel', handleWheel, { passive: false });
-            
-            // Initialize scrollAccumulator for threshold-based scrolling
-            reportContentDiv.scrollAccumulator = 0;
-            
-            // Allow scrolling for smooth transitions
-            reportContentDiv.style.overflowX = 'auto'; 
-            reportContentDiv.style.scrollSnapType = 'x mandatory';
-            reportContentDiv.style.scrollBehavior = 'auto'; // Set to auto to let our manual transitions work
-        }
-        
-        function handleTouchStart(event) {
-            touchStartX = event.touches[0].clientX;
-        }
-        
-        function handleTouchEnd(event) {
-            touchEndX = event.changedTouches[0].clientX;
-            handleSwipe();
-        }
-        
-        function handleMouseDown(event) {
-            touchStartX = event.clientX;
-        }
-        
-        function handleMouseUp(event) {
-            touchEndX = event.clientX;
-            handleSwipe();
-        }
-        
-        function handleSwipe() {
-            const swipeThreshold = 50; // Minimum distance to consider a swipe
-            const swipeDistance = touchEndX - touchStartX;
-            
-            if (Math.abs(swipeDistance) < swipeThreshold) return; // Not a significant swipe
-            
-            // If we're in cooldown period, ignore this swipe
-            const now = Date.now();
-            if (scrollCooldown) {
-                return;
-            }
-            
-            // Get current active card
-            const activeCard = reportContentDiv.querySelector('.report-card-poster.is-active');
-            if (!activeCard) return;
-            
-            const currentIndex = parseInt(activeCard.dataset.index);
-            const totalCards = reportContentDiv.querySelectorAll('.report-card-poster').length;
-            
-            // Determine direction only (ignore magnitude)
-            const direction = swipeDistance > 0 ? -1 : 1;
-            
-            // Swipe right (previous)
-            if (direction < 0 && currentIndex > 0) {
-                navigateToCard(currentIndex - 1);
-            }
-            // Swipe left (next)
-            else if (direction > 0 && currentIndex < totalCards - 1) {
-                navigateToCard(currentIndex + 1);
-            }
-            
-            // Set cooldown to prevent rapid consecutive swipes
-            scrollCooldown = true;
-            setTimeout(() => {
-                scrollCooldown = false;
-            }, 800); // 800ms cooldown before accepting next swipe
-        }
-
-        // Debounce function to limit how often a function runs
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-        
-        // Handle mousewheel events for horizontal scrolling
-        function handleWheel(event) {
-            // Prevent default to take control of scrolling
-            event.preventDefault();
-            
-            // If we're in cooldown period, ignore this scroll
-            const now = Date.now();
-            if (scrollCooldown) {
-                return;
-            }
-            
-            // Check if it's a horizontal scroll (touchpad) or Shift+wheel (mouse)
-            const isHorizontalScroll = Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.shiftKey;
-            
-            if (isHorizontalScroll && !isScrolling) {
-                isScrolling = true;
-                
-                const activeCard = reportContentDiv.querySelector('.report-card-poster.is-active');
-                if (!activeCard) {
-                    isScrolling = false;
-                    return;
-                }
-                
-                const currentIndex = parseInt(activeCard.dataset.index);
-                const totalCards = reportContentDiv.querySelectorAll('.report-card-poster').length;
-                
-                // Determine direction only (ignore magnitude)
-                let scrollDelta = event.deltaX || (event.shiftKey ? event.deltaY : 0);
-                const direction = scrollDelta > 0 ? 1 : -1;
-                
-                // Scroll right (previous)
-                if (direction < 0 && currentIndex > 0) {
-                    navigateToCard(currentIndex - 1);
-                }
-                // Scroll left (next)
-                else if (direction > 0 && currentIndex < totalCards - 1) {
-                    navigateToCard(currentIndex + 1);
-                }
-                
-                // Set cooldown to prevent rapid consecutive scrolls
-                scrollCooldown = true;
-                setTimeout(() => {
-                    scrollCooldown = false;
-                    isScrolling = false;
-                }, 800); // 800ms cooldown before accepting next scroll
-            }
-        }
-        
-        // Update active card based on current scroll position
-        function updateActiveCardOnScroll() {
-            const cards = reportContentDiv.querySelectorAll('.report-card-poster');
-            if (cards.length === 0) return;
-            
-            // Find which card is most visible in the viewport
-            let mostVisibleCard = null;
-            let maxVisibleWidth = 0;
-            
-            const containerRect = reportContentDiv.getBoundingClientRect();
-            const containerCenter = containerRect.left + containerRect.width / 2;
-            
-            cards.forEach(card => {
-                const cardRect = card.getBoundingClientRect();
-                const cardCenter = cardRect.left + cardRect.width / 2;
-                const distanceFromCenter = Math.abs(containerCenter - cardCenter);
-                
-                // Use inverse of distance as visibility score (closer = more visible)
-                const visibilityScore = 1000 - distanceFromCenter;
-                
-                if (visibilityScore > maxVisibleWidth) {
-                    maxVisibleWidth = visibilityScore;
-                    mostVisibleCard = card;
-                }
-            });
-            
-            if (mostVisibleCard) {
-                // Update active state
-                cards.forEach(c => c.classList.remove('is-active'));
-                mostVisibleCard.classList.add('is-active');
-                
-                // Update pagination
-                const currentIndex = parseInt(mostVisibleCard.dataset.index);
-                const dots = document.querySelectorAll('.pagination-dot');
-                dots.forEach(dot => dot.classList.remove('active'));
-                if (dots[currentIndex]) {
-                    dots[currentIndex].classList.add('active');
-                }
-                
-                // Update counter
-                const countIndicator = document.getElementById('pagination-count');
-                if (countIndicator) {
-                    countIndicator.textContent = `${currentIndex + 1}/${cards.length}`;
-                }
+                cards[index].scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest', 
+                    inline: 'center' 
+                });
             }
         }
     </script>
