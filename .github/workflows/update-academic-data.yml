@@ -211,36 +211,69 @@ jobs:
           async function fetchPapers(keywords) {
             const fetchedPapers = [];
             
-            for (const keyword of keywords) {
-              if (fetchedPapers.length >= 5) break; // 最多获取5篇
+            if (keywords.length === 0) {
+              console.log("No keywords provided for search.");
+              return fetchedPapers;
+            }
+
+            try {
+              const combinedKeywords = keywords.join(', ');
+              const maxPapersToFetch = 5;
               
-              try {
-                console.log(`正在为关键词 "${keyword}" 获取论文...`);
-                
-                const question = `
-                Please find ONE highly relevant research paper about the keyword "${keyword}" published in the last 12-18 months.
-                Provide the information for this single paper using the following exact labels and format. Each field should be on a new line:
-                Title: [The full title of the paper]
-                Authors: [List of authors, separated by commas. Example: John Doe, Jane Smith]
-                Affiliations: [List of main affiliations, separated by semicolons. Example: University A; Organization B]
-                Journal/Conference: [Name of the journal or conference]
-                Publication Year: [Year, e.g., 2024]
-                URL: [A direct, accessible URL to the paper (e.g., ArXiv, DOI, official publisher page)]
-                Abstract: [请用中文提供详细的论文摘要，大约150-250字。]
-                In-depth Analysis: [请用中文对论文的重要性、创新点、潜在影响和局限性进行深入解读与分析，大约200-300字。]
-                Keywords: [5-7 relevant keywords for this paper, separated by commas. Example: keyword1, keyword2, keyword3]
-                `;
-                
-                const { content, citations } = await querySonarPro(question);
-                const paperInfo = parsePaperInfo(content, citations, keyword);
-                
+              console.log(`正在为组合关键词 "${combinedKeywords}" 获取论文...`);
+              
+              const question = `
+              Please find ${maxPapersToFetch} highly relevant research papers that are related to the following keywords as a whole: "${combinedKeywords}". Focus on papers published in the last 12-18 months.
+              
+              These papers should ideally relate to multiple keywords in the list, not just one. For each paper, provide the information using the following exact format:
+              
+              PAPER 1:
+              Title: [The full title of the paper]
+              Authors: [List of authors, separated by commas. Example: John Doe, Jane Smith]
+              Affiliations: [List of main affiliations, separated by semicolons. Example: University A; Organization B]
+              Journal/Conference: [Name of the journal or conference]
+              Publication Year: [Year, e.g., 2024]
+              URL: [A direct, accessible URL to the paper (e.g., ArXiv, DOI, official publisher page)]
+              Abstract: [请用中文提供详细的论文摘要，大约150-250字。]
+              In-depth Analysis: [请用中文对论文的重要性、创新点、潜在影响和局限性进行深入解读与分析，大约200-300字。]
+              Keywords: [5-7 relevant keywords for this paper, separated by commas]
+              
+              PAPER 2:
+              Title: ...
+              [repeat format for each paper]
+              
+              It's very important that each paper is related to multiple keywords rather than just focusing on one keyword. The papers should be at the intersection of as many of these areas as possible: ${keywords.join(', ')}
+              `;
+              
+              const { content, citations } = await querySonarPro(question);
+              
+              // Split the content by "PAPER X:" to extract individual papers
+              const paperSections = content.split(/PAPER \d+:/g).filter(section => section.trim().length > 0);
+              
+              if (paperSections.length === 0) {
+                // Try to parse as a single paper if no sections were found
+                const paperInfo = parsePaperInfo(content, citations, combinedKeywords);
                 if (paperInfo) {
                   fetchedPapers.push(paperInfo);
-                  console.log(`成功获取关键词 "${keyword}" 的论文: ${paperInfo.title}`);
+                  console.log(`成功获取组合关键词的论文: ${paperInfo.title}`);
                 }
-              } catch (error) {
-                console.error(`处理关键词 "${keyword}" 时出错:`, error);
+              } else {
+                // Process each paper section
+                for (let i = 0; i < Math.min(paperSections.length, maxPapersToFetch); i++) {
+                  const section = paperSections[i];
+                  // Use the combined keywords for tracking, but also extract paper-specific keywords
+                  const paperInfo = parsePaperInfo(section, citations, combinedKeywords);
+                  
+                  if (paperInfo) {
+                    fetchedPapers.push(paperInfo);
+                    console.log(`成功获取第 ${i+1} 篇论文: ${paperInfo.title}`);
+                  } else {
+                    console.warn(`无法从第 ${i+1} 部分提取有效的论文信息`);
+                  }
+                }
               }
+            } catch (error) {
+              console.error(`处理组合关键词时出错:`, error);
             }
             
             return fetchedPapers;

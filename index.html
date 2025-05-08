@@ -639,6 +639,11 @@
                 return generateFallbackMockPapers(keywordsToSearch);
             }
 
+            if (keywordsToSearch.length === 0) {
+                console.warn("No keywords provided for search.");
+                return [];
+            }
+
             console.log(`Fetching papers from Perplexity API for keywords: ${keywordsToSearch.join(', ')}`);
             loadingMessage.textContent = `正在通过API根据关键词 [${keywordsToSearch.join(', ')}] 检索最新文献...`;
             loadingMessageContainer.style.display = 'flex';
@@ -646,72 +651,92 @@
             reportContentDiv.appendChild(loadingMessageContainer);
 
             const fetchedPapers = [];
-            const papersToFetchPerKeyword = 1; 
+            const maxPapersToFetch = 5;
 
-            for (const keyword of keywordsToSearch) {
-                if (fetchedPapers.length >= 5) break; 
+            // Combine all keywords for a single search
+            const combinedKeywords = keywordsToSearch.join(', ');
+            
+            // Create a more specific prompt asking for papers related to multiple keywords
+            const question = `
+            Please find ${maxPapersToFetch} highly relevant research papers that are related to the following keywords as a whole: "${combinedKeywords}". Focus on papers published in the last 12-18 months.
+            
+            These papers should ideally relate to multiple keywords in the list, not just one. For each paper, provide the information using the following exact format:
+            
+            PAPER 1:
+            Title: [The full title of the paper]
+            Authors: [List of authors, separated by commas. Example: John Doe, Jane Smith]
+            Affiliations: [List of main affiliations, separated by semicolons. Example: University A; Organization B]
+            Journal/Conference: [Name of the journal or conference]
+            Publication Year: [Year, e.g., 2024]
+            URL: [A direct, accessible URL to the paper (e.g., ArXiv, DOI, official publisher page)]
+            Abstract: [请用中文提供详细的论文摘要，大约150-250字。]
+            In-depth Analysis: [请用中文对论文的重要性、创新点、潜在影响和局限性进行深入解读与分析，大约200-300字。]
+            Keywords: [5-7 relevant keywords for this paper, separated by commas]
+            
+            PAPER 2:
+            Title: ...
+            [repeat format for each paper]
+            
+            It's very important that each paper is related to multiple keywords rather than just focusing on one keyword. The papers should be at the intersection of as many of these areas as possible: ${keywordsToSearch.join(', ')}
+            `;
 
-                const question = `
-                Please find ONE highly relevant research paper about the keyword "${keyword}" published in the last 12-18 months.
-                Provide the information for this single paper using the following exact labels and format. Each field should be on a new line:
-                Title: [The full title of the paper]
-                Authors: [List of authors, separated by commas. Example: John Doe, Jane Smith]
-                Affiliations: [List of main affiliations, separated by semicolons. Example: University A; Organization B]
-                Journal/Conference: [Name of the journal or conference]
-                Publication Year: [Year, e.g., 2024]
-                URL: [A direct, accessible URL to the paper (e.g., ArXiv, DOI, official publisher page)]
-                Abstract: [请用中文提供详细的论文摘要，大约150-250字。]
-                In-depth Analysis: [请用中文对论文的重要性、创新点、潜在影响和局限性进行深入解读与分析，大约200-300字。]
-                Keywords: [5-7 relevant keywords for this paper, separated by commas. Example: keyword1, keyword2, keyword3]
-
-                Ensure each field is clearly tagged as shown and starts on a new line. If specific information is unavailable, state "N/A" for that field.
-                Do not include any introductory or concluding remarks outside of this structured information for the paper.
-                `;
-
-                try {
-                    console.log(`Querying API for keyword: "${keyword}"`);
-                    const { content, citations } = await querySonarPro(PERPLEXITY_API_KEY, question);
-                    const paperInfo = parsePaperInfoFromContent(content, citations, keyword);
-                    
-                    // Updated condition to filter out "N/A" or "提取失败" for essential fields
-                    if (paperInfo && 
-                        paperInfo.title && 
-                        paperInfo.title.trim() !== "标题提取失败" && 
-                        paperInfo.title.trim() !== "N/A" &&
-                        paperInfo.snippet && 
-                        paperInfo.snippet.trim() !== "摘要未能提取." &&
-                        paperInfo.snippet.trim() !== "N/A") {
-                       fetchedPapers.push(paperInfo);
-                    } else {
-                       console.warn(`Essential fields (title/abstract) were "提取失败" or "N/A" for keyword: ${keyword}. Discarding paper. Title: "${paperInfo.title}", Snippet: "${paperInfo.snippet ? paperInfo.snippet.substring(0,50)+'...' : 'N/A'}"`);
+            try {
+                console.log(`Querying API for combined keywords: "${combinedKeywords}"`);
+                const { content, citations } = await querySonarPro(PERPLEXITY_API_KEY, question);
+                
+                // Split the content by "PAPER X:" to extract individual papers
+                const paperSections = content.split(/PAPER \d+:/g).filter(section => section.trim().length > 0);
+                
+                if (paperSections.length === 0) {
+                    // Try to parse as a single paper if no sections were found
+                    const paperInfo = parsePaperInfoFromContent(content, citations, combinedKeywords);
+                    if (paperInfo && paperInfo.title && paperInfo.title.trim() !== "标题提取失败" && 
+                        paperInfo.title.trim() !== "N/A" && paperInfo.snippet && 
+                        paperInfo.snippet.trim() !== "摘要未能提取." && paperInfo.snippet.trim() !== "N/A") {
+                        fetchedPapers.push(paperInfo);
                     }
-                } catch (error) {
-                    console.error(`Error processing keyword "${keyword}":`, error.message);
-                    fetchedPapers.push({
-                        id: `error-card-${keyword}-${Date.now()}`,
-                        title: `获取"${keyword}"相关文献失败`,
-                        url: "#", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
-                        paperKeywords: [keyword, "错误"],
-                        snippet: `未能获取或解析关于 "${keyword}" 的文献信息。错误: ${error.message.substring(0,100)}...`,
-                        interpretation: "请检查浏览器控制台获取更详细的错误信息，或尝试其他关键词。"
-                    });
+                } else {
+                    // Process each paper section
+                    for (let i = 0; i < Math.min(paperSections.length, maxPapersToFetch); i++) {
+                        const section = paperSections[i];
+                        // Use the combined keywords for tracking, but also extract paper-specific keywords
+                        const paperInfo = parsePaperInfoFromContent(section, citations, combinedKeywords);
+                        
+                        if (paperInfo && paperInfo.title && paperInfo.title.trim() !== "标题提取失败" && 
+                            paperInfo.title.trim() !== "N/A" && paperInfo.snippet && 
+                            paperInfo.snippet.trim() !== "摘要未能提取." && paperInfo.snippet.trim() !== "N/A") {
+                            fetchedPapers.push(paperInfo);
+                        } else {
+                            console.warn(`Could not extract valid paper information from section ${i+1}`);
+                        }
+                    }
                 }
+            } catch (error) {
+                console.error(`Error processing combined keywords "${combinedKeywords}":`, error.message);
+                fetchedPapers.push({
+                    id: `error-card-combined-${Date.now()}`,
+                    title: `获取"${combinedKeywords}"相关文献失败`,
+                    url: "#", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
+                    paperKeywords: [...keywordsToSearch, "错误"],
+                    snippet: `未能获取或解析多关键词相关的文献信息。错误: ${error.message.substring(0,100)}...`,
+                    interpretation: "请检查浏览器控制台获取更详细的错误信息，或尝试其他关键词组合。"
+                });
             }
             
             if (fetchedPapers.length === 0 && keywordsToSearch.length > 0) {
-                console.warn("API calls did not yield any usable papers after parsing attempts.");
+                console.warn("API call did not yield any usable papers after parsing attempts.");
                 return [{
                     id: "api-fallback-final-" + Date.now(),
                     title: "未能从API获取具体文献",
                     url: "#", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
                     paperKeywords: keywordsToSearch,
-                    snippet: "尝试通过Perplexity API根据您的关键词检索文献，但未能成功解析返回结果或未找到匹配文献。请检查您的API密钥、网络连接，或尝试不同的关键词。",
-                    interpretation: "这可能是由于API响应格式与预期不符，或者当前关键词下没有易于提取的文献信息。建议检查控制台日志获取更详细的错误信息。"
+                    snippet: "尝试通过Perplexity API根据您的组合关键词检索文献，但未能成功解析返回结果或未找到匹配文献。请检查您的API密钥、网络连接，或尝试不同的关键词组合。",
+                    interpretation: "这可能是由于API响应格式与预期不符，或者当前关键词组合下没有易于提取的文献信息。建议检查控制台日志获取更详细的错误信息。"
                 }];
             }
 
             console.log("Final fetched papers to render:", fetchedPapers);
-            return fetchedPapers.slice(0, 5); 
+            return fetchedPapers.slice(0, maxPapersToFetch);
         }
         
         function generateFallbackMockPapers(keywordsToSearch) {
