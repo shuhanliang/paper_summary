@@ -45,7 +45,7 @@
         }
         #report-content {
             display: flex; 
-            overflow-x: auto; /* Changed from hidden to auto to enable scrolling */
+            overflow-x: hidden; /* Changed back to hidden since we're controlling scrolling */
             overflow-y: hidden; 
             scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
@@ -197,7 +197,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: -10px; /* Move up from previous position */
+            margin-top: -25px; /* Moved up further from previous -10px */
             gap: 8px;
             position: relative;
             z-index: 10;
@@ -1418,18 +1418,17 @@
             reportContentDiv.addEventListener('mousedown', handleMouseDown, false);
             reportContentDiv.addEventListener('mouseup', handleMouseUp, false);
             
-            // Add event listener for wheel/scroll events
+            // Add event listener for wheel/scroll events with more control
             reportContentDiv.addEventListener('wheel', handleWheel, { passive: false });
             
-            // Make sure container is scrollable by touch
-            reportContentDiv.style.overflowX = 'auto';
+            // Initialize scrollAccumulator for threshold-based scrolling
+            reportContentDiv.scrollAccumulator = 0;
+            
+            // Make container behavior explicit but prevent natural scrolling
+            // We'll handle scroll behavior ourselves for better control
+            reportContentDiv.style.overflowX = 'hidden'; 
             reportContentDiv.style.scrollSnapType = 'x mandatory';
             reportContentDiv.style.scrollBehavior = 'smooth';
-            
-            // Listen for native scroll event to update active card
-            reportContentDiv.addEventListener('scroll', debounce(function() {
-                updateActiveCardOnScroll();
-            }, 100));
         }
         
         function handleTouchStart(event) {
@@ -1488,10 +1487,8 @@
         
         // Handle mousewheel events for horizontal scrolling
         function handleWheel(event) {
-            // Prevent default only if horizontal scrolling
-            if (Math.abs(event.deltaX) > 0) {
-                event.preventDefault();
-            }
+            // Prevent default to take control of scrolling
+            event.preventDefault();
             
             // Check if it's a horizontal scroll (touchpad) or Shift+wheel (mouse)
             const isHorizontalScroll = Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.shiftKey;
@@ -1503,16 +1500,30 @@
                 const currentIndex = parseInt(activeCard.dataset.index);
                 const totalCards = reportContentDiv.querySelectorAll('.report-card-poster').length;
                 
-                // Determine scroll direction
-                const scrollDirection = event.deltaX || event.deltaY; // Use deltaY when shift is pressed
+                // Use a threshold to determine if we should navigate
+                // This prevents multiple card jumps with a single scroll
+                const scrollThreshold = 50;
+                let scrollDelta = event.deltaX || (event.shiftKey ? event.deltaY : 0);
                 
-                // Scroll right (previous)
-                if (scrollDirection < 0 && currentIndex > 0) {
-                    navigateToCard(currentIndex - 1);
-                }
-                // Scroll left (next)
-                else if (scrollDirection > 0 && currentIndex < totalCards - 1) {
-                    navigateToCard(currentIndex + 1);
+                // Store the accumulated scroll delta
+                if (!reportContentDiv.scrollAccumulator) reportContentDiv.scrollAccumulator = 0;
+                reportContentDiv.scrollAccumulator += scrollDelta;
+                
+                // Only navigate when accumulated delta exceeds threshold
+                if (Math.abs(reportContentDiv.scrollAccumulator) >= scrollThreshold) {
+                    const direction = reportContentDiv.scrollAccumulator > 0 ? 1 : -1;
+                    
+                    // Scroll right (previous)
+                    if (direction < 0 && currentIndex > 0) {
+                        navigateToCard(currentIndex - 1);
+                    }
+                    // Scroll left (next)
+                    else if (direction > 0 && currentIndex < totalCards - 1) {
+                        navigateToCard(currentIndex + 1);
+                    }
+                    
+                    // Reset accumulator
+                    reportContentDiv.scrollAccumulator = 0;
                 }
             }
         }
