@@ -45,12 +45,17 @@
         }
         #report-content {
             display: flex; 
-            overflow-x: auto; 
+            overflow-x: hidden; 
             overflow-y: hidden; 
             scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
             padding: 20px 0;
             height: 100%;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        #report-content::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
         }
         .report-card-poster {
             scroll-snap-align: center; 
@@ -190,10 +195,20 @@
         /* Pagination dots */
         .pagination-dots {
             display: flex;
-            justify-content: center;
-            margin-top: 15px;
-            gap: 10px;
+            flex-direction: column;
             align-items: center;
+            margin-top: 15px;
+            gap: 8px;
+        }
+        .pagination-count {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
         }
         .pagination-dot {
             width: 10px;
@@ -206,11 +221,6 @@
         .pagination-dot.active {
             background-color: #2563eb;
             transform: scale(1.2);
-        }
-        .pagination-count {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin: 0 15px;
         }
         
         /* Responsive container adjustments */
@@ -336,8 +346,11 @@
                         </div>
                     </div>
                     <div class="pagination-dots" id="pagination-container">
-                        <!-- Pagination dots will be generated here -->
+                        <!-- Pagination count above dots -->
                         <span class="pagination-count" id="pagination-count">0/0</span>
+                        <div class="dots-container" id="dots-container">
+                            <!-- Pagination dots will be generated here -->
+                        </div>
                     </div>
                 </div>
             </section>
@@ -1064,7 +1077,7 @@
                         
                         // Update pagination dots
                         const currentIndex = parseInt(entry.target.dataset.index);
-                        const dots = paginationContainer.querySelectorAll('.pagination-dot');
+                        const dots = document.querySelectorAll('.pagination-dot');
                         dots.forEach(dot => dot.classList.remove('active'));
                         if (dots[currentIndex]) {
                             dots[currentIndex].classList.add('active');
@@ -1334,7 +1347,12 @@
 
         // Add new function to render pagination dots
         function renderPaginationDots(totalCount) {
-            paginationContainer.innerHTML = '';
+            const dotsContainer = document.getElementById('dots-container');
+            dotsContainer.innerHTML = '';
+            
+            // Update count indicator
+            const countIndicator = document.getElementById('pagination-count');
+            countIndicator.textContent = totalCount > 0 ? `1/${totalCount}` : '0/0';
             
             // Add dots
             for (let i = 0; i < totalCount; i++) {
@@ -1344,19 +1362,12 @@
                 dot.addEventListener('click', () => {
                     navigateToCard(i);
                 });
-                paginationContainer.appendChild(dot);
+                dotsContainer.appendChild(dot);
             }
-            
-            // Add count indicator
-            const countIndicator = document.createElement('span');
-            countIndicator.className = 'pagination-count';
-            countIndicator.id = 'pagination-count';
-            countIndicator.textContent = totalCount > 0 ? `1/${totalCount}` : '0/0';
-            paginationContainer.appendChild(countIndicator);
             
             // Activate first dot if exists
             if (totalCount > 0) {
-                paginationContainer.querySelector('.pagination-dot').classList.add('active');
+                dotsContainer.querySelector('.pagination-dot').classList.add('active');
             }
         }
 
