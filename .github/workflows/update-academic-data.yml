@@ -362,13 +362,13 @@ jobs:
 
       - name: Send email notification
         if: success()
-        uses: dawidd6/action-send-mail@v5  # 升级到最新版本v5
+        uses: dawidd6/action-send-mail@v5
         with:
-          server_address: smtp.office365.com
-          server_port: 587
-          # 移除secure参数，因为端口587使用STARTTLS而非SSL/TLS
-          username: ${{ secrets.EMAIL_USERNAME }}
-          password: ${{ secrets.EMAIL_PASSWORD }}
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: xuz10962@gmail.com
+          password: cxzw ibpn kvfh extk
           subject: 学术周报已更新 - ${{ github.repository }}
           body: |
             您好，
@@ -383,7 +383,7 @@ jobs:
             
             此邮件由GitHub Actions自动发送，请勿回复。
           to: zhengxu22@m.fudan.edu.cn
-          from: 学术周报自动更新 <eisenx123@outlook.com>
-          # 添加调试参数，帮助排查问题
+          from: 学术周报自动更新 <xuz10962@gmail.com>
           nodemailerlog: true
           nodemailerdebug: true
+      
