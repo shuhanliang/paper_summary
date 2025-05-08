@@ -1,0 +1,328 @@
+name: Update Academic Data
+
+on:
+  schedule:
+    # 每天北京时间早上8:00运行（UTC时间0:00）
+    - cron: '0 0 * * *'
+  # 允许手动触发
+  workflow_dispatch:
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install node-fetch@2 dotenv
+
+      - name: Create updater script
+        run: |
+          cat > update-data.js << 'EOL'
+          require('dotenv').config();
+          const fetch = require('node-fetch');
+
+          // 配置
+          const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+          const GITHUB_REPO = process.env.GITHUB_REPOSITORY;
+          const DATA_FILE = 'academic_data.json';
+          const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
+          const DEFAULT_KEYWORDS = ["通信", "AI 6G", "Agent", "LLM", "语义通信"];
+
+          // 获取北京时间
+          function getBeijingTime() {
+            const now = new Date();
+            const utcOffset = now.getTimezoneOffset() * 60000;
+            const utcTime = now.getTime() + utcOffset;
+            const beijingTime = new Date(utcTime + (3600000 * 8)); 
+            return beijingTime;
+          }
+
+          // 从GitHub获取现有数据
+          async function fetchExistingData() {
+            try {
+              const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`;
+              const headers = { 'Authorization': `token ${GITHUB_TOKEN}` };
+              
+              const response = await fetch(url, { headers });
+              
+              if (!response.ok) {
+                if (response.status === 404) {
+                  console.log("Data file not found on GitHub. Will create it.");
+                  return { keywords: DEFAULT_KEYWORDS, papers: [] };
+                }
+                throw new Error(`GitHub API error: ${response.status}`);
+              }
+              
+              const data = await response.json();
+              const content = Buffer.from(data.content, 'base64').toString('utf8');
+              const parsedData = JSON.parse(content);
+              console.log("Successfully fetched existing data from GitHub");
+              return { ...parsedData, sha: data.sha };
+            } catch (error) {
+              console.error("Error fetching existing data:", error.message);
+              return { keywords: DEFAULT_KEYWORDS, papers: [] };
+            }
+          }
+
+          // 调用Perplexity API获取论文
+          async function querySonarPro(question) {
+            if (!PERPLEXITY_API_KEY) {
+              throw new Error("Perplexity API key is missing");
+            }
+            
+            const url = "https://api.perplexity.ai/chat/completions";
+            const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${PERPLEXITY_API_KEY}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                model: "sonar-pro",
+                messages: [{ role: "user", content: question }]
+              })
+            });
+            
+            if (!response.ok) {
+              const errorText = await response.text();
+              throw new Error(`Perplexity API error (${response.status}): ${errorText}`);
+            }
+            
+            const result = await response.json();
+            return {
+              content: result.choices[0].message.content,
+              citations: result.citations || []
+            };
+          }
+
+          // 解析API响应为论文对象
+          function parsePaperInfo(content, citations, keyword) {
+            // 简化的解析逻辑
+            function extractField(text, labelStarts, nextLabelStarts = []) {
+              const labelEndChars = ":：";
+              for (const start of labelStarts) {
+                for (const endChar of labelEndChars) {
+                  const fullLabel = start + endChar;
+                  let startIndex = text.toLowerCase().indexOf(fullLabel.toLowerCase());
+                  if (startIndex === -1) continue;
+                  
+                  startIndex += fullLabel.length;
+                  
+                  let endIndex = text.length;
+                  for (const nextStart of nextLabelStarts) {
+                    for (const nextEndChar of labelEndChars) {
+                      const nextFullLabel = nextStart + nextEndChar;
+                      const tempEndIndex = text.toLowerCase().indexOf(nextFullLabel.toLowerCase(), startIndex);
+                      if (tempEndIndex !== -1 && tempEndIndex < endIndex) {
+                        endIndex = tempEndIndex;
+                      }
+                    }
+                  }
+                  
+                  return text.substring(startIndex, endIndex).trim();
+                }
+              }
+              return null;
+            }
+            
+            try {
+              const paper = {
+                id: `paper-api-${Date.now()}-${Math.random().toString(36).substring(7)}`,
+                title: "标题提取失败",
+                url: "#",
+                authors: ["作者提取失败"],
+                affiliations: ["单位提取失败"],
+                journal: "期刊/会议提取失败",
+                publicationDate: `${getBeijingTime().getFullYear()}年`,
+                paperKeywords: [keyword, "自动更新"],
+                snippet: "摘要未能提取。",
+                interpretation: "深入解读未能提取。"
+              };
+              
+              const allLabels = ["title", "标题", "authors", "作者", "affiliations", "单位", 
+                                "journal/conference", "期刊/会议", "publication year", "发表年份", 
+                                "url", "abstract", "摘要", "in-depth analysis", "深入解读", "keywords", "关键词"];
+              
+              const title = extractField(content, ["title", "标题"], 
+                allLabels.filter(l => !["title", "标题"].includes(l.toLowerCase())));
+              if (title) paper.title = title;
+              
+              const authorsText = extractField(content, ["authors", "作者"], 
+                allLabels.filter(l => !["authors", "作者"].includes(l.toLowerCase())));
+              if (authorsText) paper.authors = authorsText.split(/,|、|and/i).map(a => a.trim()).filter(a => a.length > 0);
+              
+              const affiliationsText = extractField(content, ["affiliations", "单位"], 
+                allLabels.filter(l => !["affiliations", "单位"].includes(l.toLowerCase())));
+              if (affiliationsText) paper.affiliations = affiliationsText.split(/;/).map(a => a.trim()).filter(a => a.length > 0);
+              
+              const journal = extractField(content, ["journal/conference", "期刊/会议"], 
+                allLabels.filter(l => !["journal/conference", "期刊/会议"].includes(l.toLowerCase())));
+              if (journal) paper.journal = journal;
+              
+              const publicationDate = extractField(content, ["publication year", "发表年份"], 
+                allLabels.filter(l => !["publication year", "发表年份"].includes(l.toLowerCase())));
+              if (publicationDate) paper.publicationDate = publicationDate;
+              
+              const urlText = extractField(content, ["url"], 
+                allLabels.filter(l => !["url"].includes(l.toLowerCase())));
+              if (urlText && urlText.startsWith("http")) paper.url = urlText;
+              else if (citations && citations.length > 0) {
+                const potentialUrl = citations.find(c => c.url && 
+                  (c.url.includes('arxiv.org') || c.url.includes('doi.org') || 
+                   c.url.includes('acm.org') || c.url.includes('ieee.org')))?.url;
+                if (potentialUrl) paper.url = potentialUrl;
+                else if (citations[0].url) paper.url = citations[0].url;
+              }
+              
+              const snippet = extractField(content, ["abstract", "摘要"], 
+                allLabels.filter(l => !["abstract", "摘要"].includes(l.toLowerCase())));
+              if (snippet) paper.snippet = snippet;
+              
+              const interpretation = extractField(content, ["in-depth analysis", "深入解读与分析", "深入解读"], 
+                allLabels.filter(l => !["in-depth analysis", "深入解读与分析", "深入解读"].includes(l.toLowerCase())));
+              if (interpretation) paper.interpretation = interpretation;
+              
+              const keywordsText = extractField(content, ["keywords", "关键词"]);
+              if (keywordsText) {
+                paper.paperKeywords = [keyword, ...keywordsText.split(/,|、/).map(k => k.trim()).filter(k => k.length > 0)];
+              }
+              
+              // 验证必要字段是否有效
+              if (paper.title === "标题提取失败" || paper.snippet === "摘要未能提取。") {
+                console.log(`解析失败: 关键词 "${keyword}" 的论文标题或摘要提取失败`);
+                return null;
+              }
+              
+              return paper;
+            } catch (error) {
+              console.error(`解析关键词 "${keyword}" 的内容时出错:`, error);
+              return null;
+            }
+          }
+
+          // 获取所有论文
+          async function fetchPapers(keywords) {
+            const fetchedPapers = [];
+            
+            for (const keyword of keywords) {
+              if (fetchedPapers.length >= 5) break; // 最多获取5篇
+              
+              try {
+                console.log(`正在为关键词 "${keyword}" 获取论文...`);
+                
+                const question = `
+                Please find ONE highly relevant research paper about the keyword "${keyword}" published in the last 12-18 months.
+                Provide the information for this single paper using the following exact labels and format. Each field should be on a new line:
+                Title: [The full title of the paper]
+                Authors: [List of authors, separated by commas. Example: John Doe, Jane Smith]
+                Affiliations: [List of main affiliations, separated by semicolons. Example: University A; Organization B]
+                Journal/Conference: [Name of the journal or conference]
+                Publication Year: [Year, e.g., 2024]
+                URL: [A direct, accessible URL to the paper (e.g., ArXiv, DOI, official publisher page)]
+                Abstract: [请用中文提供详细的论文摘要，大约150-250字。]
+                In-depth Analysis: [请用中文对论文的重要性、创新点、潜在影响和局限性进行深入解读与分析，大约200-300字。]
+                Keywords: [5-7 relevant keywords for this paper, separated by commas. Example: keyword1, keyword2, keyword3]
+                `;
+                
+                const { content, citations } = await querySonarPro(question);
+                const paperInfo = parsePaperInfo(content, citations, keyword);
+                
+                if (paperInfo) {
+                  fetchedPapers.push(paperInfo);
+                  console.log(`成功获取关键词 "${keyword}" 的论文: ${paperInfo.title}`);
+                }
+              } catch (error) {
+                console.error(`处理关键词 "${keyword}" 时出错:`, error);
+              }
+            }
+            
+            return fetchedPapers;
+          }
+
+          // 保存数据到GitHub
+          async function saveToGitHub(data, sha) {
+            try {
+              const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${DATA_FILE}`;
+              const headers = {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Content-Type': 'application/json'
+              };
+              
+              const content = JSON.stringify(data, null, 2);
+              const encodedContent = Buffer.from(content).toString('base64');
+              
+              const body = {
+                message: `更新学术数据 - ${new Date().toISOString()}`,
+                content: encodedContent,
+                branch: 'main'
+              };
+              
+              if (sha) body.sha = sha;
+              
+              const response = await fetch(url, {
+                method: 'PUT',
+                headers,
+                body: JSON.stringify(body)
+              });
+              
+              if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`保存到GitHub失败 (${response.status}): ${errorText}`);
+              }
+              
+              console.log("成功保存数据到GitHub");
+            } catch (error) {
+              console.error("保存数据到GitHub时出错:", error);
+              throw error;
+            }
+          }
+
+          // 主函数
+          async function main() {
+            try {
+              // 获取现有数据
+              const existingData = await fetchExistingData();
+              const keywords = existingData.keywords || DEFAULT_KEYWORDS;
+              
+              console.log(`将使用以下关键词: ${keywords.join(', ')}`);
+              
+              // 获取新论文
+              const papers = await fetchPapers(keywords);
+              
+              if (papers.length === 0) {
+                console.log("未能获取任何论文，将保留现有数据");
+                return;
+              }
+              
+              // 准备新数据
+              const newData = {
+                papers,
+                lastUpdate: getBeijingTime().toISOString(),
+                keywords,
+                lastAutoUpdateDate: getBeijingTime().toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'})
+              };
+              
+              // 保存到GitHub
+              await saveToGitHub(newData, existingData.sha);
+              console.log(`成功更新了 ${papers.length} 篇论文`);
+            } catch (error) {
+              console.error("更新过程中出错:", error);
+              process.exit(1);
+            }
+          }
+
+          main();
+          EOL
+
+      - name: Run updater
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+        run: node update-data.js 

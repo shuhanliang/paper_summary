@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术周报生成器 - 海报版</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #e9eef2; 
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
+        }
+        .keyword-tag {
+            transition: all 0.2s ease-in-out;
+        }
+        .keyword-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #report-content-wrapper {
+            perspective: 1500px; 
+        }
+        #report-content {
+            display: flex; 
+            overflow-x: auto; 
+            overflow-y: hidden; 
+            scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 20px; 
+        }
+        .report-card-poster {
+            scroll-snap-align: center; 
+            flex: 0 0 90%; 
+            max-width: 90%; 
+            height: 580px; 
+            margin: 0 15px; 
+            border-radius: 16px; 
+            background-color: #ffffff;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0,0,0,0.04);
+            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease-out;
+            transform-style: preserve-3d;
+            opacity: 0.7;
+            transform: scale(0.9) rotateY(25deg) translateX(10px); 
+            overflow: hidden; 
+        }
+        .report-card-poster.is-active {
+            opacity: 1;
+            transform: scale(1) rotateY(0deg) translateX(0px); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15), 0 8px 15px rgba(0,0,0,0.08);
+        }
+        .poster-grid {
+            display: grid;
+            grid-template-columns: 38% 62%; 
+            height: 100%;
+        }
+        .poster-left-column {
+            background-color: #f0f4f8; 
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; 
+            border-right: 1px solid #dde4eb;
+            overflow-y: auto; 
+        }
+        .poster-right-column {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto; 
+        }
+        .poster-title {
+            font-size: 1.5rem; 
+            font-weight: 700;
+            color: #1e3a8a; 
+            line-height: 1.3;
+            margin-bottom: 12px;
+        }
+        .poster-authors {
+            font-size: 0.85rem; 
+            color: #374151;
+            margin-bottom: 8px;
+        }
+        .poster-authors sup {
+            color: #059669; 
+        }
+        .poster-affiliations {
+            font-size: 0.75rem; 
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+        .poster-affiliations span {
+            display: block;
+            margin-bottom: 2px;
+        }
+        .poster-journal-info {
+            font-size: 0.8rem; 
+            color: #4b5563;
+        }
+        .poster-journal-info strong {
+            color: #1e3a8a;
+        }
+        .poster-section-title {
+            font-size: 0.9rem; 
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #60a5fa; 
+            padding-bottom: 4px;
+            display: inline-block;
+        }
+        .poster-abstract, .poster-interpretation-content { 
+            font-size: 0.85rem; 
+            color: #334155;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 16px;
+        }
+        .poster-interpretation { 
+             background-color: #f8fafc; 
+             padding: 10px;
+             border-radius: 6px;
+             border: 1px solid #e2e8f0;
+        }
+        .poster-keywords-container .poster-keywords-tag { 
+            background-color: #dbeafe; 
+            color: #1e40af; 
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            margin-right: 6px;
+            margin-bottom: 6px;
+            display: inline-block;
+        }
+        .poster-read-more-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #2563eb; 
+            color: white;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.2);
+            transition: all 0.2s ease-in-out;
+            margin-top: auto; 
+        }
+        .poster-read-more-btn:hover {
+            background-color: #1d4ed8;
+            box-shadow: 0 6px 10px rgba(37, 99, 235, 0.3);
+            transform: translateY(-1px);
+        }
+        #loading-message-container {
+            width: 100%;
+            height: 580px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: #4b5563;
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen flex flex-col items-center py-8 px-4">
+
+    <div class="container mx-auto max-w-5xl w-full">
+        <header class="mb-10 text-center">
+            <h1 class="text-4xl font-bold text-sky-700">学术周报</h1>
+            <p class="text-slate-600 mt-2">每日清晨，为您定制专属学术动态</p>
+        </header>
+
+        <main class="grid md:grid-cols-3 gap-8">
+            <aside class="md:col-span-1 space-y-8">
+                <section id="keyword-management" class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-sky-600 border-b pb-2">关键词管理</h2>
+                    <form id="add-keyword-form" class="space-y-4">
+                        <div>
+                            <label for="keyword-input" class="block text-sm font-medium text-slate-700 mb-1">添加关键词:</label>
+                            <input type="text" id="keyword-input" placeholder="例如：人工智能, 机器学习" class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-sky-500 focus:border-sky-500 transition duration-150 ease-in-out">
+                        </div>
+                        <button type="submit" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-opacity-50">
+                            添加关键词
+                        </button>
+                    </form>
+                    <div id="keywords-list-container" class="mt-6">
+                        <h3 class="text-lg font-semibold text-slate-700 mb-3">我的关键词:</h3>
+                        <div id="keywords-list" class="flex flex-wrap gap-2"></div>
+                        <p id="no-keywords-message" class="text-sm text-slate-500 mt-2" style="display: none;">暂无关键词，请添加。</p>
+                    </div>
+                </section>
+
+                <section id="update-info" class="bg-white p-6 rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-semibold mb-4 text-sky-600 border-b pb-2">更新信息</h2>
+                    <div class="space-y-3 text-sm text-slate-600">
+                        <p><span class="font-semibold">自动更新:</span> 系统将于每日北京时间 <strong class="text-sky-700">早上 8:00</strong> 尝试自动获取新内容。</p>
+                        <p id="last-updated"><span class="font-semibold">上次内容获取时间:</span> <span id="last-updated-time" class="text-sky-700">正在加载...</span></p>
+                        <p id="next-scheduled-update"><span class="font-semibold">下次计划自动获取:</span> <span id="next-update-time" class="text-sky-700">正在计算...</span></p>
+                        <button id="manual-refresh-button" class="mt-4 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+                            手动刷新 (调用API获取)
+                        </button>
+                    </div>
+                </section>
+            </aside>
+
+            <section id="report-display-container" class="md:col-span-2 bg-transparent p-0 rounded-xl">
+                <div class="flex justify-between items-center mb-4 px-1">
+                    <h2 class="text-2xl font-semibold text-sky-700">本周学术精选</h2>
+                    <span id="report-date" class="text-sm text-slate-500"></span>
+                </div>
+                <div id="report-content-wrapper">
+                    <div id="report-content" class="h-[600px]">
+                        <div id="loading-message-container">
+                            <p id="loading-message">正在加载学术周报...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="mt-12 text-center text-sm text-slate-500">
+            <p>&copy; <span id="current-year"></span> 学术周报生成器. 保留所有权利.</p>
+        </footer>
+    </div>
+
+    <script>
+        // --- DOM Elements ---
+        const keywordInput = document.getElementById('keyword-input');
+        const addKeywordForm = document.getElementById('add-keyword-form');
+        const keywordsListDiv = document.getElementById('keywords-list');
+        const noKeywordsMessage = document.getElementById('no-keywords-message');
+        
+        const reportContentDiv = document.getElementById('report-content');
+        const loadingMessageContainer = document.getElementById('loading-message-container');
+        const loadingMessage = document.getElementById('loading-message');
+        const reportDateSpan = document.getElementById('report-date');
+        
+        const lastUpdatedTimeSpan = document.getElementById('last-updated-time');
+        const nextUpdateTimeSpan = document.getElementById('next-update-time');
+        const manualRefreshButton = document.getElementById('manual-refresh-button');
+        const currentYearSpan = document.getElementById('current-year');
+
+        // --- State ---
+        let userKeywords = ["通信", "AI 6G", "Agent", "LLM", "语义通信"]; 
+        let activeKeywords = []; 
+        let intersectionObserver;
+        let autoUpdateInterval;
+
+        const PERPLEXITY_API_KEY = "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"; 
+        const LOCAL_STORAGE_PAPERS_KEY = 'academicReportPapersData';
+        const LOCAL_STORAGE_LAST_FETCH_KEY = 'academicReportLastFetchTime';
+        const LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY = 'academicReportLastAutoUpdateDate';
+
+        // GitHub API configuration
+        const GITHUB_USERNAME = "Jannhsu"; // 已更新为您的GitHub用户名
+        const GITHUB_REPO = "paper_summary"; // 已更新为您的仓库名
+        const GITHUB_TOKEN = ""; // 为安全起见，建议后续手动添加
+        const GITHUB_API_BASE = `https://api.github.com/repos/${GITHUB_USERNAME}/${GITHUB_REPO}/contents`;
+        const GITHUB_DATA_FILE = "academic_data.json"; // 存储数据的文件名
+        const USE_GITHUB_STORAGE = true; // 已启用GitHub存储
+
+
+        // --- Utility Functions ---
+        function getBeijingTime() {
+            const now = new Date();
+            const utcOffset = now.getTimezoneOffset() * 60000;
+            const utcTime = now.getTime() + utcOffset;
+            const beijingTime = new Date(utcTime + (3600000 * 8)); 
+            return beijingTime;
+        }
+
+        function getFormattedDateTime(dateObject) {
+            return dateObject.toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        
+        // --- GitHub Data Persistence Functions ---
+        async function fetchFromGitHub() {
+            if (!USE_GITHUB_STORAGE) return null;
+            
+            try {
+                console.log("Fetching data from GitHub...");
+                const url = `${GITHUB_API_BASE}/${GITHUB_DATA_FILE}`;
+                const headers = GITHUB_TOKEN ? { 'Authorization': `token ${GITHUB_TOKEN}` } : {};
+                
+                const response = await fetch(url, { headers });
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        console.log("Data file not found on GitHub. Will create it after data is available.");
+                        return null;
+                    }
+                    throw new Error(`GitHub API error: ${response.status}`);
+                }
+                
+                const data = await response.json();
+                const content = atob(data.content); // Decode base64 content
+                const parsedData = JSON.parse(content);
+                console.log("Successfully fetched data from GitHub");
+                return parsedData;
+            } catch (error) {
+                console.error("Error fetching from GitHub:", error);
+                return null;
+            }
+        }
+
+        async function saveToGitHub(dataToSave) {
+            if (!USE_GITHUB_STORAGE) return false;
+            
+            try {
+                console.log("Saving data to GitHub...");
+                const content = JSON.stringify(dataToSave, null, 2);
+                const encodedContent = btoa(unescape(encodeURIComponent(content))); // Encode content to base64
+                
+                // First, check if file exists and get its SHA if it does
+                let sha = "";
+                const checkUrl = `${GITHUB_API_BASE}/${GITHUB_DATA_FILE}`;
+                const headers = {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json'
+                };
+                
+                try {
+                    const checkResponse = await fetch(checkUrl, { headers });
+                    if (checkResponse.ok) {
+                        const fileData = await checkResponse.json();
+                        sha = fileData.sha;
+                    }
+                } catch (error) {
+                    console.log("File doesn't exist yet, will create new file");
+                }
+                
+                // Prepare request body
+                const body = {
+                    message: `Update academic data - ${new Date().toISOString()}`,
+                    content: encodedContent,
+                    branch: "main" // or "master" depending on your repository
+                };
+                
+                if (sha) body.sha = sha; // Include SHA if file exists
+                
+                // Create or update file
+                const saveResponse = await fetch(checkUrl, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify(body)
+                });
+                
+                if (!saveResponse.ok) {
+                    throw new Error(`Failed to save to GitHub: ${saveResponse.status}`);
+                }
+                
+                console.log("Successfully saved data to GitHub");
+                return true;
+            } catch (error) {
+                console.error("Error saving to GitHub:", error);
+                return false;
+            }
+        }
+
+        // Combined data structure for GitHub storage
+        async function saveSharedData(papers) {
+            if (!USE_GITHUB_STORAGE) return false;
+            
+            const sharedData = {
+                papers,
+                lastUpdate: getBeijingTime().toISOString(),
+                keywords: activeKeywords,
+                lastAutoUpdateDate: localStorage.getItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY)
+            };
+            
+            return await saveToGitHub(sharedData);
+        }
+
+        async function loadSharedData() {
+            if (!USE_GITHUB_STORAGE) return null;
+            
+            const data = await fetchFromGitHub();
+            if (data) {
+                if (data.papers) renderReport(data.papers);
+                if (data.keywords) {
+                    activeKeywords = data.keywords;
+                    renderActiveKeywords();
+                }
+                if (data.lastUpdate) {
+                    localStorage.setItem(LOCAL_STORAGE_LAST_FETCH_KEY, data.lastUpdate);
+                }
+                if (data.lastAutoUpdateDate) {
+                    localStorage.setItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY, data.lastAutoUpdateDate);
+                }
+                updateTimestamps(false);
+                return data;
+            }
+            return null;
+        }
+        
+        // --- Keyword Management ---
+        function renderActiveKeywords() {
+            keywordsListDiv.innerHTML = '';
+            noKeywordsMessage.style.display = activeKeywords.length === 0 ? 'block' : 'none';
+            activeKeywords.forEach((keyword, index) => {
+                const keywordTag = document.createElement('span');
+                keywordTag.className = 'keyword-tag bg-sky-100 text-sky-700 text-sm font-medium px-3 py-1.5 rounded-full flex items-center shadow-sm cursor-default transition-all';
+                keywordTag.textContent = keyword;
+                const deleteButton = document.createElement('button');
+                deleteButton.className = 'ml-2 text-sky-500 hover:text-sky-700 font-bold text-xs';
+                deleteButton.textContent = '✕';
+                deleteButton.title = `删除关键词 "${keyword}"`;
+                deleteButton.onclick = () => deleteActiveKeyword(index);
+                keywordTag.appendChild(deleteButton);
+                keywordsListDiv.appendChild(keywordTag);
+            });
+        }
+
+        async function addActiveKeyword(keyword) {
+            const trimmedKeyword = keyword.trim();
+            if (trimmedKeyword && !activeKeywords.includes(trimmedKeyword)) {
+                activeKeywords.push(trimmedKeyword);
+                saveActiveKeywordsToLocalStorage();
+                renderActiveKeywords();
+                console.log("Keywords changed, fetching new papers.");
+                await loadOrFetchPapers(true); // Force API fetch when keywords change
+            }
+            keywordInput.value = '';
+        }
+
+        async function deleteActiveKeyword(index) {
+            activeKeywords.splice(index, 1);
+            saveActiveKeywordsToLocalStorage();
+            renderActiveKeywords();
+            console.log("Keywords changed, fetching new papers.");
+            await loadOrFetchPapers(true); // Force API fetch when keywords change
+        }
+
+        function loadActiveKeywordsFromLocalStorage() {
+            const storedKeywords = localStorage.getItem('academicReportKeywords');
+            if (storedKeywords) {
+                activeKeywords = JSON.parse(storedKeywords);
+                 if (activeKeywords.length === 0 && userKeywords.length > 0) { 
+                    activeKeywords = [...userKeywords];
+                }
+            } else if (userKeywords.length > 0) { 
+                 activeKeywords = [...userKeywords];
+            }
+        }
+
+        function saveActiveKeywordsToLocalStorage() {
+            localStorage.setItem('academicReportKeywords', JSON.stringify(activeKeywords));
+            
+            // Also save to GitHub if enabled
+            if (USE_GITHUB_STORAGE) {
+                const papersData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PAPERS_KEY) || '[]');
+                saveSharedData(papersData);
+            }
+        }
+
+        // --- Perplexity AI API Interaction ---
+        async function querySonarPro(apiKey, question) {
+            const url = "https://api.perplexity.ai/chat/completions";
+            
+            if (apiKey === "YOUR_PERPLEXITY_API_KEY_HERE" || !apiKey) { 
+                console.warn("Perplexity API key is a placeholder or missing. Real API call will not be made.");
+                return Promise.reject(new Error("API key is a placeholder. Please replace it with your actual key for API calls."));
+            }
+
+            console.log(`Attempting to call Perplexity API with model 'sonar-pro' for question: "${question.substring(0,100)}..."`);
+            let response;
+            try {
+                response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        model: "sonar-pro", 
+                        messages: [{ role: "user", content: question }]
+                    })
+                });
+            } catch (networkError) {
+                console.error("Network error during Perplexity API call:", networkError);
+                throw new Error(`Network error: ${networkError.message}`);
+            }
+
+            if (!response.ok) {
+                const errorBody = await response.text(); 
+                console.error("Perplexity API Error Response Status:", response.status);
+                console.error("Perplexity API Error Response Body:", errorBody);
+                throw new Error(`Perplexity API request failed with status ${response.status}: ${errorBody}`);
+            }
+            
+            const result = await response.json();
+            console.log("Perplexity API Raw JSON Result:", JSON.stringify(result, null, 2)); 
+            
+            if (!result.choices || !result.choices[0] || !result.choices[0].message || typeof result.choices[0].message.content === 'undefined') {
+                console.error("Unexpected API response structure from Perplexity:", result);
+                throw new Error("Unexpected response structure from Perplexity API. 'content' field is missing or invalid.");
+            }
+
+            const content = result.choices[0].message.content;
+            const citations = result.citations || []; 
+            console.log("Extracted content from API:", content.substring(0, 500) + "...");
+            console.log("Extracted citations from API:", citations);
+            
+            return { content, citations };
+        }
+
+        function parsePaperInfoFromContent(content, citations, originalKeyword) {
+            console.log(`Attempting to parse content for keyword "${originalKeyword}":\n---BEGIN CONTENT---\n${content}\n---END CONTENT---`);
+            let paper = {
+                id: `paper-api-${Date.now()}-${Math.random().toString(36).substring(7)}`,
+                title: "标题提取失败",
+                url: "#",
+                authors: ["作者提取失败"],
+                affiliations: ["单位提取失败"],
+                journal: "期刊/会议提取失败",
+                publicationDate: `${getBeijingTime().getFullYear()}年`,
+                paperKeywords: [originalKeyword, "解析数据"],
+                snippet: "摘要未能提取。",
+                interpretation: "深入解读未能提取。"
+            };
+
+            try {
+                if (citations && citations.length > 0) {
+                    const potentialUrl = citations.find(c => c.url && (c.url.includes('arxiv.org') || c.url.includes('doi.org') || c.url.includes('acm.org') || c.url.includes('ieee.org')))?.url;
+                    if (potentialUrl) paper.url = potentialUrl;
+                    else if (citations[0].url) paper.url = citations[0].url;
+                }
+
+                const extractField = (text, labelStart, nextLabelStarts = []) => {
+                    const labelEndChars = ":："; 
+                    let bestMatch = null;
+                
+                    for (const start of labelStart) {
+                        for (const endChar of labelEndChars) {
+                            const fullLabel = start + endChar;
+                            let startIndex = text.toLowerCase().indexOf(fullLabel.toLowerCase());
+                            if (startIndex === -1) continue;
+                
+                            startIndex += fullLabel.length; 
+                
+                            let endIndex = text.length;
+                            if (nextLabelStarts.length > 0) {
+                                for (const nextStart of nextLabelStarts) {
+                                    for (const nextEndChar of labelEndChars) {
+                                        const nextFullLabel = nextStart + nextEndChar;
+                                        const tempEndIndex = text.toLowerCase().indexOf(nextFullLabel.toLowerCase(), startIndex);
+                                        if (tempEndIndex !== -1 && tempEndIndex < endIndex) {
+                                            endIndex = tempEndIndex;
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            const doubleNewlineIndex = text.indexOf("\n\n", startIndex);
+                            if (doubleNewlineIndex !== -1 && doubleNewlineIndex < endIndex) {
+                                let isPartOfNextLabel = false;
+                                if(nextLabelStarts.length > 0){
+                                    for (const nextStart of nextLabelStarts) {
+                                        for (const nextEndChar of labelEndChars) {
+                                            const nextFullLabel = nextStart + nextEndChar;
+                                            if (text.substring(doubleNewlineIndex, endIndex).toLowerCase().includes(nextFullLabel.toLowerCase())) {
+                                                isPartOfNextLabel = true;
+                                                break;
+                                            }
+                                        }
+                                        if(isPartOfNextLabel) break;
+                                    }
+                                }
+                                if(!isPartOfNextLabel) endIndex = doubleNewlineIndex;
+                            }
+
+                            const extracted = text.substring(startIndex, endIndex).trim();
+                            if (extracted) {
+                                if (!bestMatch || extracted.length > bestMatch.length) {
+                                    bestMatch = extracted;
+                                }
+                            }
+                        }
+                    }
+                    return bestMatch;
+                };
+                
+                const allPossibleNextLabels = ["authors", "作者", "affiliations", "单位", "journal/conference", "期刊/会议", "publication year", "发表年份", "url", "abstract", "摘要", "in-depth analysis", "深入解读与分析", "深入解读", "keywords", "关键词"];
+
+                paper.title = extractField(content, ["title", "标题"], allPossibleNextLabels.filter(l => !["title", "标题"].includes(l.toLowerCase()))) || paper.title;
+                
+                const authorsText = extractField(content, ["authors", "作者"], allPossibleNextLabels.filter(l => !["authors", "作者"].includes(l.toLowerCase())));
+                if (authorsText) paper.authors = authorsText.split(/,|、|and/i).map(a => a.trim()).filter(a => a.length > 0);
+
+                const affiliationsText = extractField(content, ["affiliations", "单位"], allPossibleNextLabels.filter(l => !["affiliations", "单位"].includes(l.toLowerCase())));
+                if (affiliationsText) paper.affiliations = affiliationsText.split(/;/).map(a => a.trim()).filter(a => a.length > 0);
+                
+                paper.journal = extractField(content, ["journal/conference", "期刊/会议"], allPossibleNextLabels.filter(l => !["journal/conference", "期刊/会议"].includes(l.toLowerCase()))) || paper.journal;
+                paper.publicationDate = extractField(content, ["publication year", "发表年份"], allPossibleNextLabels.filter(l => !["publication year", "发表年份"].includes(l.toLowerCase()))) || paper.publicationDate;
+                
+                const urlText = extractField(content, ["url"], allPossibleNextLabels.filter(l => !["url"].includes(l.toLowerCase())));
+                if (urlText && urlText.startsWith("http")) paper.url = urlText;
+
+                paper.snippet = extractField(content, ["abstract", "摘要"], allPossibleNextLabels.filter(l => !["abstract", "摘要"].includes(l.toLowerCase()))) || paper.snippet;
+                paper.interpretation = extractField(content, ["in-depth analysis", "深入解读与分析", "深入解读"], allPossibleNextLabels.filter(l => !["in-depth analysis", "深入解读与分析", "深入解读"].includes(l.toLowerCase()))) || paper.interpretation;
+
+                const keywordsText = extractField(content, ["keywords", "关键词"]); 
+                if (keywordsText) {
+                    paper.paperKeywords = [originalKeyword, ...keywordsText.split(/,|、/).map(k => k.trim()).filter(k => k.length > 0)];
+                }
+                
+                console.log("Parsed paper info:", JSON.stringify(paper, null, 2));
+                return paper;
+
+            } catch (e) {
+                console.error(`Error during parsing content for keyword "${originalKeyword}":`, e);
+                console.error("Content that caused parsing error:\n", content);
+                return paper; 
+            }
+        }
+
+
+        async function fetchPapersFromAPI(keywordsToSearch) {
+            if (PERPLEXITY_API_KEY === "YOUR_PERPLEXITY_API_KEY_HERE" || !PERPLEXITY_API_KEY) {
+                console.warn("API Key is a placeholder. Using fallback mock data generation.");
+                return generateFallbackMockPapers(keywordsToSearch);
+            }
+
+            console.log(`Fetching papers from Perplexity API for keywords: ${keywordsToSearch.join(', ')}`);
+            loadingMessage.textContent = `正在通过API根据关键词 [${keywordsToSearch.join(', ')}] 检索最新文献...`;
+            loadingMessageContainer.style.display = 'flex';
+            reportContentDiv.innerHTML = ''; 
+            reportContentDiv.appendChild(loadingMessageContainer);
+
+            const fetchedPapers = [];
+            const papersToFetchPerKeyword = 1; 
+
+            for (const keyword of keywordsToSearch) {
+                if (fetchedPapers.length >= 5) break; 
+
+                const question = `
+                Please find ONE highly relevant research paper about the keyword "${keyword}" published in the last 12-18 months.
+                Provide the information for this single paper using the following exact labels and format. Each field should be on a new line:
+                Title: [The full title of the paper]
+                Authors: [List of authors, separated by commas. Example: John Doe, Jane Smith]
+                Affiliations: [List of main affiliations, separated by semicolons. Example: University A; Organization B]
+                Journal/Conference: [Name of the journal or conference]
+                Publication Year: [Year, e.g., 2024]
+                URL: [A direct, accessible URL to the paper (e.g., ArXiv, DOI, official publisher page)]
+                Abstract: [请用中文提供详细的论文摘要，大约150-250字。]
+                In-depth Analysis: [请用中文对论文的重要性、创新点、潜在影响和局限性进行深入解读与分析，大约200-300字。]
+                Keywords: [5-7 relevant keywords for this paper, separated by commas. Example: keyword1, keyword2, keyword3]
+
+                Ensure each field is clearly tagged as shown and starts on a new line. If specific information is unavailable, state "N/A" for that field.
+                Do not include any introductory or concluding remarks outside of this structured information for the paper.
+                `;
+
+                try {
+                    console.log(`Querying API for keyword: "${keyword}"`);
+                    const { content, citations } = await querySonarPro(PERPLEXITY_API_KEY, question);
+                    const paperInfo = parsePaperInfoFromContent(content, citations, keyword);
+                    
+                    // Updated condition to filter out "N/A" or "提取失败" for essential fields
+                    if (paperInfo && 
+                        paperInfo.title && 
+                        paperInfo.title.trim() !== "标题提取失败" && 
+                        paperInfo.title.trim() !== "N/A" &&
+                        paperInfo.snippet && 
+                        paperInfo.snippet.trim() !== "摘要未能提取." &&
+                        paperInfo.snippet.trim() !== "N/A") {
+                       fetchedPapers.push(paperInfo);
+                    } else {
+                       console.warn(`Essential fields (title/abstract) were "提取失败" or "N/A" for keyword: ${keyword}. Discarding paper. Title: "${paperInfo.title}", Snippet: "${paperInfo.snippet ? paperInfo.snippet.substring(0,50)+'...' : 'N/A'}"`);
+                    }
+                } catch (error) {
+                    console.error(`Error processing keyword "${keyword}":`, error.message);
+                    fetchedPapers.push({
+                        id: `error-card-${keyword}-${Date.now()}`,
+                        title: `获取"${keyword}"相关文献失败`,
+                        url: "#", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
+                        paperKeywords: [keyword, "错误"],
+                        snippet: `未能获取或解析关于 "${keyword}" 的文献信息。错误: ${error.message.substring(0,100)}...`,
+                        interpretation: "请检查浏览器控制台获取更详细的错误信息，或尝试其他关键词。"
+                    });
+                }
+            }
+            
+            if (fetchedPapers.length === 0 && keywordsToSearch.length > 0) {
+                console.warn("API calls did not yield any usable papers after parsing attempts.");
+                return [{
+                    id: "api-fallback-final-" + Date.now(),
+                    title: "未能从API获取具体文献",
+                    url: "#", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
+                    paperKeywords: keywordsToSearch,
+                    snippet: "尝试通过Perplexity API根据您的关键词检索文献，但未能成功解析返回结果或未找到匹配文献。请检查您的API密钥、网络连接，或尝试不同的关键词。",
+                    interpretation: "这可能是由于API响应格式与预期不符，或者当前关键词下没有易于提取的文献信息。建议检查控制台日志获取更详细的错误信息。"
+                }];
+            }
+
+            console.log("Final fetched papers to render:", fetchedPapers);
+            return fetchedPapers.slice(0, 5); 
+        }
+        
+        function generateFallbackMockPapers(keywordsToSearch) {
+            console.log(`Using FALLBACK mock data generation for keywords: ${keywordsToSearch.join(', ')}`);
+            const numPapers = 1 + Math.floor(Math.random() * 2); 
+            const fallbackPapers = [];
+            const mockSources = [ 
+                { titleBase: "LLM驱动的6G网络切片(Fallback)", urlBase: "#", authorsBase: ["模拟作者A"], affiliationsBase: ["模拟机构X"], journalBase: "模拟期刊", keywordsBase: ["6G", "LLM"], snippetBase: "这是LLM与6G结合的模拟摘要...", interpretationBase: "这是LLM与6G结合的模拟解读..." },
+                { titleBase: "语义通信Agent协作(Fallback)", urlBase: "#", authorsBase: ["模拟作者B"], affiliationsBase: ["模拟机构Y"], journalBase: "模拟会议", keywordsBase: ["语义通信", "Agent"], snippetBase: "这是语义通信与Agent的模拟摘要...", interpretationBase: "这是语义通信与Agent的模拟解读..." }
+            ];
+            for (let i = 0; i < numPapers; i++) {
+                const source = mockSources[i % mockSources.length];
+                const keyword = keywordsToSearch.length > 0 ? keywordsToSearch[i % keywordsToSearch.length] : "通用";
+                fallbackPapers.push({
+                    id: `paper-fallback-${Date.now()}-${i}`,
+                    title: `${keyword}前沿 (Fallback): ${source.titleBase}`,
+                    url: source.urlBase, authors: source.authorsBase, affiliations: source.affiliationsBase, journal: source.journalBase,
+                    publicationDate: `${getBeijingTime().getFullYear()}年`,
+                    paperKeywords: [...source.keywordsBase, keyword, "Fallback数据"],
+                    snippet: `(Fallback数据基于关键词"${keyword}") ${source.snippetBase}`,
+                    interpretation: `(Fallback解读) ${source.interpretationBase}`
+                });
+            }
+            return fallbackPapers;
+        }
+
+
+        // --- Report Rendering & Data Persistence ---
+        async function renderReport(papersToRender) {
+            if (!papersToRender || papersToRender.length === 0) {
+                loadingMessage.textContent = '未能获取或生成学术内容。请检查关键词或稍后再试。';
+                loadingMessageContainer.style.display = 'flex';
+                reportContentDiv.innerHTML = '';
+                reportContentDiv.appendChild(loadingMessageContainer);
+                localStorage.removeItem(LOCAL_STORAGE_PAPERS_KEY); // Clear stored papers if nothing to render
+                updateTimestamps(true); 
+                return;
+            }
+            
+            loadingMessageContainer.style.display = 'none'; 
+            reportContentDiv.innerHTML = ''; 
+
+            if (intersectionObserver) {
+                intersectionObserver.disconnect();
+            }
+
+            papersToRender.forEach(item => {
+                const card = document.createElement('article');
+                card.className = 'report-card-poster';
+
+                let authorsHtml = item.authors.map((author, index) => `${author}<sup class="text-emerald-600">${index + 1}</sup>`).join(', ');
+                let affiliationsHtml = item.affiliations.map((aff, index) => `<span class="text-xs block"><sup class="text-emerald-600">${index + 1}</sup>${aff}</span>`).join('');
+                let keywordsHtml = item.paperKeywords.map(k => `<span class="poster-keywords-tag">${k}</span>`).join(' ');
+
+                card.innerHTML = `
+                    <div class="poster-grid">
+                        <div class="poster-left-column">
+                            <div>
+                                <h3 class="poster-title">${item.title}</h3>
+                                <p class="poster-authors">${authorsHtml}</p>
+                                <div class="poster-affiliations">${affiliationsHtml}</div>
+                            </div>
+                            <div class="poster-journal-info mt-auto pt-3 border-t border-slate-300">
+                                <p><strong>期刊:</strong> ${item.journal}</p>
+                                <p><strong>发表日期:</strong> ${item.publicationDate}</p>
+                            </div>
+                        </div>
+                        <div class="poster-right-column">
+                            <section class="mb-3">
+                                <h4 class="poster-section-title">摘要</h4>
+                                <p class="poster-abstract">${item.snippet}</p>
+                            </section>
+                            <section class="mb-3">
+                                <h4 class="poster-section-title">关键词</h4>
+                                <div class="poster-keywords-container flex flex-wrap gap-1 mt-1">
+                                    ${keywordsHtml}
+                                </div>
+                            </section>
+                            <section class="mb-4 flex-grow flex flex-col">
+                                <h4 class="poster-section-title">深入解读与分析</h4>
+                                <div class="poster-interpretation mt-1 flex-grow overflow-y-auto">
+                                    <p class="poster-interpretation-content">${item.interpretation || "暂无深入解读。"}</p>
+                                </div>
+                            </section>
+                            <footer class="mt-auto pt-3">
+                                <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="poster-read-more-btn">
+                                    阅读原文 &rarr;
+                                </a>
+                            </footer>
+                        </div>
+                    </div>
+                `;
+                reportContentDiv.appendChild(card);
+            });
+
+            try {
+                localStorage.setItem(LOCAL_STORAGE_PAPERS_KEY, JSON.stringify(papersToRender));
+                localStorage.setItem(LOCAL_STORAGE_LAST_FETCH_KEY, getBeijingTime().toISOString());
+                console.log("Papers saved to localStorage.");
+                
+                // If GitHub storage is enabled, save data there too
+                if (USE_GITHUB_STORAGE) {
+                    await saveSharedData(papersToRender);
+                }
+            } catch (e) {
+                console.error("Error saving papers to localStorage:", e);
+            }
+
+
+            setupIntersectionObserver();
+            const firstCard = reportContentDiv.querySelector('.report-card-poster');
+            if (firstCard) {
+                setTimeout(() => {
+                     if (reportContentDiv.contains(firstCard)) { 
+                        firstCard.classList.add('is-active');
+                     }
+                },100);
+            }
+            updateTimestamps(true); 
+        }
+
+        function setupIntersectionObserver() {
+            const cards = document.querySelectorAll('.report-card-poster');
+            if (cards.length === 0) return;
+
+            const options = {
+                root: reportContentDiv, 
+                rootMargin: '0px', 
+                threshold: 0.6 
+            };
+
+            intersectionObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        cards.forEach(c => c.classList.remove('is-active'));
+                        entry.target.classList.add('is-active');
+                    }
+                });
+            }, options);
+
+            cards.forEach(card => {
+                intersectionObserver.observe(card);
+            });
+        }
+        
+        function updateTimestamps(contentFetchedSuccessfully = false) {
+            const now = getBeijingTime();
+            if (contentFetchedSuccessfully) { 
+                lastUpdatedTimeSpan.textContent = getFormattedDateTime(now);
+            } else { 
+                const lastFetchISO = localStorage.getItem(LOCAL_STORAGE_LAST_FETCH_KEY);
+                if (lastFetchISO) {
+                    lastUpdatedTimeSpan.textContent = getFormattedDateTime(new Date(lastFetchISO));
+                } else {
+                    lastUpdatedTimeSpan.textContent = "从未获取";
+                }
+            }
+            reportDateSpan.textContent = `报告生成于: ${getFormattedDateTime(now)}`; 
+            
+            let nextUpdate = new Date(now);
+            if (now.getHours() >= 8) {
+                nextUpdate.setDate(now.getDate() + 1);
+            }
+            nextUpdate.setHours(8, 0, 0, 0);
+            nextUpdateTimeSpan.textContent = getFormattedDateTime(nextUpdate);
+        }
+
+        async function loadOrFetchPapers(forceApiFetch = false) {
+            // Try to load from GitHub first if enabled
+            if (USE_GITHUB_STORAGE && !forceApiFetch) {
+                console.log("Attempting to load data from GitHub...");
+                const githubData = await loadSharedData();
+                if (githubData && githubData.papers && githubData.papers.length > 0) {
+                    console.log("Successfully loaded papers from GitHub");
+                    return; // renderReport is called inside loadSharedData
+                }
+                console.log("No valid data from GitHub, falling back to local storage or API");
+            }
+            
+            if (!forceApiFetch) {
+                const storedPapersJSON = localStorage.getItem(LOCAL_STORAGE_PAPERS_KEY);
+                if (storedPapersJSON) {
+                    try {
+                        const storedPapers = JSON.parse(storedPapersJSON);
+                        if (storedPapers && storedPapers.length > 0) {
+                            console.log("Loading papers from localStorage.");
+                            await renderReport(storedPapers);
+                            updateTimestamps(false); 
+                            return; 
+                        }
+                    } catch (e) {
+                        console.error("Error parsing stored papers, will fetch from API:", e);
+                        localStorage.removeItem(LOCAL_STORAGE_PAPERS_KEY); 
+                    }
+                }
+            }
+
+            console.log(forceApiFetch ? "Forcing API fetch." : "No valid cached papers, fetching from API.");
+            try {
+                const papers = await fetchPapersFromAPI(activeKeywords);
+                if (papers && papers.length > 0) {
+                    await renderReport(papers); 
+                } else {
+                    console.log("API returned no usable papers, rendering empty or fallback.");
+                    await renderReport([]); 
+                }
+            } catch (error) {
+                console.error("Critical error in loadOrFetchPapers (API fetch part):", error);
+                loadingMessage.textContent = `获取内容时发生严重错误: ${error.message}.`;
+                loadingMessageContainer.style.display = 'flex';
+                reportContentDiv.innerHTML = '';
+                reportContentDiv.appendChild(loadingMessageContainer);
+                await renderReport(generateFallbackMockPapers(activeKeywords)); 
+            }
+        }
+
+
+        async function checkForAutoUpdate() {
+            const now = getBeijingTime();
+            const lastAutoUpdateDate = localStorage.getItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY);
+            const todayStr = now.toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'});
+
+            if (now.getHours() === 8 && now.getMinutes() === 0) { 
+                if (lastAutoUpdateDate !== todayStr) {
+                    console.log("Performing automatic update at 8:00 AM Beijing Time.");
+                    await loadOrFetchPapers(true); 
+                    localStorage.setItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY, todayStr);
+                    
+                    // If using GitHub storage, update shared data
+                    if (USE_GITHUB_STORAGE) {
+                        const papersData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PAPERS_KEY) || '[]');
+                        await saveSharedData(papersData);
+                    }
+                } else {
+                    console.log("Automatic update for today already performed.");
+                }
+            }
+        }
+
+        function startAutoUpdateScheduler() {
+            checkForAutoUpdate(); 
+            if (autoUpdateInterval) clearInterval(autoUpdateInterval); 
+            autoUpdateInterval = setInterval(checkForAutoUpdate, 60000); 
+        }
+
+
+        // --- Event Listeners ---
+        addKeywordForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            await addActiveKeyword(keywordInput.value); 
+        });
+
+        manualRefreshButton.addEventListener('click', async () => {
+            console.log("Manual refresh triggered.");
+            await loadOrFetchPapers(true); 
+        });
+
+        // --- Initialization ---
+        async function initializeApp() {
+            currentYearSpan.textContent = new Date().getFullYear();
+            
+            // GitHub configuration message
+            if (!USE_GITHUB_STORAGE) {
+                console.log("GitHub storage is disabled. To enable shared data persistence:");
+                console.log("1. Set your GitHub username and repo name in the code");
+                console.log("2. Create a GitHub personal access token with repo scope");
+                console.log("3. Set USE_GITHUB_STORAGE to true");
+            }
+            
+            // Try to load from GitHub first if enabled
+            if (USE_GITHUB_STORAGE) {
+                console.log("GitHub storage is enabled, attempting to load shared data...");
+                const githubData = await loadSharedData();
+                if (githubData) {
+                    console.log("Successfully loaded shared data from GitHub");
+                    return; // Keywords and papers are loaded in loadSharedData
+                }
+                console.log("No data found on GitHub or error occurred, falling back to local mode");
+            }
+            
+            // Fall back to localStorage if GitHub fails or is disabled
+            loadActiveKeywordsFromLocalStorage(); 
+            renderActiveKeywords(); 
+            await loadOrFetchPapers(false); 
+            startAutoUpdateScheduler(); 
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeApp);
+    </script>
+</body>
+</html>
