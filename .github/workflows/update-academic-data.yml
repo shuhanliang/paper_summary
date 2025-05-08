@@ -360,31 +360,31 @@ jobs:
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
         run: node update-data.js
 
-
-      - name: Send email notification
-        if: success()
-        uses: dawidd6/action-send-mail@v5
-        with:
-          server_address: smtp.gmail.com
-          server_port: 465
-          secure: true
-          username: eisenx123@gmail.com
-          password: lvpq gnox jhjn axf
-          subject: 学术周报已更新 - ${{ github.repository }}
-          body: |
-            您好，
-            
-            您的学术周报已成功更新！新的学术论文已经添加到数据库中。
-            
-            您可以通过以下链接访问您的学术周报：
-            https://jannhsu.github.io/paper_summary/
-            
-            更新时间：${{ github.event.repository.updated_at }}
-            仓库：${{ github.repository }}
-            
-            此邮件由GitHub Actions自动发送，请勿回复。
-          to: zhengxu22@m.fudan.edu.cn
-          from: 学术周报自动更新 <xuz10962@gmail.com>
-          nodemailerlog: true
-          nodemailerdebug: true
+      # 邮件通知功能暂时注释掉，用于调试
+      # - name: Send email notification
+      #   if: success()
+      #   uses: dawidd6/action-send-mail@v5
+      #   with:
+      #     server_address: smtp.gmail.com
+      #     server_port: 465
+      #     secure: true
+      #     username: eisenx123@gmail.com
+      #     password: lvpq gnox jhjn axf
+      #     subject: 学术周报已更新 - ${{ github.repository }}
+      #     body: |
+      #       您好，
+      #       
+      #       您的学术周报已成功更新！新的学术论文已经添加到数据库中。
+      #       
+      #       您可以通过以下链接访问您的学术周报：
+      #       https://jannhsu.github.io/paper_summary/
+      #       
+      #       更新时间：${{ github.event.repository.updated_at }}
+      #       仓库：${{ github.repository }}
+      #       
+      #       此邮件由GitHub Actions自动发送，请勿回复。
+      #     to: zhengxu22@m.fudan.edu.cn
+      #     from: 学术周报自动更新 <xuz10962@gmail.com>
+      #     nodemailerlog: true
+      #     nodemailerdebug: true
       
