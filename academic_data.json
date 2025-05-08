@@ -1,0 +1,149 @@
+{
+  "papers": [
+    {
+      "id": "paper-api-1746680805700-5t4e4k",
+      "title": "延时受限无线联邦学习的终端调度和资源分配 (Joint Device Scheduling and Resource Allocation for Latency Constrained Wireless Federated Learning)",
+      "url": "#",
+      "authors": [
+        "施文琦",
+        "周盛",
+        "牛志升"
+      ],
+      "affiliations": [
+        "清华大学电子工程系"
+      ],
+      "journal": "IEEE通信学会期刊",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "通信",
+        "无线通信",
+        "联邦学习",
+        "资源分配",
+        "终端调度",
+        "延时优化",
+        "人工智能",
+        "移动网络"
+      ],
+      "snippet": "该论文研究了无线移动网络中联邦学习的延时优化问题。随着人工智能技术的发展，无线移动网络承载的深度神经网络训练任务日益增多，训练延时直接影响应用的时效性。研究者针对通信和计算资源对联邦学习收敛的复杂耦合影响进行了深入分析，首次揭示了训练轮数与调度终端数在延时意义下的定量折中规律。基于此，论文提出了当轮调度用户数的最优估计方法，并据此优化了用户调度和频谱分配策略，实现了训练轮数与平均调度终端数的自适应平衡，从而获得最快的模型训练收敛速度。",
+      "interpretation": "该研究在无线通信与人工智能融合领域具有重要意义。论文的主要创新点在于首次定量分析了联邦学习中训练轮数与调度终端数之间的折中关系，解决了通信资源与计算资源协同优化这一复杂问题。研究成果为面向深度学习任务的无线通信与计算资源协同管理提供了理论基础和实用指导。该论文获得第十三届IEEE通信学会亚太杰出论文奖，这一奖项每年仅从亚太地区学者在IEEE通信学会所属期刊及国际会议发表的数万篇论文中遴选出2至3篇具有重大学术影响力的论文，充分证明了该研究的高水平和重要性。论文的局限性可能在于特定场景下模型的适用性和实际部署时可能面临的挑战。"
+    },
+    {
+      "id": "paper-api-1746680818784-ujuoam",
+      "title": "Overview of AI and communication for 6G network",
+      "url": "https://www.sciengine.com/doi/10.1007/s11432-024-4337-1",
+      "authors": [
+        "[Information not provided in search results]"
+      ],
+      "affiliations": [
+        "[Information not provided in search results]"
+      ],
+      "journal": "SCIENCE CHINA Information Sciences",
+      "publicationDate": "2025",
+      "paperKeywords": [
+        "AI 6G",
+        "6G networks",
+        "artificial intelligence",
+        "communication technology",
+        "network architecture",
+        "AI-native networks",
+        "intelligent networks",
+        "next-generation communication"
+      ],
+      "snippet": "本论文全面概述了人工智能与6G网络通信，重点关注其基础原理、内在特性及应用。论文深入探讨了AI如何成为6G网络的关键使能技术，分析了当前AI在通信网络中的应用状态，并指出了未来发展方向。研究强调了AI技术如何有效解决6G网络面临的复杂挑战，包括大规模连接管理、超高速数据传输以及网络智能化等方面。此外，论文还探讨了AI与6G融合后可能带来的新型网络架构和服务模式，为未来通信技术发展提供了理论基础和技术路线图。",
+      "interpretation": "该论文在AI与6G融合研究领域具有重要意义，发表于2025年4月2日，是最新的前沿研究成果之一。其创新点在于全面系统地分析了AI技术如何从根本上改变通信网络的设计与运行范式，而不仅仅是作为辅助工具。论文提出的观点对于构建真正的\"AI原生\"6G网络提供了理论支撑，这对于实现下一代通信网络的智能自主、高效运行至关重要。潜在影响方面，该研究可能引导未来网络架构设计和标准制定的新方向，促进通信与AI领域的深度融合。然而，论文可能面临的局限性包括对实际部署挑战的评估不足，以及AI在网络中应用的安全性和隐私问题的讨论有限。总体而言，该论文为6G时代的AI通信融合提供了宝贵的学术视角。"
+    },
+    {
+      "id": "paper-api-1746680836023-5ylwu",
+      "title": "On the limits of agency in agent-based models",
+      "url": "#",
+      "authors": [
+        "Not specified in the search results"
+      ],
+      "affiliations": [
+        "MIT Media Lab"
+      ],
+      "journal": "AAMAS 2025",
+      "publicationDate": "2025",
+      "paperKeywords": [
+        "Agent",
+        "agent-based models",
+        "LLM archetypes",
+        "population-scale simulations",
+        "AgentTorch",
+        "emergent patterns",
+        "computational efficiency",
+        "social systems modeling"
+      ],
+      "snippet": "该论文介绍了一种突破性的代理架构，使大型语言模型(LLM)引导的代理能够从小规模模拟扩展到大规模人口级模拟。研究提出了\"LLM原型\"方法，这是一种将LLM高效集成到基于代理的模型(ABM)中的新方法，同时保持模拟数百万代理的能力。论文强调，在模拟人口规模现象时，模拟规模通常比个体代理的复杂性更为重要，因为只有当模拟在真正的人口规模上运行时，对现实世界政策决策至关重要的涌现模式才会变得可见。",
+      "interpretation": "这篇论文代表了代理基础建模领域的根本性突破。其重要性主要体现在解决了LLM代理扩展性的关键挑战，使我们能够从仅模拟数百个代理跃升至模拟数百万个代理，同时保持计算效率。这一创新通过引入\"LLM原型\"方法实现，该方法在保持大规模模拟能力的同时高效整合了大型语言模型的能力。\n\n论文的创新点在于开发了AgentTorch框架，这是一个用于大规模代理建模的开源平台，不仅支持所提出的代理架构，还为开发和部署人口规模AI系统提供了更广泛的平台。这使政策制定者能够在实际实施前在模拟环境中测试干预措施，弥合了研究创新与实际部署之间的关键鸿沟。\n\n这项研究的潜在影响是巨大的，特别是对于复杂社会系统建模领域，它将使研究人员能够捕捉到只有在人口规模模拟中才能观察到的涌现行为模式。然而，其局限性可能包括对计算资源的高需求以及在真实世界环境中验证如此大规模模拟结果的复杂性。"
+    },
+    {
+      "id": "paper-api-1746680845505-enn02p",
+      "title": "Scaling Laws for Precision: Quantifying the Impact of Low-Precision Training and Quantization on Large Language Models",
+      "url": "#",
+      "authors": [
+        "Kumar",
+        "et al."
+      ],
+      "affiliations": [
+        "Not explicitly listed in the result, but commonly from AI research institutions (e.g., Allen AI, academic/industry labs)—precise affiliations would be in the paper itself."
+      ],
+      "journal": "Not specified, but referenced as a notable publication in November 2024; likely a top-tier machine learning conference (e.g., NeurIPS or ICLR), but exact venue not confirmed in the snippet.",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "LLM",
+        "LLM",
+        "scaling laws",
+        "low-precision training",
+        "quantization",
+        "Chinchilla",
+        "model efficiency",
+        "AI hardware"
+      ],
+      "snippet": "本文针对当前大规模语言模型（LLM）在低精度（16位及以下）训练和量化场景下的表现，提出并系统分析了精度缩放定律。研究团队通过大量实验，揭示了低精度训练与后量化过程对模型精度的影响，并提出统一的函数框架以预测由低精度引起的额外损失。论文成果不仅扩展了经典Chinchilla定律，为LLM参数规模和数据集大小提供了新的优化依据，还对模型在低精度硬件上的高效应用提出了理论指导。该研究对未来高效、节能的LLM训练和部署具有重要意义。",
+      "interpretation": "本论文的重要性在于，它有效填补了大规模语言模型在低精度训练和推理环境下性能预测的理论空白。相比传统的Chinchilla缩放定律，该研究首次将低精度训练和量化对模型表现的影响纳入统一分析框架，这对于当前AI模型追求高效推理、节能部署的发展趋势具有极大现实意义。创新点主要体现在对各种低精度与量化策略下，模型损失变化的规律性总结，从而为模型设计者提供了明确的参考标准和优化方向。该成果有助于推动低成本、绿色AI的发展，扩展了LLM在资源受限环境下的适用范围。局限性方面，论文虽然总结性强，但具体适用范围仍需在更多模型架构与实际应用场景中验证，特殊任务和极端低精度下的泛化能力有待进一步研究。"
+    },
+    {
+      "id": "paper-api-1746680855031-akexw4",
+      "title": "智能超表面赋能语义通信系统研究综述",
+      "url": "https://jeit.ac.cn/cn/article/doi/10.11999/JEIT240984?viewType=HTML",
+      "authors": [
+        "朱政宇",
+        "梁馨月",
+        "孙钢灿",
+        "牛凯",
+        "楚征",
+        "杨照辉",
+        "杨光睿",
+        "郑谷寒"
+      ],
+      "affiliations": [
+        "中国科学技术大学",
+        "电子与信息学报编辑部"
+      ],
+      "journal": "电子与信息学报",
+      "publicationDate": "2025",
+      "paperKeywords": [
+        "语义通信",
+        "语义通信",
+        "智能超表面",
+        "重构性",
+        "BLEU指标",
+        "信道增强",
+        "N-gram模型",
+        "物理层协同"
+      ],
+      "snippet": "本文系统综述了智能超表面（RIS）赋能的语义通信系统的最新研究进展。智能超表面通过对电磁环境的智能调控，为语义通信系统带来了全新的性能提升路径。文章深入分析了RIS在改善信道质量、降低遮挡带来的中断概率等方面的作用，并结合双语评估（BLEU）指标对系统性能进行了定量评估。实验结果表明，RIS增强下的语义通信系统在不同信噪比条件下不仅具有更高的BLEU得分，实现了更为准确的语义还原，还表现出更强的抗噪声与稳定性，尤其在低信噪比场景下优势明显。此外，文中还对不同N-gram模型的适用性进行了比较分析，并探讨了不同应用场景下的系统设计要点与未来发展方向[1]。",
+      "interpretation": "该论文的重要性在于首次系统性地将智能超表面技术引入语义通信领域，从物理层与语义层协同优化的角度，揭示了RIS可显著提升语义通信系统在复杂信道下的性能。文章的创新点包括利用RIS辅助信道实现多路径增强，结合BLEU打分体系实现语义层面的端到端性能评估，以及深入分析不同模型复杂度对系统表现的影响。其潜在影响在于为未来低功耗、高可靠、语义驱动的通信系统设计提供理论支持和技术参考，尤其适用于物联网、智能交通等对效率和鲁棒性有极高要求的场景。局限性方面，现有研究多以仿真为主，实际部署下RIS的能耗、实时调控和大规模组网等问题尚待解决。此外，语义度量标准的多样性和适应性仍需进一步探索，以满足更复杂、多模态通信场景的需求[1]。"
+    }
+  ],
+  "lastUpdate": "2025-05-08T13:07:35.033Z",
+  "keywords": [
+    "通信",
+    "AI 6G",
+    "Agent",
+    "LLM",
+    "语义通信"
+  ],
+  "lastAutoUpdateDate": "2025/5/8"
+}
