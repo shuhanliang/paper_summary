@@ -329,11 +329,11 @@ jobs:
 
       - name: Send email notification
         if: success()
-        uses: dawidd6/action-send-mail@v3
+        uses: dawidd6/action-send-mail@v5  # 升级到最新版本v5
         with:
           server_address: smtp.office365.com
           server_port: 587
-          secure: true
+          # 移除secure参数，因为端口587使用STARTTLS而非SSL/TLS
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: 学术周报已更新 - ${{ github.repository }}
@@ -351,4 +351,6 @@ jobs:
             此邮件由GitHub Actions自动发送，请勿回复。
           to: zhengxu22@m.fudan.edu.cn
           from: 学术周报自动更新 <eisenx123@outlook.com>
-          attachments: "" 
+          # 添加调试参数，帮助排查问题
+          nodemailerlog: true
+          nodemailerdebug: true
