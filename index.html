@@ -392,6 +392,9 @@
         // Touch/swipe navigation variables
         let touchStartX = 0;
         let touchEndX = 0;
+        let isScrolling = false;  // Flag to track if we're in an active scroll
+        let scrollCooldown = false; // Prevent rapid consecutive scrolls
+        let lastScrollTime = 0;  // Track when the last scroll happened
 
         // --- State ---
         let userKeywords = ["通信", "AI 6G", "Agent", "LLM", "语义通信"]; 
@@ -1455,6 +1458,12 @@
             
             if (Math.abs(swipeDistance) < swipeThreshold) return; // Not a significant swipe
             
+            // If we're in cooldown period, ignore this swipe
+            const now = Date.now();
+            if (scrollCooldown) {
+                return;
+            }
+            
             // Get current active card
             const activeCard = reportContentDiv.querySelector('.report-card-poster.is-active');
             if (!activeCard) return;
@@ -1462,14 +1471,23 @@
             const currentIndex = parseInt(activeCard.dataset.index);
             const totalCards = reportContentDiv.querySelectorAll('.report-card-poster').length;
             
+            // Determine direction only (ignore magnitude)
+            const direction = swipeDistance > 0 ? -1 : 1;
+            
             // Swipe right (previous)
-            if (swipeDistance > 0 && currentIndex > 0) {
+            if (direction < 0 && currentIndex > 0) {
                 navigateToCard(currentIndex - 1);
             }
             // Swipe left (next)
-            else if (swipeDistance < 0 && currentIndex < totalCards - 1) {
+            else if (direction > 0 && currentIndex < totalCards - 1) {
                 navigateToCard(currentIndex + 1);
             }
+            
+            // Set cooldown to prevent rapid consecutive swipes
+            scrollCooldown = true;
+            setTimeout(() => {
+                scrollCooldown = false;
+            }, 800); // 800ms cooldown before accepting next swipe
         }
 
         // Debounce function to limit how often a function runs
@@ -1490,41 +1508,46 @@
             // Prevent default to take control of scrolling
             event.preventDefault();
             
+            // If we're in cooldown period, ignore this scroll
+            const now = Date.now();
+            if (scrollCooldown) {
+                return;
+            }
+            
             // Check if it's a horizontal scroll (touchpad) or Shift+wheel (mouse)
             const isHorizontalScroll = Math.abs(event.deltaX) > Math.abs(event.deltaY) || event.shiftKey;
             
-            if (isHorizontalScroll) {
+            if (isHorizontalScroll && !isScrolling) {
+                isScrolling = true;
+                
                 const activeCard = reportContentDiv.querySelector('.report-card-poster.is-active');
-                if (!activeCard) return;
+                if (!activeCard) {
+                    isScrolling = false;
+                    return;
+                }
                 
                 const currentIndex = parseInt(activeCard.dataset.index);
                 const totalCards = reportContentDiv.querySelectorAll('.report-card-poster').length;
                 
-                // Use a threshold to determine if we should navigate
-                // This prevents multiple card jumps with a single scroll
-                const scrollThreshold = 50;
+                // Determine direction only (ignore magnitude)
                 let scrollDelta = event.deltaX || (event.shiftKey ? event.deltaY : 0);
+                const direction = scrollDelta > 0 ? 1 : -1;
                 
-                // Store the accumulated scroll delta
-                if (!reportContentDiv.scrollAccumulator) reportContentDiv.scrollAccumulator = 0;
-                reportContentDiv.scrollAccumulator += scrollDelta;
-                
-                // Only navigate when accumulated delta exceeds threshold
-                if (Math.abs(reportContentDiv.scrollAccumulator) >= scrollThreshold) {
-                    const direction = reportContentDiv.scrollAccumulator > 0 ? 1 : -1;
-                    
-                    // Scroll right (previous)
-                    if (direction < 0 && currentIndex > 0) {
-                        navigateToCard(currentIndex - 1);
-                    }
-                    // Scroll left (next)
-                    else if (direction > 0 && currentIndex < totalCards - 1) {
-                        navigateToCard(currentIndex + 1);
-                    }
-                    
-                    // Reset accumulator
-                    reportContentDiv.scrollAccumulator = 0;
+                // Scroll right (previous)
+                if (direction < 0 && currentIndex > 0) {
+                    navigateToCard(currentIndex - 1);
                 }
+                // Scroll left (next)
+                else if (direction > 0 && currentIndex < totalCards - 1) {
+                    navigateToCard(currentIndex + 1);
+                }
+                
+                // Set cooldown to prevent rapid consecutive scrolls
+                scrollCooldown = true;
+                setTimeout(() => {
+                    scrollCooldown = false;
+                    isScrolling = false;
+                }, 800); // 800ms cooldown before accepting next scroll
             }
         }
         
