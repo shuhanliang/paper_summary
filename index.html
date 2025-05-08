@@ -42,10 +42,11 @@
             height: calc(100vh - 300px);
             min-height: 600px;
             margin: 0 auto;
+            overflow: hidden; /* Contain the scrolling effect */
         }
         #report-content {
             display: flex; 
-            overflow-x: auto; /* Changed back to auto to allow smooth scrolling transitions */
+            overflow-x: auto; 
             overflow-y: hidden; 
             scroll-snap-type: x mandatory; 
             -webkit-overflow-scrolling: touch; 
@@ -53,6 +54,7 @@
             height: 100%;
             scrollbar-width: none; /* Firefox */
             -ms-overflow-style: none; /* IE and Edge */
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1); /* Smooth transition for programmatic scrolling */
         }
         #report-content::-webkit-scrollbar {
             display: none; /* Chrome, Safari and Opera */
@@ -65,7 +67,7 @@
             border-radius: 16px; 
             background-color: #ffffff;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0,0,0,0.04);
-            transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.6s ease-out;
+            transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.8s ease-out;
             transform-style: preserve-3d;
             opacity: 0.7;
             transform: scale(0.9) rotateY(25deg) translateX(10px); 
@@ -1385,18 +1387,26 @@
         function navigateToCard(index) {
             const cards = reportContentDiv.querySelectorAll('.report-card-poster');
             if (index >= 0 && index < cards.length) {
-                // Use native scrolling with smooth behavior for better transition effect
-                cards[index].scrollIntoView({ 
-                    behavior: 'smooth', 
-                    block: 'nearest', 
-                    inline: 'center' 
-                });
+                // Use manual scroll positioning for better control of the animation
+                const card = cards[index];
+                const container = reportContentDiv;
+                const containerWidth = container.offsetWidth;
+                const cardRect = card.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
                 
-                // Give time for the scroll animation to start before updating active classes
+                // Calculate the scroll position to center the card
+                // This creates a more visible sliding animation
+                const scrollLeft = card.offsetLeft - (containerWidth - cardRect.width) / 2;
+                
+                // Animate the scroll with a CSS transition
+                container.style.transition = 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                container.scrollLeft = scrollLeft;
+                
+                // Wait for the scroll animation to complete before updating active status
                 setTimeout(() => {
-                    // Update active status for better visual effect
+                    // Update active status for visual effect
                     cards.forEach(c => c.classList.remove('is-active'));
-                    cards[index].classList.add('is-active');
+                    card.classList.add('is-active');
                     
                     // Update dots
                     const dots = document.querySelectorAll('.pagination-dot');
@@ -1410,7 +1420,7 @@
                     if (countIndicator) {
                         countIndicator.textContent = `${index + 1}/${cards.length}`;
                     }
-                }, 50); // Short delay to let scroll start
+                }, 300); // Longer delay to let scroll animation become visible
             }
         }
 
@@ -1433,7 +1443,7 @@
             // Allow scrolling for smooth transitions
             reportContentDiv.style.overflowX = 'auto'; 
             reportContentDiv.style.scrollSnapType = 'x mandatory';
-            reportContentDiv.style.scrollBehavior = 'smooth';
+            reportContentDiv.style.scrollBehavior = 'auto'; // Set to auto to let our manual transitions work
         }
         
         function handleTouchStart(event) {
