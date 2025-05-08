@@ -187,6 +187,27 @@
             <p class="text-slate-600 mt-2">每日清晨，为您定制专属学术动态</p>
         </header>
 
+        <!-- 开发者工具栏（默认隐藏） -->
+        <div id="dev-toolbar" class="hidden bg-gray-900 text-white p-4 rounded-lg mb-6 relative">
+            <button id="close-dev-toolbar" class="absolute top-2 right-2 text-white hover:text-gray-300">✕</button>
+            <h3 class="text-lg font-bold mb-2">开发者工具</h3>
+            <div class="grid gap-3">
+                <div>
+                    <label class="block mb-1 text-sm">API密钥（仅用于本地测试）:</label>
+                    <input type="password" id="dev-api-key" class="w-full px-3 py-2 bg-gray-800 border border-gray-700 rounded text-white" placeholder="输入Perplexity API密钥进行本地测试">
+                </div>
+                <div class="flex items-center">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="dev-debug-mode" class="sr-only peer">
+                        <div class="relative w-11 h-6 bg-gray-700 rounded-full peer peer-checked:bg-blue-500 peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full"></div>
+                        <span class="ml-3 text-sm">启用调试模式</span>
+                    </label>
+                    <button id="apply-dev-settings" class="ml-auto bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm">应用</button>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">警告: API密钥仅存储在本地，用于开发测试。请勿在生产环境或共享设备上使用此功能。</p>
+            </div>
+        </div>
+
         <main class="grid md:grid-cols-3 gap-8">
             <aside class="md:col-span-1 space-y-8">
                 <section id="keyword-management" class="bg-white p-6 rounded-xl shadow-lg">
@@ -258,14 +279,23 @@
         const manualRefreshButton = document.getElementById('manual-refresh-button');
         const currentYearSpan = document.getElementById('current-year');
 
+        // 开发者工具栏元素
+        const devToolbar = document.getElementById('dev-toolbar');
+        const closeDevToolbarBtn = document.getElementById('close-dev-toolbar');
+        const devApiKeyInput = document.getElementById('dev-api-key');
+        const devDebugModeToggle = document.getElementById('dev-debug-mode');
+        const applyDevSettingsBtn = document.getElementById('apply-dev-settings');
+
         // --- State ---
         let userKeywords = ["通信", "AI 6G", "Agent", "LLM", "语义通信"]; 
         let activeKeywords = []; 
         let intersectionObserver;
         let autoUpdateInterval;
         let keywordsModified = false;
+        let isDebugMode = false; // 调试模式标志
 
-        const PERPLEXITY_API_KEY = ""; // 已移除密钥，使用GitHub Secrets中设置的密钥
+        // 安全地处理API密钥 - 生产环境中不应该直接暴露
+        const PERPLEXITY_API_KEY = ""; // 生产环境中使用空字符串
         const LOCAL_STORAGE_PAPERS_KEY = 'academicReportPapersData';
         const LOCAL_STORAGE_LAST_FETCH_KEY = 'academicReportLastFetchTime';
         const LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY = 'academicReportLastAutoUpdateDate';
@@ -654,8 +684,11 @@
 
 
         async function fetchPapersFromAPI(keywordsToSearch) {
-            if (PERPLEXITY_API_KEY === "YOUR_PERPLEXITY_API_KEY_HERE" || !PERPLEXITY_API_KEY) {
-                console.warn("API Key is a placeholder. Using fallback mock data generation.");
+            // 优先使用开发者工具设置的临时API密钥
+            const effectiveApiKey = window.tempApiKey || PERPLEXITY_API_KEY;
+            
+            if (!effectiveApiKey || effectiveApiKey === "YOUR_PERPLEXITY_API_KEY_HERE") {
+                console.warn("API Key is missing or placeholder. Using fallback mock data generation.");
                 return generateFallbackMockPapers(keywordsToSearch);
             }
 
@@ -702,7 +735,7 @@
 
             try {
                 console.log(`Querying API for combined keywords: "${combinedKeywords}"`);
-                const { content, citations } = await querySonarPro(PERPLEXITY_API_KEY, question);
+                const { content, citations } = await querySonarPro(effectiveApiKey, question);
                 
                 // Split the content by "PAPER X:" to extract individual papers
                 const paperSections = content.split(/PAPER \d+:/g).filter(section => section.trim().length > 0);
@@ -1011,15 +1044,66 @@
 
         manualRefreshButton.addEventListener('click', async () => {
             console.log("Manual refresh triggered.");
-            // 手动点击刷新按钮时，始终调用API获取新数据
-            console.log("Manual refresh button clicked, fetching new papers from API.");
-            await loadOrFetchPapers(true); // 强制调用API刷新
+            
+            // 如果不在调试模式下，并且没有API密钥，则显示安全提示
+            if (!isDebugMode && (!PERPLEXITY_API_KEY || PERPLEXITY_API_KEY === "")) {
+                console.log("Manual refresh only works in debug mode or when API key is configured");
+                loadingMessage.textContent = `出于安全考虑，在生产环境中不支持手动API刷新。此功能仅在自动更新或调试模式下可用。`;
+                loadingMessageContainer.style.display = 'flex';
+                reportContentDiv.innerHTML = ''; 
+                reportContentDiv.appendChild(loadingMessageContainer);
+                
+                // 显示最近的缓存数据
+                setTimeout(async () => {
+                    const storedPapersJSON = localStorage.getItem(LOCAL_STORAGE_PAPERS_KEY);
+                    if (storedPapersJSON) {
+                        try {
+                            const storedPapers = JSON.parse(storedPapersJSON);
+                            if (storedPapers && storedPapers.length > 0) {
+                                console.log("Displaying cached papers instead");
+                                await renderReport(storedPapers);
+                            }
+                        } catch (e) {
+                            console.error("Error parsing stored papers:", e);
+                        }
+                    }
+                }, 3000);
+                return;
+            }
+            
+            // 在调试模式或有API密钥的情况下继续刷新
+            try {
+                loadingMessage.textContent = `正在通过API获取最新论文...`;
+                loadingMessageContainer.style.display = 'flex';
+                reportContentDiv.innerHTML = ''; 
+                reportContentDiv.appendChild(loadingMessageContainer);
+                
+                // 直接调用API，绕过缓存检查
+                const papers = await fetchPapersFromAPI(activeKeywords);
+                if (papers && papers.length > 0) {
+                    await renderReport(papers);
+                } else {
+                    console.log("API returned no usable papers, rendering empty or fallback.");
+                    await renderReport([]);
+                }
+            } catch (error) {
+                console.error("Error during manual refresh:", error);
+                loadingMessage.textContent = `获取内容时发生错误: ${error.message}`;
+                loadingMessageContainer.style.display = 'flex';
+            }
             keywordsModified = false; // 重置关键词修改状态
         });
 
         // --- Initialization ---
         async function initializeApp() {
             currentYearSpan.textContent = new Date().getFullYear();
+            
+            // 检查是否有保存的开发者设置
+            const savedApiKey = localStorage.getItem('dev_api_key');
+            if (savedApiKey) {
+                window.tempApiKey = savedApiKey;
+                console.log("Loaded saved development API key");
+            }
             
             // GitHub configuration message
             if (!USE_GITHUB_STORAGE) {
@@ -1049,6 +1133,55 @@
         }
 
         document.addEventListener('DOMContentLoaded', initializeApp);
+
+        // --- 开发者工具栏逻辑 ---
+        // 快捷键打开开发者工具栏: Ctrl+Shift+D
+        document.addEventListener('keydown', (e) => {
+            // 检查是否是Ctrl+Shift+D (或Mac上的Command+Shift+D)
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key === 'd') {
+                e.preventDefault();
+                devToolbar.classList.toggle('hidden');
+                
+                // 加载已保存的设置
+                const savedApiKey = localStorage.getItem('dev_api_key') || '';
+                if (savedApiKey) {
+                    devApiKeyInput.value = savedApiKey;
+                }
+                
+                devDebugModeToggle.checked = isDebugMode;
+            }
+        });
+
+        // 关闭按钮
+        closeDevToolbarBtn.addEventListener('click', () => {
+            devToolbar.classList.add('hidden');
+        });
+
+        // 应用开发者设置
+        applyDevSettingsBtn.addEventListener('click', () => {
+            const apiKey = devApiKeyInput.value.trim();
+            
+            if (apiKey) {
+                localStorage.setItem('dev_api_key', apiKey);
+                // 临时覆盖API密钥
+                window.tempApiKey = apiKey;
+                console.log("API key saved locally for development");
+            } else {
+                localStorage.removeItem('dev_api_key');
+                window.tempApiKey = null;
+            }
+            
+            isDebugMode = devDebugModeToggle.checked;
+            console.log("Debug mode:", isDebugMode ? "ON" : "OFF");
+            
+            // 隐藏工具栏
+            devToolbar.classList.add('hidden');
+            
+            // 如果刚启用了调试模式，提示用户
+            if (isDebugMode) {
+                alert("调试模式已启用。现在可以使用手动刷新功能。");
+            }
+        });
     </script>
 </body>
 </html>
