@@ -310,7 +310,15 @@
                 }
                 
                 const data = await response.json();
-                const content = atob(data.content); // Decode base64 content
+                // Fix: Use proper UTF-8 decoding for base64 content
+                // Convert base64 to binary string and then decode as UTF-8
+                const binaryString = atob(data.content);
+                const bytes = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    bytes[i] = binaryString.charCodeAt(i);
+                }
+                const content = new TextDecoder('utf-8').decode(bytes);
+                
                 const parsedData = JSON.parse(content);
                 console.log("Successfully fetched data from GitHub");
                 return parsedData;
@@ -326,7 +334,14 @@
             try {
                 console.log("Saving data to GitHub...");
                 const content = JSON.stringify(dataToSave, null, 2);
-                const encodedContent = btoa(unescape(encodeURIComponent(content))); // Encode content to base64
+                
+                // Fix: Properly encode UTF-8 content to base64
+                // First convert string to UTF-8 bytes, then encode as base64
+                const encoder = new TextEncoder();
+                const bytes = encoder.encode(content);
+                let binaryString = '';
+                bytes.forEach(byte => binaryString += String.fromCharCode(byte));
+                const encodedContent = btoa(binaryString);
                 
                 // First, check if file exists and get its SHA if it does
                 let sha = "";
