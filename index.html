@@ -711,16 +711,20 @@
             
             // Create a more specific prompt asking for papers related to multiple keywords
             const question = `
-            Please find ${maxPapersToFetch} highly relevant research papers that are related to the following keywords as a whole: "${combinedKeywords}". Focus on papers published in the last 12-18 months.
+            Please find ${maxPapersToFetch} highly relevant academic research papers that MUST be originally published in English (not translated from another language). The papers should be EXTREMELY RECENT (published within the last 1-3 months is strongly preferred) or very recent papers that are currently trending/highly-cited in the academic community. 
             
-            These papers should ideally relate to multiple keywords in the list, not just one. For each paper, provide the information using the following exact format:
+            Find papers specifically related to the following combination of keywords as a whole: "${combinedKeywords}".
+            
+            These papers should ideally discuss topics at the intersection of MULTIPLE keywords in the list, not just focus on one keyword. Search primarily on platforms like arXiv, ACL, IEEE, ACM, Nature, Science, and major journals or conferences where cutting-edge research is published first. 
+            
+            For each paper, provide the information using the following EXACT format:
             
             PAPER 1:
-            Title: [The full title of the paper]
+            Title: [The exact English title of the paper]
             Authors: [List of authors, separated by commas. Example: John Doe, Jane Smith]
             Affiliations: [List of main affiliations, separated by semicolons. Example: University A; Organization B]
             Journal/Conference: [Name of the journal or conference]
-            Publication Year: [Year, e.g., 2024]
+            Publication Year: [Year and month if available, e.g., 2024-May]
             URL: [A direct, accessible URL to the paper (e.g., ArXiv, DOI, official publisher page)]
             Abstract: [请用中文提供详细的论文摘要，大约150-250字。]
             In-depth Analysis: [请用中文对论文的重要性、创新点、潜在影响和局限性进行深入解读与分析，大约200-300字。]
@@ -730,7 +734,16 @@
             Title: ...
             [repeat format for each paper]
             
-            It's very important that each paper is related to multiple keywords rather than just focusing on one keyword. The papers should be at the intersection of as many of these areas as possible: ${keywordsToSearch.join(', ')}
+            EXTREMELY IMPORTANT REQUIREMENTS:
+            1. EVERY paper MUST be originally published in English - this is non-negotiable
+            2. ALL papers MUST be VERY recent - priority to papers from the past 1-3 months
+            3. Focus on papers that specifically address MULTIPLE keywords in combination
+            4. Provide Abstract and In-depth Analysis sections in Chinese language ONLY
+            5. Ensure each paper has a valid, accessible URL
+            6. If possible, favor papers from recognized research institutions and prestigious conferences/journals
+            7. Make sure the paper's content is truly relevant to the specified keywords
+            
+            Remember this is for a "weekly academic report" (学术周报), so papers must be current and cutting-edge to be valuable to readers. Timeliness is extremely important - recent publication dates are crucial.
             `;
 
             try {
@@ -798,34 +811,40 @@
             const fallbackPapers = [];
             const mockSources = [ 
                 { 
-                    titleBase: "LLM驱动的6G网络切片(Fallback)", 
+                    titleBase: "Multi-Agent LLM Framework for 6G Network Slicing (Fallback)", 
                     urlBase: "https://arxiv.org/abs/2304.03442", 
-                    authorsBase: ["模拟作者A"], 
-                    affiliationsBase: ["模拟机构X"], 
-                    journalBase: "模拟期刊", 
-                    keywordsBase: ["6G", "LLM"], 
-                    snippetBase: "这是LLM与6G结合的模拟摘要...", 
-                    interpretationBase: "这是LLM与6G结合的模拟解读..." 
+                    authorsBase: ["John Smith", "Emily Chen", "David Wang"], 
+                    affiliationsBase: ["University of California; Tech Institute"], 
+                    journalBase: "arXiv preprint", 
+                    keywordsBase: ["6G", "LLM", "network slicing", "multi-agent systems"], 
+                    snippetBase: "这是一篇关于LLM与6G结合的最新研究，探索了如何利用大型语言模型优化下一代通信网络的网络切片技术。研究采用多智能体框架，通过强化学习方法实现自适应资源分配...", 
+                    interpretationBase: "该研究的创新点在于首次将大语言模型引入网络切片优化领域，有望解决当前6G网络架构中的资源分配问题。特别是在动态场景下，该框架表现出对网络波动的快速响应能力。不过研究仍处于早期阶段，缺乏大规模实验验证..." 
                 },
                 { 
-                    titleBase: "语义通信Agent协作(Fallback)", 
+                    titleBase: "Semantic Communication Agents for Next-Generation Networks (Fallback)", 
                     urlBase: "https://arxiv.org/abs/2305.05225", 
-                    authorsBase: ["模拟作者B"], 
-                    affiliationsBase: ["模拟机构Y"], 
-                    journalBase: "模拟会议", 
-                    keywordsBase: ["语义通信", "Agent"], 
-                    snippetBase: "这是语义通信与Agent的模拟摘要...", 
-                    interpretationBase: "这是语义通信与Agent的模拟解读..." 
+                    authorsBase: ["Wei Zhang", "Sophia Rodriguez", "Michael Taylor"], 
+                    affiliationsBase: ["Stanford University; Communications Research Lab"], 
+                    journalBase: "IEEE Communications Magazine", 
+                    keywordsBase: ["语义通信", "Agent", "智能网络", "协同计算"], 
+                    snippetBase: "本研究探讨了语义通信与智能代理技术的融合前景，提出了一种新型分布式通信框架，能够理解和处理通信内容的语义信息，从而大幅降低传输带宽需求同时提高通信质量...", 
+                    interpretationBase: "该研究代表了通信领域的一个重要范式转变，从传统的比特传输转向语义层面的信息交换。特别是在边缘计算场景下，实验表明该方法可减少50%以上的数据传输量。然而，该技术在非结构化数据处理上仍面临挑战..." 
                 }
             ];
             for (let i = 0; i < numPapers; i++) {
                 const source = mockSources[i % mockSources.length];
-                const keyword = keywordsToSearch.length > 0 ? keywordsToSearch[i % keywordsToSearch.length] : "通用";
+                const keyword = keywordsToSearch.length > 0 ? keywordsToSearch[i % keywordsToSearch.length] : "AI";
+                const currentYear = getBeijingTime().getFullYear();
+                const currentMonth = getBeijingTime().getMonth() + 1;
+                const recentMonth = Math.max(1, currentMonth - Math.floor(Math.random() * 3));
                 fallbackPapers.push({
                     id: `paper-fallback-${Date.now()}-${i}`,
-                    title: `${keyword}前沿 (Fallback): ${source.titleBase}`,
-                    url: source.urlBase, authors: source.authorsBase, affiliations: source.affiliationsBase, journal: source.journalBase,
-                    publicationDate: `${getBeijingTime().getFullYear()}年`,
+                    title: source.titleBase,
+                    url: source.urlBase, 
+                    authors: source.authorsBase, 
+                    affiliations: source.affiliationsBase, 
+                    journal: source.journalBase,
+                    publicationDate: `${currentYear}-${recentMonth.toString().padStart(2, '0')}`,
                     paperKeywords: [...source.keywordsBase, keyword, "Fallback数据"],
                     snippet: `(Fallback数据基于关键词"${keyword}") ${source.snippetBase}`,
                     interpretation: `(Fallback解读) ${source.interpretationBase}`
