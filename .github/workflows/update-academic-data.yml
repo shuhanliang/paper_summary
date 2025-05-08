@@ -367,8 +367,8 @@ jobs:
           server_address: smtp.gmail.com
           server_port: 465
           secure: true
-          username: xuz10962@gmail.com
-          password: qygw uqtr qsdg kqbr
+          username: eisenx123@gmail.com
+          password: lvpq gnox jhjn axf
           subject: 学术周报已更新 - ${{ github.repository }}
           body: |
             您好，
