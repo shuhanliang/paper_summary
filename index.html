@@ -769,7 +769,7 @@
                 fetchedPapers.push({
                     id: `error-card-combined-${Date.now()}`,
                     title: `获取"${combinedKeywords}"相关文献失败`,
-                    url: "#", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
+                    url: "", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
                     paperKeywords: [...keywordsToSearch, "错误"],
                     snippet: `未能获取或解析多关键词相关的文献信息。错误: ${error.message.substring(0,100)}...`,
                     interpretation: "请检查浏览器控制台获取更详细的错误信息，或尝试其他关键词组合。"
@@ -781,7 +781,7 @@
                 return [{
                     id: "api-fallback-final-" + Date.now(),
                     title: "未能从API获取具体文献",
-                    url: "#", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
+                    url: "", authors: ["系统"], affiliations: ["N/A"], journal: "N/A", publicationDate: getBeijingTime().getFullYear() + "年",
                     paperKeywords: keywordsToSearch,
                     snippet: "尝试通过Perplexity API根据您的组合关键词检索文献，但未能成功解析返回结果或未找到匹配文献。请检查您的API密钥、网络连接，或尝试不同的关键词组合。",
                     interpretation: "这可能是由于API响应格式与预期不符，或者当前关键词组合下没有易于提取的文献信息。建议检查控制台日志获取更详细的错误信息。"
@@ -797,8 +797,26 @@
             const numPapers = 1 + Math.floor(Math.random() * 2); 
             const fallbackPapers = [];
             const mockSources = [ 
-                { titleBase: "LLM驱动的6G网络切片(Fallback)", urlBase: "#", authorsBase: ["模拟作者A"], affiliationsBase: ["模拟机构X"], journalBase: "模拟期刊", keywordsBase: ["6G", "LLM"], snippetBase: "这是LLM与6G结合的模拟摘要...", interpretationBase: "这是LLM与6G结合的模拟解读..." },
-                { titleBase: "语义通信Agent协作(Fallback)", urlBase: "#", authorsBase: ["模拟作者B"], affiliationsBase: ["模拟机构Y"], journalBase: "模拟会议", keywordsBase: ["语义通信", "Agent"], snippetBase: "这是语义通信与Agent的模拟摘要...", interpretationBase: "这是语义通信与Agent的模拟解读..." }
+                { 
+                    titleBase: "LLM驱动的6G网络切片(Fallback)", 
+                    urlBase: "https://arxiv.org/abs/2304.03442", 
+                    authorsBase: ["模拟作者A"], 
+                    affiliationsBase: ["模拟机构X"], 
+                    journalBase: "模拟期刊", 
+                    keywordsBase: ["6G", "LLM"], 
+                    snippetBase: "这是LLM与6G结合的模拟摘要...", 
+                    interpretationBase: "这是LLM与6G结合的模拟解读..." 
+                },
+                { 
+                    titleBase: "语义通信Agent协作(Fallback)", 
+                    urlBase: "https://arxiv.org/abs/2305.05225", 
+                    authorsBase: ["模拟作者B"], 
+                    affiliationsBase: ["模拟机构Y"], 
+                    journalBase: "模拟会议", 
+                    keywordsBase: ["语义通信", "Agent"], 
+                    snippetBase: "这是语义通信与Agent的模拟摘要...", 
+                    interpretationBase: "这是语义通信与Agent的模拟解读..." 
+                }
             ];
             for (let i = 0; i < numPapers; i++) {
                 const source = mockSources[i % mockSources.length];
@@ -875,9 +893,13 @@
                                 </div>
                             </section>
                             <footer class="mt-auto pt-3">
-                                <a href="${item.url}" target="_blank" rel="noopener noreferrer" class="poster-read-more-btn">
+                                ${item.url && item.url !== "#" ? 
+                                `<a href="${item.url}" target="_blank" rel="noopener noreferrer" class="poster-read-more-btn">
                                     阅读原文 &rarr;
-                                </a>
+                                </a>` : 
+                                `<button class="poster-read-more-btn bg-gray-400 cursor-not-allowed" disabled>
+                                    暂无原文链接
+                                </button>`}
                             </footer>
                         </div>
                     </div>
