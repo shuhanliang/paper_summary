@@ -368,7 +368,7 @@ jobs:
           server_port: 465
           secure: true
           username: xuz10962@gmail.com
-          password: cxzw ibpn kvfh extk
+          password: ssgy ielr qixy lclp
           subject: 学术周报已更新 - ${{ github.repository }}
           body: |
             您好，
@@ -382,7 +382,7 @@ jobs:
             仓库：${{ github.repository }}
             
             此邮件由GitHub Actions自动发送，请勿回复。
-          to: zhengxu22@m.fudan.edu.cn
+          to: zhengxu22@m.fudan.edu.cn, chenhui.a.ye@nokia-sbell.com
           from: 学术周报自动更新 <xuz10962@gmail.com>
           nodemailerlog: true
           nodemailerdebug: true
