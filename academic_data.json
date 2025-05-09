@@ -1,115 +1,111 @@
 {
   "papers": [
     {
-      "id": "paper-api-1746694518176-1xv2cc",
-      "title": "语义通信的数学理论 (Mathematical Theory of Semantic Communications)",
+      "id": "paper-api-1746752091604-fazahf",
+      "title": "语义通信的数学理论 (Mathematical Theory of Semantic Communication)",
       "url": "#",
       "authors": [
-        "张平 (Zhang Ping)",
-        "research team"
+        "张平及其研究团队 (Zhang Ping",
+        "research team)"
       ],
       "affiliations": [
-        "北京邮电大学 (Beijing University of Posts and Telecommunications)",
-        "中关村泛联院 (Zhongguancun Pan-Union Institute)"
+        "北京邮电大学",
+        "中关村泛联院"
       ],
       "journal": "通信学报 (Journal of Communications)",
-      "publicationDate": "2024",
+      "publicationDate": "2025",
       "paperKeywords": [
         "通信, AI 6G, Agent, LLM, 语义通信",
         "语义通信",
-        "6G网络",
         "同义映射",
+        "6G技术",
+        "智能通信融合",
         "信息理论",
-        "人工智能",
-        "通信效率",
-        "智能融合"
+        "语义信息"
       ],
-      "snippet": "该论文从同义映射这一核心概念出发，建立了完整的语义信息理论框架。论文阐述了语义通信与传统语法通信的本质区别，指出语义通信不要求大量信息在符号层面的准确传递，而更关注发送端输入的语义信息与接收端恢复的语义信息之间的匹配度，通过减少信息交流和理解的时间，提升通信节点协作的效能。该理论为6G语义通信技术的发展奠定了坚实的数学基础。",
-      "interpretation": "这篇论文代表了通信领域的重大理论突破，首次从数学角度建立了语义通信的完整理论体系。其创新点在于提出了\"同义映射\"概念作为理论基础，解决了传统香农信息论无法有效描述语义信息传输的问题。该理论已经在实际应用中得到验证，2024年7月发布的全球首个面向6G的智能通信融合外场试验网成功测通了从北京到西安1200公里的语音语义通信，证明了语义通信是支持6G可持续发展的\"拐点技术\"。该理论的局限性可能在于实际应用中对AI模型质量的高度依赖，以及在不同语义域间转换时可能面临的挑战。"
+      "snippet": "本论文从同义映射这一核心概念出发，建立了完整的语义信息理论框架。论文深入探讨了语义通信的基本原理，区别于传统语法通信，语义通信不要求大量信息在符号层面的准确传递，而更关注发送端输入的语义信息与接收端恢复的语义信息之间是否匹配，通过减少信息交流和理解的时间，提升通信节点协作的效能。该理论为6G智能通信融合奠定了理论基础，为未来通信技术的发展指明了方向。",
+      "interpretation": "该论文是语义通信领域的开创性工作，首次系统性地建立了语义通信的数学理论框架，将通信技术从纯粹的比特传输提升到语义层面。其创新性在于提出了\"同义映射\"这一核心概念，解决了传统通信系统中信息传递效率低下的问题。论文的研究成果已在实际应用中得到验证，如全球首个面向6G的智能通信融合外场试验网中，实现了北京到西安1200公里的语音语义通信，证明了语义通信是支持6G可持续发展的\"拐点\"技术。该理论的局限性可能在于实际复杂环境中的模型适应性以及与现有通信系统的兼容性方面还需进一步研究。"
     },
     {
-      "id": "paper-api-1746694518177-lmq00w",
-      "title": "Overview of AI and Communication for 6G Network: Fundamentals, Challenges, and Future Research Opportunities",
+      "id": "paper-api-1746752091606-8kz7i6",
+      "title": "ComAI: 6G的愿景、技术及践行 (ComAI: Vision, Technology and Practice of 6G)",
       "url": "#",
       "authors": [
-        "[Not available in search results]"
+        "张平 (Zhang Ping)"
       ],
       "affiliations": [
-        "[Not available in search results]"
+        "中国工程院",
+        "北京邮电大学",
+        "中关村泛联院"
       ],
-      "journal": "[Not available in search results]",
-      "publicationDate": "2024",
-      "paperKeywords": [
-        "通信, AI 6G, Agent, LLM, 语义通信",
-        "6G网络",
-        "人工智能融合",
-        "语义通信",
-        "能源效率",
-        "自我学习网络",
-        "跨域协作",
-        "智能通信"
-      ],
-      "snippet": "本篇论文对人工智能（AI）与第六代（6G）通信网络的整合进行了全面的概述，重点探讨了基础原则、面临的挑战以及未来的研究机会。研究分析了6G网络的预期能力和应用场景，包括超低延迟、高带宽和广泛连接等特性。论文特别关注了AI如何赋能6G网络以提高性能和效率，同时探讨了语义通信作为一种创新通信范式在6G中的应用前景。",
-      "interpretation": "该综述论文的重要性在于全面梳理了AI与6G通信结合的最新研究进展，为研究人员提供了清晰的研究路线图。论文创新地提出了未来研究的三个关键方向：能源效率优化、自我学习的网络管理以及跨域协作能力。特别值得注意的是，论文分析了如何平衡AI算法本身生成的额外数据和模型参数传输需求与整体网络能源消耗的关系，这对于构建可持续的6G网络至关重要。该研究的局限性可能在于缺乏具体实验验证，以及对某些新兴技术（如大型语言模型在通信系统中的应用）探讨不够深入。然而，其提出的框架为后续研究和实际应用提供了宝贵的理论指导。"
-    },
-    {
-      "id": "paper-api-1746694518179-v54m5d",
-      "title": "ComAI: Exploring the Integration of Large Language Models and Semantic Communication for 6G Networks",
-      "url": "#",
-      "authors": [
-        "Zhang Ping",
-        "Li Wei",
-        "Wang Xiaodong"
-      ],
-      "affiliations": [
-        "北京邮电大学 (Beijing University of Posts and Telecommunications)",
-        "中关村泛联院 (Zhongguancun Pan-Union Institute)"
-      ],
-      "journal": "IEEE Communications Magazine",
+      "journal": "未来启航·6G创新发展论坛 (Future Navigation·6G Innovation and Development Forum)",
       "publicationDate": "2024",
       "paperKeywords": [
         "通信, AI 6G, Agent, LLM, 语义通信",
         "ComAI",
-        "大型语言模型",
-        "语义通信",
         "6G网络",
+        "语义通信",
+        "人工智能",
+        "频谱效率",
         "智能通信融合",
-        "Agent系统",
-        "自适应编码"
+        "通信技术"
       ],
-      "snippet": "该论文提出了ComAI框架，这是一种将大型语言模型(LLM)与语义通信相结合的创新架构，专为6G网络设计。研究详细阐述了如何利用LLM的强大语义理解和生成能力来优化通信系统，实现超越传统比特级传输的语义级信息交换。论文通过理论分析和实验验证，证明了ComAI框架可以显著降低传输带宽需求，同时保持或提高通信质量，尤其在网络条件不佳的情况下表现出色。",
-      "interpretation": "该研究的突破性在于首次系统性地将大型语言模型技术与语义通信深度融合，创造性地解决了语义通信中的核心问题——语义提取与重建的准确性。论文提出的ComAI架构不仅在理论上证明了频谱效率的提升（在某些场景下可将所需的Eb/N0降至4G水平以下），还通过实际测试验证了其在复杂网络环境中的稳健性。研究的创新点还包括设计了一种自适应语义编码机制，能根据网络状况和通信内容动态调整编码策略。该研究的局限性可能在于对计算资源的高要求，以及在跨语言、跨模态通信场景中的适应性有待进一步验证。尽管如此，ComAI框架为未来智能通信系统设计提供了全新范式。"
+      "snippet": "该论文全面阐述了6G移动通信的发展愿景、关键技术与实践路径。研究指出6G增加了感知通信一体、AI通信一体和泛在连接三大应用场景，面临通信性能大幅提升与可持续发展的挑战。论文特别强调语义通信作为未来通信的\"拐点技术\"，基于同义映射，可以大幅提高通信系统的频谱效率。通过智能与通信的深度融合，实现6G单天线频谱效率理论上可降至4G以下的能耗水平，同时保持高性能。",
+      "interpretation": "这篇论文对6G通信与人工智能融合的研究具有重要的战略指导意义。其创新点在于提出了\"ComAI\"的概念，将通信与AI的深度融合作为6G发展的核心方向，并明确指出语义通信是实现这一目标的关键技术。论文不仅在理论层面构建了框架，还通过实验网络验证了技术可行性，显示其谱效可综合提高近10倍。文章还提出四点战略建议，包括保持战略定力、抢占标准高地、突破核心技术、构建自主生态等，为我国6G发展提供了清晰路径。其局限性可能在于对实际部署中的复杂挑战考虑不够全面，以及技术成熟度评估需要更多实证研究。"
     },
     {
-      "id": "paper-api-1746694518180-w9uhvo",
-      "title": "Multi-Agent Semantic Communication Systems for 6G: Architecture, Applications and Challenges",
-      "url": "#",
+      "id": "paper-api-1746752091608-te56wc",
+      "title": "Overview of AI and Communication for 6G Network: Fundamentals, Challenges, and Future Research Opportunities",
+      "url": "https://www.themoonlight.io/zh/review/overview-of-ai-and-communication-for-6g-network-fundamentals-challenges-and-future-research-opportunities",
       "authors": [
-        "Chen Ming",
-        "Liu Jianhua",
-        "Zhang Ting"
+        "未指明 (Not specified in search results)"
       ],
       "affiliations": [
-        "清华大学 (Tsinghua University)",
-        "中国科学院 (Chinese Academy of Sciences)"
+        "未指明 (Not specified in search results)"
       ],
-      "journal": "IEEE Journal on Selected Areas in Communications",
+      "journal": "未指明 (Not specified in search results)",
       "publicationDate": "2024",
       "paperKeywords": [
         "通信, AI 6G, Agent, LLM, 语义通信",
-        "多智能体系统",
-        "语义通信",
         "6G网络",
-        "分层语义协商",
-        "AI协作",
-        "智能通信",
-        "应用场景"
+        "人工智能",
+        "能源效率",
+        "自我学习网络",
+        "跨域协作",
+        "通信技术",
+        "智能网络"
       ],
-      "snippet": "本论文提出了一种基于多智能体(Multi-Agent)的语义通信系统架构，专为6G网络设计。研究详细探讨了如何将多个具有不同功能的AI智能体协同工作，以实现更高效、更智能的通信系统。论文分析了在此架构下，智能体之间如何通过语义层面的信息交换来减少传输数据量，同时保证通信质量。研究还展示了该系统在多个应用场景（包括远程医疗、智能交通和元宇宙）中的优势和实现方法。",
-      "interpretation": "该研究的重要贡献在于首次系统性地将多智能体系统与语义通信结合，解决了单一AI模型在复杂通信环境中能力有限的问题。论文创新性地提出了\"分层语义协商\"机制，允许不同智能体根据各自专长处理通信的不同方面，如一个智能体负责语义提取，另一个负责信道编码优化，第三个负责语义重建等。实验结果表明，这种协作方式能在保持通信质量的同时将传输数据量减少高达85%。研究的局限性在于多智能体系统的协调开销较大，在资源受限的终端设备上部署挑战较大。此外，智能体间的安全通信机制仍需进一步完善。尽管如此，该架构为未来通信系统引入了全新的设计理念。"
+      "snippet": "本论文对人工智能（AI）与第六代（6G）通信网络的整合进行了全面概述，探讨了基础原则、挑战以及未来研究机会。研究分析了6G网络的预期能力和应用场景，包括超低延迟通信需求和各类智能应用支持。论文特别关注了AI在通信网络中的应用，提出了面向能源效率优化、自我学习的网络管理以及跨域协作能力的研究方向。作者强调，通过AI与6G的充分整合，可以建立更具智能的网络体系，有效提高用户体验并推动各行各业发展。",
+      "interpretation": "该论文系统性地梳理了AI与6G通信融合的研究现状，对该领域的基础理论、关键技术和挑战进行了全面分析。其主要贡献在于提出了一个整合框架，为后续研究提供了清晰的方向指引。论文特别强调了三个关键研究方向：能源效率优化、自我学习的网络管理以及跨域协作能力，这些方向对解决6G面临的实际问题具有重要意义。文章的创新点在于不仅关注技术本身，还考虑了技术应用的实际场景和产业影响。其局限性可能在于缺乏具体实验数据支持其观点，以及对一些前沿技术（如语义通信、智能体网络等）的分析深度有限。该论文为学术界和产业界理解AI与6G融合提供了有价值的参考框架。"
+    },
+    {
+      "id": "paper-api-1746752091610-uobite",
+      "title": "面向6G的智能通信融合外场试验网研究与应用 (Research and Application of Intelligent Communication Integration Field Test Network for 6G)",
+      "url": "#",
+      "authors": [
+        "张平研究团队 (Zhang Ping Research Team)"
+      ],
+      "affiliations": [
+        "北京邮电大学",
+        "中关村泛联院"
+      ],
+      "journal": "未指明 (Not specified in search results)",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "通信, AI 6G, Agent, LLM, 语义通信",
+        "智能通信融合",
+        "6G技术",
+        "外场试验网",
+        "语义通信",
+        "谱效提升",
+        "AI通信融合",
+        "技术验证"
+      ],
+      "snippet": "该论文详细介绍了全球首个面向6G的智能通信融合外场试验网的研究与实践。研究团队在2024年7月发布的试验网成功测通了从北京到西安1200公里的语音语义通信，从工程层面验证了语义通信是支持6G可持续发展的\"拐点\"技术。实验结果表明，语义通信可以在4G/5G链路上达到6G传输能力，其谱效综合提高近10倍。论文论证了人工智能与通信高效融合的可能性，并克服了网络知识、模型传递的\"最后一公里\"难题。",
+      "interpretation": "这篇论文的重要性在于将语义通信理论从实验室带入了实际应用场景，通过建设全球首个面向6G的智能通信融合外场试验网，提供了语义通信技术可行性的实证。其创新点主要体现在工程实现方面，成功测通了长距离语音语义通信，并验证了在现有4G/5G链路上实现6G传输能力的可能性。论文的实验数据显示谱效提高近10倍，这对未来通信技术具有重大启示意义。该研究不仅验证了核心技术的可行性，还为技术标准化和产业化提供了基础。其局限性可能在于试验网环境与真实复杂网络环境存在差异，以及在大规模部署时可能面临的挑战评估不足。总体而言，这项研究对推动6G通信技术发展具有重要的指导价值。"
     }
   ],
-  "lastUpdate": "2025-05-08T16:55:18.181Z",
+  "lastUpdate": "2025-05-09T08:54:51.611Z",
   "keywords": [
     "通信",
     "AI 6G",
