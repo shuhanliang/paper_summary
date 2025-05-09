@@ -34,6 +34,14 @@ jobs:
           const DATA_FILE = 'academic_data.json';
           const PERPLEXITY_API_KEY = process.env.PERPLEXITY_API_KEY;
           const DEFAULT_KEYWORDS = ["通信", "AI 6G", "Agent", "LLM", "语义通信"];
+          // English keyword mapping for better API results
+          const KEYWORDS_ENGLISH_MAPPING = {
+            "通信": "Communications",
+            "AI 6G": "AI 6G",
+            "Agent": "Agent",
+            "LLM": "Large Language Model",
+            "语义通信": "Semantic Communications"
+          };
 
           // 获取北京时间
           function getBeijingTime() {
@@ -103,7 +111,7 @@ jobs:
           }
 
           // 解析API响应为论文对象
-          function parsePaperInfo(content, citations, keyword) {
+          function parsePaperInfo(content, citations, englishKeyword, originalKeyword) {
             // 简化的解析逻辑
             function extractField(text, labelStarts, nextLabelStarts = []) {
               const labelEndChars = ":：";
@@ -141,7 +149,7 @@ jobs:
                 affiliations: ["单位提取失败"],
                 journal: "期刊/会议提取失败",
                 publicationDate: `${getBeijingTime().getFullYear()}年`,
-                paperKeywords: [keyword, "自动更新"],
+                paperKeywords: [originalKeyword, "自动更新"],
                 snippet: "摘要未能提取。",
                 interpretation: "深入解读未能提取。"
               };
@@ -191,18 +199,18 @@ jobs:
               
               const keywordsText = extractField(content, ["keywords", "关键词"]);
               if (keywordsText) {
-                paper.paperKeywords = [keyword, ...keywordsText.split(/,|、/).map(k => k.trim()).filter(k => k.length > 0)];
+                paper.paperKeywords = [originalKeyword, ...keywordsText.split(/,|、/).map(k => k.trim()).filter(k => k.length > 0)];
               }
               
               // 验证必要字段是否有效
               if (paper.title === "标题提取失败" || paper.snippet === "摘要未能提取。") {
-                console.log(`解析失败: 关键词 "${keyword}" 的论文标题或摘要提取失败`);
+                console.log(`解析失败: 关键词 "${originalKeyword}" 的论文标题或摘要提取失败`);
                 return null;
               }
               
               return paper;
             } catch (error) {
-              console.error(`解析关键词 "${keyword}" 的内容时出错:`, error);
+              console.error(`解析关键词 "${originalKeyword}" 的内容时出错:`, error);
               return null;
             }
           }
@@ -218,12 +226,17 @@ jobs:
 
             try {
               const combinedKeywords = keywords.join(', ');
+              // Map to English keywords for better API results
+              const englishKeywords = keywords.map(keyword => KEYWORDS_ENGLISH_MAPPING[keyword] || keyword);
+              const combinedEnglishKeywords = englishKeywords.join(', ');
+              
               const maxPapersToFetch = 5;
               
               console.log(`正在为组合关键词 "${combinedKeywords}" 获取论文...`);
+              console.log(`使用英文关键词: "${combinedEnglishKeywords}"`);
               
               const question = `
-              Please find ${maxPapersToFetch} highly relevant research papers that are related to the following keywords as a whole: "${combinedKeywords}". Focus on papers published in the last 12-18 months.
+              Please find ${maxPapersToFetch} highly relevant research papers that are related to the following keywords as a whole: "${combinedEnglishKeywords}". Focus on papers published in the last 12-18 months.
               
               These papers should ideally relate to multiple keywords in the list, not just one. For each paper, provide the information using the following exact format:
               
@@ -242,7 +255,7 @@ jobs:
               Title: ...
               [repeat format for each paper]
               
-              It's very important that each paper is related to multiple keywords rather than just focusing on one keyword. The papers should be at the intersection of as many of these areas as possible: ${keywords.join(', ')}
+              It's very important that each paper is related to multiple keywords rather than just focusing on one keyword. The papers should be at the intersection of as many of these areas as possible: ${englishKeywords.join(', ')}
               `;
               
               const { content, citations } = await querySonarPro(question);
@@ -252,7 +265,7 @@ jobs:
               
               if (paperSections.length === 0) {
                 // Try to parse as a single paper if no sections were found
-                const paperInfo = parsePaperInfo(content, citations, combinedKeywords);
+                const paperInfo = parsePaperInfo(content, citations, combinedEnglishKeywords, combinedKeywords);
                 if (paperInfo) {
                   fetchedPapers.push(paperInfo);
                   console.log(`成功获取组合关键词的论文: ${paperInfo.title}`);
@@ -261,8 +274,8 @@ jobs:
                 // Process each paper section
                 for (let i = 0; i < Math.min(paperSections.length, maxPapersToFetch); i++) {
                   const section = paperSections[i];
-                  // Use the combined keywords for tracking, but also extract paper-specific keywords
-                  const paperInfo = parsePaperInfo(section, citations, combinedKeywords);
+                  // Pass both the original Chinese keyword and English keyword for better tracking
+                  const paperInfo = parsePaperInfo(section, citations, combinedEnglishKeywords, combinedKeywords);
                   
                   if (paperInfo) {
                     fetchedPapers.push(paperInfo);
@@ -383,7 +396,7 @@ jobs:
             仓库：${{ github.repository }}
             
             此邮件由GitHub Actions自动发送，请勿回复。
-          to: zhengxu22@m.fudan.edu.cn, chenhui.a.ye@nokia-sbell.com
+          to: zhengxu22@m.fudan.edu.cn
           from: 学术周报自动更新 <13937372851@163.com>
           nodemailerlog: true
           nodemailerdebug: true
