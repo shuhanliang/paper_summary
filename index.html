@@ -320,7 +320,7 @@
                 <section id="update-info" class="bg-white p-6 rounded-xl shadow-lg">
                     <h2 class="text-2xl font-semibold mb-4 text-sky-600 border-b pb-2">更新信息</h2>
                     <div class="space-y-3 text-sm text-slate-600">
-                        <p><span class="font-semibold">自动更新:</span> 系统将于每日北京时间 <strong class="text-sky-700">早上 8:00</strong> 尝试自动获取新内容。</p>
+                        <p><span class="font-semibold">自动更新:</span> 系统将于每个工作日（周一至周五）北京时间 <strong class="text-sky-700">早上 8:00</strong> 尝试自动获取新内容。</p>
                         <p id="last-updated"><span class="font-semibold">上次内容获取时间:</span> <span id="last-updated-time" class="text-sky-700">正在加载...</span></p>
                         <p id="next-scheduled-update"><span class="font-semibold">下次计划自动获取:</span> <span id="next-update-time" class="text-sky-700">正在计算...</span></p>
                         <button id="manual-refresh-button" class="mt-4 w-full bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-150 ease-in-out focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
@@ -1127,11 +1127,31 @@
             }
             reportDateSpan.textContent = `报告生成于: ${getFormattedDateTime(now)}`; 
             
+            // 计算下次更新时间（考虑工作日）
             let nextUpdate = new Date(now);
-            if (now.getHours() >= 8) {
+            const currentDay = now.getDay(); // 0是周日，1-5是周一至周五，6是周六
+            const currentHour = now.getHours();
+            
+            if (currentDay === 0) { // 周日
+                // 设置为下周一早上8点
                 nextUpdate.setDate(now.getDate() + 1);
+                nextUpdate.setHours(8, 0, 0, 0);
+            } else if (currentDay === 6) { // 周六
+                // 设置为下周一早上8点
+                nextUpdate.setDate(now.getDate() + 2);
+                nextUpdate.setHours(8, 0, 0, 0);
+            } else if (currentDay >= 1 && currentDay <= 5) { // 周一至周五
+                if (currentHour >= 8) {
+                    // 已过当天8点，如果是周五，设为下周一，否则设为明天
+                    if (currentDay === 5) { // 周五
+                        nextUpdate.setDate(now.getDate() + 3); // 跳到下周一
+                    } else {
+                        nextUpdate.setDate(now.getDate() + 1); // 明天
+                    }
+                }
+                nextUpdate.setHours(8, 0, 0, 0);
             }
-            nextUpdate.setHours(8, 0, 0, 0);
+            
             nextUpdateTimeSpan.textContent = getFormattedDateTime(nextUpdate);
         }
 
@@ -1189,10 +1209,14 @@
             const now = getBeijingTime();
             const lastAutoUpdateDate = localStorage.getItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY);
             const todayStr = now.toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'});
-
-            if (now.getHours() === 8 && now.getMinutes() === 0) { 
+            const dayOfWeek = now.getDay(); // 0是周日，1-5是周一至周五，6是周六
+            
+            // 只在工作日（周一至周五）检查更新
+            const isWorkday = dayOfWeek >= 1 && dayOfWeek <= 5;
+            
+            if (isWorkday && now.getHours() === 8 && now.getMinutes() === 0) { 
                 if (lastAutoUpdateDate !== todayStr) {
-                    console.log("Performing automatic update at 8:00 AM Beijing Time.");
+                    console.log("Performing automatic update at 8:00 AM Beijing Time on a workday.");
                     await loadOrFetchPapers(true); 
                     localStorage.setItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY, todayStr);
                     

@@ -2,8 +2,9 @@ name: Update Academic Data
 
 on:
   schedule:
-    # 每天北京时间早上8:00运行（UTC时间0:00）
-    - cron: '0 0 * * *'
+    # 每个工作日（周一至周五）北京时间早上8:00运行（UTC时间0:00）
+    # 格式: 分 时 日 月 周几 (0-6，0是周日)
+    - cron: '0 0 * * 1-5'
   # 允许手动触发
   workflow_dispatch:
 
@@ -396,7 +397,7 @@ jobs:
             仓库：${{ github.repository }}
             
             此邮件由GitHub Actions自动发送，请勿回复。
-          to: zhengxu22@m.fudan.edu.cn
+          to: zhengxu22@m.fudan.edu.cn, chenhui.a.ye@nokia-sbell.com
           from: 学术周报自动更新 <13937372851@163.com>
           nodemailerlog: true
           nodemailerdebug: true
