@@ -20,19 +20,35 @@
         fetch('keywords_full.json')
             .then(response => response.json())
             .then(data => {
-                const listDiv = document.getElementById('keywords-list');
-                listDiv.innerHTML = '';
+                const keywordCounts = {};
 
-                data.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'keyword';
-                    div.innerHTML = `<strong>${item.keyword}</strong> <span class="count">（出现 ${item.count} 次）</span>`;
-                    listDiv.appendChild(div);
+                data.papers.forEach(paper => {
+                    if (paper.paperKeywords && Array.isArray(paper.paperKeywords)) {
+                        paper.paperKeywords.forEach(keyword => {
+                            keywordCounts[keyword] = (keywordCounts[keyword] || 0) + 1;
+                        });
+                    }
                 });
-            })
-            .catch(error => {
-                document.getElementById('keywords-list').innerText = '❌ 加载关键词失败: ' + error;
+
+                const sortedKeywords = Object.entries(keywordCounts)
+                .sort((a, b) => b[1] - a[1])
+                .map(([keyword, count]) => ({ keyword, count }));
+
+            const listDiv = document.getElementById('keywords-list');
+            listDiv.innerHTML = '';
+
+            sortedKeywords.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'keyword';
+                div.innerHTML = `<strong>${item.keyword}</strong> <span class="count">（出现 ${item.count} 次）</span>`;
+                listDiv.appendChild(div);
             });
+    })
+        .catch(error => {
+            document.getElementById('keywords-list').innerText = '❌ 加载关键词失败: ' + error;
+        });
+
+
     </script>
 </body>
 </html>
