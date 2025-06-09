@@ -347,12 +347,75 @@ jobs:
                 console.log("未能获取任何论文，将保留现有数据");
                 return;
               }
+
+              // === 从拿到的论文里获取所有的关键词，后期论文多了可以考虑做关键词排序 ===
+              // 全景关键词池
+              const allKeywords = papers.flatMap(p => p.paperKeywords).filter(k => typeof k === 'string' && k.length > 0);
+
+              // 统计词频
+              const keywordFreq = allKeywords.reduce((acc, k) => {
+                acc[k] = (acc[k] || 0) + 1;
+                return acc;
+              }, {});
+
+              // 排序后写入
+              const sortedKeywordsFull = Object.entries(keywordFreq)
+                .sort((a, b) => b[1] - a[1])
+                .map(([k, count]) => ({ keyword: k, count }));
+
               
+              // save keywordsFull.json to github
+              async function saveKeywordsFullToGitHub(keywordsFullData) {
+                try {
+                  const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/keywords_full.json`;
+                  const headers = {
+                    'Authorization': `token ${GITHUB_TOKEN}`,
+                    'Content-Type': 'application/json'
+                  };
+
+                  const content = JSON.stringify(keywordsFullData, null, 2);
+                  const encodedContent = Buffer.from(content).toString('base64');
+
+                  const body = {
+                    message: `更新全景关键词 - ${new Date().toISOString()}`,
+                    content: encodedContent,
+                    branch: 'main'
+                  };
+
+
+
+
+                  const response = await fetch(url, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify(body)
+                  });
+
+                  if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`保存全景关键词失败 (${response.status}): ${errorText}`);
+                  }
+
+                  console.log("✅ 成功保存全景关键词到 keywords_full.json");
+
+              } catch (error) {
+                console.error("❌ 保存全景关键词时出错:", error);
+              }
+          }
+          
+          // 调用保存
+          await saveKeywordsFullToGitHub(sortedKeywordsFull);
+
+            
+
+
+
+
               // 准备新数据
               const newData = {
                 papers,
                 lastUpdate: getBeijingTime().toISOString(),
-                keywords,
+                keywords: newGlobalKeywords,
                 lastAutoUpdateDate: getBeijingTime().toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'})
               };
               
