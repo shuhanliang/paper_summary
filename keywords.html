@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>全景关键词 - 学术周报</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        .keyword { font-size: 18px; margin: 5px 0; }
+        .count { color: #888; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>📚 全景关键词</h1>
+    <p>（统计所有已抓取论文中的关键词出现频率，供参考）</p>
+    <div id="keywords-list">加载中...</div>
+    <p><a href="index.html">← 返回首页</a></p>
+
+    <script>
+        fetch('keywords_full.json')
+            .then(response => response.json())
+            .then(data => {
+                const listDiv = document.getElementById('keywords-list');
+                listDiv.innerHTML = '';
+
+                data.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'keyword';
+                    div.innerHTML = `<strong>${item.keyword}</strong> <span class="count">（出现 ${item.count} 次）</span>`;
+                    listDiv.appendChild(div);
+                });
+            })
+            .catch(error => {
+                document.getElementById('keywords-list').innerText = '❌ 加载关键词失败: ' + error;
+            });
+    </script>
+</body>
+</html>
