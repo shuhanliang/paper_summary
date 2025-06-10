@@ -155,7 +155,7 @@ jobs:
                 affiliations: ["单位提取失败"],
                 journal: "期刊/会议提取失败",
                 publicationDate: `${getBeijingTime().getFullYear()}年`,
-                paperKeywords: [originalKeyword, "自动更新"],
+                paperKeywords: [originalKeyword, "自动更新"], // 去掉originalKeyword（就是那个长的并在一起的关键词）
                 snippet: "摘要未能提取。",
                 interpretation: "深入解读未能提取。"
               };
@@ -205,7 +205,7 @@ jobs:
               
               const keywordsText = extractField(content, ["keywords", "关键词"]);
               if (keywordsText) {
-                paper.paperKeywords = [originalKeyword, ...keywordsText.split(/,|、/).map(k => k.trim()).filter(k => k.length > 0)];
+                paper.paperKeywords = [...keywordsText.split(/,|、/).map(k => k.trim()).filter(k => k.length > 0)]; // <--- 修改后，移除了 originalKeyword
               }
               
               // 验证必要字段是否有效
