@@ -155,7 +155,7 @@ jobs:
                 affiliations: ["单位提取失败"],
                 journal: "期刊/会议提取失败",
                 publicationDate: `${getBeijingTime().getFullYear()}年`,
-                paperKeywords: [originalKeyword, "自动更新"], // 去掉originalKeyword（就是那个长的并在一起的关键词）
+                paperKeywords: ["自动更新"], // 去掉originalKeyword（就是那个长的并在一起的关键词）
                 snippet: "摘要未能提取。",
                 interpretation: "深入解读未能提取。"
               };
