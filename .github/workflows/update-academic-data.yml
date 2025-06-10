@@ -415,7 +415,7 @@ jobs:
               const newData = {
                 papers,
                 lastUpdate: getBeijingTime().toISOString(),
-                keywords: newGlobalKeywords,
+                keywords: keywords,
                 lastAutoUpdateDate: getBeijingTime().toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'})
               };
               
@@ -433,7 +433,7 @@ jobs:
 
       - name: Run updater
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
           PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
         run: node update-data.js
 
