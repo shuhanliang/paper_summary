@@ -227,7 +227,6 @@ jobs:
 
             try {
               const combinedKeywords = keywords.join(', ');
-              // Map to English keywords for better API results
               const englishKeywords = keywords.map(keyword => KEYWORDS_ENGLISH_MAPPING[keyword] || keyword);
               const combinedEnglishKeywords = englishKeywords.join(', ');
               
@@ -239,7 +238,7 @@ jobs:
               const question = `
               Please find ${maxPapersToFetch} highly relevant research papers that are related to the following keywords as a whole: "${combinedEnglishKeywords}". Focus on papers published in the last 12-18 months.
               
-              These papers should ideally relate to multiple keywords in the list, not just one. For each paper, provide the information using the following exact format:
+              For each paper, provide the information using the following exact format:
               
               PAPER 1:
               Title: [The full title of the paper]
@@ -261,21 +260,17 @@ jobs:
               
               const { content, citations } = await querySonarPro(question);
               
-              // Split the content by "PAPER X:" to extract individual papers
               const paperSections = content.split(/PAPER \d+:/g).filter(section => section.trim().length > 0);
               
               if (paperSections.length === 0) {
-                // Try to parse as a single paper if no sections were found
                 const paperInfo = parsePaperInfo(content, citations, combinedEnglishKeywords, combinedKeywords);
                 if (paperInfo) {
                   fetchedPapers.push(paperInfo);
                   console.log(`成功获取组合关键词的论文: ${paperInfo.title}`);
                 }
               } else {
-                // Process each paper section
                 for (let i = 0; i < Math.min(paperSections.length, maxPapersToFetch); i++) {
                   const section = paperSections[i];
-                  // Pass both the original Chinese keyword and English keyword for better tracking
                   const paperInfo = parsePaperInfo(section, citations, combinedEnglishKeywords, combinedKeywords);
                   
                   if (paperInfo) {
@@ -334,13 +329,11 @@ jobs:
           // 主函数
           async function main() {
             try {
-              // 获取现有数据
               const existingData = await fetchExistingData();
               const keywords = existingData.keywords || DEFAULT_KEYWORDS;
               
               console.log(`将使用以下关键词: ${keywords.join(', ')}`);
               
-              // 获取新论文
               const papers = await fetchPapers(keywords);
               
               if (papers.length === 0) {
@@ -348,23 +341,17 @@ jobs:
                 return;
               }
 
-              // === 从拿到的论文里获取所有的关键词，后期论文多了可以考虑做关键词排序 ===
-              // 全景关键词池
               const allKeywords = papers.flatMap(p => p.paperKeywords).filter(k => typeof k === 'string' && k.length > 0);
 
-              // 统计词频
               const keywordFreq = allKeywords.reduce((acc, k) => {
                 acc[k] = (acc[k] || 0) + 1;
                 return acc;
               }, {});
 
-              // 排序后写入
               const sortedKeywordsFull = Object.entries(keywordFreq)
                 .sort((a, b) => b[1] - a[1])
                 .map(([k, count]) => ({ keyword: k, count }));
 
-              
-              // save keywordsFull.json to github
               async function saveKeywordsFullToGitHub(keywordsFullData) {
                 try {
                   const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/keywords_full.json`;
@@ -382,8 +369,17 @@ jobs:
                     branch: 'main'
                   };
 
-
-
+                  try {
+                    const response = await fetch(url, {
+                      headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+                    });
+                    if (response.ok) {
+                      const existingFile = await response.json();
+                      body.sha = existingFile.sha;
+                    }
+                  } catch (error) {
+                      console.log("keywords_full.json not found. Creating a new one.");
+                  }
 
                   const response = await fetch(url, {
                     method: 'PUT',
@@ -398,20 +394,13 @@ jobs:
 
                   console.log("✅ 成功保存全景关键词到 keywords_full.json");
 
-              } catch (error) {
-                console.error("❌ 保存全景关键词时出错:", error);
+                } catch (error) {
+                  console.error("❌ 保存全景关键词时出错:", error);
+                }
               }
-          }
-          
-          // 调用保存
-          await saveKeywordsFullToGitHub(sortedKeywordsFull);
+              
+              await saveKeywordsFullToGitHub(sortedKeywordsFull);
 
-            
-
-
-
-
-              // 准备新数据
               const newData = {
                 papers,
                 lastUpdate: getBeijingTime().toISOString(),
@@ -419,9 +408,9 @@ jobs:
                 lastAutoUpdateDate: getBeijingTime().toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'})
               };
               
-              // 保存到GitHub
               await saveToGitHub(newData, existingData.sha);
               console.log(`成功更新了 ${papers.length} 篇论文`);
+              
             } catch (error) {
               console.error("更新过程中出错:", error);
               process.exit(1);
@@ -460,9 +449,7 @@ jobs:
             仓库：${{ github.repository }}
             
             此邮件由GitHub Actions自动发送，请勿回复。
-          to: zhengxu22@m.fudan.edu.cn, chenhui.a.ye@nokia-sbell.com
+          to: blumanchu111@gmail.com
           from: 学术周报自动更新 <13937372851@163.com>
           nodemailerlog: true
           nodemailerdebug: true
-      
-      
