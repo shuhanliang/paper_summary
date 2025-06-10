@@ -331,33 +331,172 @@ jobs:
             }
           }
 
+          # // 主函数
+          # async function main() {
+          #   try {
+          #     const existingData = await fetchExistingData();
+          #     const keywords = existingData.keywords || DEFAULT_KEYWORDS;
+              
+          #     console.log(`将使用以下关键词: ${keywords.join(', ')}`);
+              
+          #     let papers; // 先声明一个空的容器，调试用
+
+
+          #     // --- 修改部分：根据调试模式决定如何获取论文数据 ---
+          #     if (DEBUG_MODE) {
+          #       console.log("🚀 调试模式已开启，将使用缓存数据，跳过 Perplexity API 调用。");
+          #       papers = existingData.papers || []; // 使用已存在的论文数据
+          #     } else {
+          #       console.log("调用 Perplexity API 获取新论文...");
+          #       papers = await fetchPapers(keywords);
+          #     }
+          #     // --- 修改结束 ---
+              
+          #     if (papers.length === 0) {
+          #       console.log("未能获取任何论文，将保留现有数据");
+          #       return;
+          #     }
+
+          #     const allKeywords = papers.flatMap(p => p.paperKeywords).filter(k => typeof k === 'string' && k.length > 0);
+
+          #     const keywordFreq = allKeywords.reduce((acc, k) => {
+          #       acc[k] = (acc[k] || 0) + 1;
+          #       return acc;
+          #     }, {});
+
+          #     const sortedKeywordsFull = Object.entries(keywordFreq)
+          #       .sort((a, b) => b[1] - a[1])
+          #       .map(([k, count]) => ({ keyword: k, count }));
+
+          #     async function saveKeywordsFullToGitHub(keywordsFullData) {
+          #       try {
+          #         const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/keywords_full.json`;
+          #         const headers = {
+          #           'Authorization': `token ${GITHUB_TOKEN}`,
+          #           'Content-Type': 'application/json'
+          #         };
+
+          #         const content = JSON.stringify(keywordsFullData, null, 2);
+          #         const encodedContent = Buffer.from(content).toString('base64');
+
+          #         const body = {
+          #           message: `更新全景关键词 - ${new Date().toISOString()}`,
+          #           content: encodedContent,
+          #           branch: 'main'
+          #         };
+
+          #         try {
+          #           const response = await fetch(url, {
+          #             headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
+          #           });
+          #           if (response.ok) {
+          #             const existingFile = await response.json();
+          #             body.sha = existingFile.sha;
+          #           }
+          #         } catch (error) {
+          #             console.log("keywords_full.json not found. Creating a new one.");
+          #         }
+
+          #         const response = await fetch(url, {
+          #           method: 'PUT',
+          #           headers,
+          #           body: JSON.stringify(body)
+          #         });
+
+          #         if (!response.ok) {
+          #           const errorText = await response.text();
+          #           throw new Error(`保存全景关键词失败 (${response.status}): ${errorText}`);
+          #         }
+
+          #         console.log("✅ 成功保存全景关键词到 keywords_full.json");
+
+          #       } catch (error) {
+          #         console.error("❌ 保存全景关键词时出错:", error);
+          #       }
+          #     }
+              
+          #     await saveKeywordsFullToGitHub(sortedKeywordsFull);
+
+          #     // --- FIX STARTS HERE: 自动更新核心搜索关键词的逻辑 ---
+
+          #     // 1. 定义想从新热词中挑选前几个来添加
+          #     const TOP_N_KEYWORDS_TO_ADD = 3; 
+
+          #     // 2. 获取本次抓取到的最高频的N个新热词
+          #     const newHotKeywords = sortedKeywordsFull
+          #       .slice(0, TOP_N_KEYWORDS_TO_ADD)
+          #       .map(item => item.keyword);
+
+          #     // 3. 将旧的关键词和新的热词合并，并用Set数据结构去除重复项
+          #     const combinedKeywords = new Set([...keywords, ...newHotKeywords]);
+
+          #     // 4. 将Set转换回数组，作为下一次搜索要用的新关键词列表
+          #     const newSearchKeywords = Array.from(combinedKeywords);
+
+          #     console.log("Original search keywords:", keywords);
+          #     console.log("New hot keywords to add:", newHotKeywords);
+          #     console.log("Updated search keywords for next run:", newSearchKeywords);
+
+          #     // --- FIX ENDS HERE ---
+
+
+          #     const newData = {
+          #       papers,
+          #       lastUpdate: getBeijingTime().toISOString(),
+          #       keywords: keywords,
+          #       lastAutoUpdateDate: getBeijingTime().toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'})
+          #     };
+              
+          #     await saveToGitHub(newData, existingData.sha);
+          #     console.log(`成功更新了 ${papers.length} 篇论文`);
+              
+          #   } catch (error) {
+          #     console.error("更新过程中出错:", error);
+          #     process.exit(1);
+          #   }
+          # }
+
+          # main();
+          # EOL
+
           // 主函数
           async function main() {
             try {
+              // --- 步骤 1: 获取现有数据和已存在的论文URL ---
               const existingData = await fetchExistingData();
               const keywords = existingData.keywords || DEFAULT_KEYWORDS;
+              const existingPaperUrls = new Set((existingData.papers || []).map(p => p.url).filter(url => url && url !== "#"));
               
               console.log(`将使用以下关键词: ${keywords.join(', ')}`);
+              console.log(`目前已记录 ${existingPaperUrls.size} 篇论文的URL。`);
               
-              let papers; // 先声明一个空的容器，调试用
-
-
-              // --- 修改部分：根据调试模式决定如何获取论文数据 ---
+              // (调试模式逻辑，保持不变)
+              let papers;
               if (DEBUG_MODE) {
                 console.log("🚀 调试模式已开启，将使用缓存数据，跳过 Perplexity API 调用。");
-                papers = existingData.papers || []; // 使用已存在的论文数据
+                papers = existingData.papers || [];
               } else {
                 console.log("调用 Perplexity API 获取新论文...");
                 papers = await fetchPapers(keywords);
               }
-              // --- 修改结束 ---
               
               if (papers.length === 0) {
-                console.log("未能获取任何论文，将保留现有数据");
+                console.log("未能获取任何论文数据，工作流结束。");
                 return;
               }
 
-              const allKeywords = papers.flatMap(p => p.paperKeywords).filter(k => typeof k === 'string' && k.length > 0);
+              // --- 步骤 2 & 3: 过滤掉重复论文 ---
+              const newUniquePapers = papers.filter(p => !existingPaperUrls.has(p.url));
+
+              // --- 步骤 4: 如果没有新论文则提前结束 ---
+              if (newUniquePapers.length === 0) {
+                  console.log("本次获取的论文均已存在，没有新内容可更新。");
+                  return;
+              }
+              console.log(`API返回了 ${papers.length} 篇论文，其中 ${newUniquePapers.length} 篇是全新的。`);
+
+              // --- 后续所有操作，都基于 newUniquePapers ---
+              const allKeywords = newUniquePapers.flatMap(p => p.paperKeywords).filter(k => typeof k === 'string' && k.length > 0);
 
               const keywordFreq = allKeywords.reduce((acc, k) => {
                 acc[k] = (acc[k] || 0) + 1;
@@ -368,96 +507,57 @@ jobs:
                 .sort((a, b) => b[1] - a[1])
                 .map(([k, count]) => ({ keyword: k, count }));
 
+              // (saveKeywordsFullToGitHub 函数定义保持不变)
               async function saveKeywordsFullToGitHub(keywordsFullData) {
                 try {
                   const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/keywords_full.json`;
-                  const headers = {
-                    'Authorization': `token ${GITHUB_TOKEN}`,
-                    'Content-Type': 'application/json'
-                  };
-
+                  const headers = { 'Authorization': `token ${GITHUB_TOKEN}`, 'Content-Type': 'application/json' };
                   const content = JSON.stringify(keywordsFullData, null, 2);
                   const encodedContent = Buffer.from(content).toString('base64');
-
-                  const body = {
-                    message: `更新全景关键词 - ${new Date().toISOString()}`,
-                    content: encodedContent,
-                    branch: 'main'
-                  };
-
+                  const body = { message: `更新全景关键词 - ${new Date().toISOString()}`, content: encodedContent, branch: 'main' };
                   try {
-                    const response = await fetch(url, {
-                      headers: { 'Authorization': `token ${GITHUB_TOKEN}` }
-                    });
-                    if (response.ok) {
-                      const existingFile = await response.json();
-                      body.sha = existingFile.sha;
-                    }
-                  } catch (error) {
-                      console.log("keywords_full.json not found. Creating a new one.");
-                  }
-
-                  const response = await fetch(url, {
-                    method: 'PUT',
-                    headers,
-                    body: JSON.stringify(body)
-                  });
-
-                  if (!response.ok) {
-                    const errorText = await response.text();
-                    throw new Error(`保存全景关键词失败 (${response.status}): ${errorText}`);
-                  }
-
+                    const response = await fetch(url, { headers: { 'Authorization': `token ${GITHUB_TOKEN}` } });
+                    if (response.ok) { body.sha = (await response.json()).sha; }
+                  } catch (error) { console.log("keywords_full.json not found. Creating a new one."); }
+                  const response = await fetch(url, { method: 'PUT', headers, body: JSON.stringify(body) });
+                  if (!response.ok) { throw new Error(`保存全景关键词失败 (${response.status}): ${await response.text()}`); }
                   console.log("✅ 成功保存全景关键词到 keywords_full.json");
-
-                } catch (error) {
-                  console.error("❌ 保存全景关键词时出错:", error);
-                }
+                } catch (error) { console.error("❌ 保存全景关键词时出错:", error); }
               }
               
-              await saveKeywordsFullToGitHub(sortedKeywordsFull);
+              if (sortedKeywordsFull.length > 0) {
+                  await saveKeywordsFullToGitHub(sortedKeywordsFull);
+              }
 
-              // --- FIX STARTS HERE: 自动更新核心搜索关键词的逻辑 ---
-
-              // 1. 定义想从新热词中挑选前几个来添加
+              // (自动更新核心关键词的逻辑保持不变)
               const TOP_N_KEYWORDS_TO_ADD = 3; 
-
-              // 2. 获取本次抓取到的最高频的N个新热词
-              const newHotKeywords = sortedKeywordsFull
-                .slice(0, TOP_N_KEYWORDS_TO_ADD)
-                .map(item => item.keyword);
-
-              // 3. 将旧的关键词和新的热词合并，并用Set数据结构去除重复项
+              const newHotKeywords = sortedKeywordsFull.slice(0, TOP_N_KEYWORDS_TO_ADD).map(item => item.keyword);
               const combinedKeywords = new Set([...keywords, ...newHotKeywords]);
-
-              // 4. 将Set转换回数组，作为下一次搜索要用的新关键词列表
               const newSearchKeywords = Array.from(combinedKeywords);
+              
+              // --- 步骤 5 & 6: 合并并截取最终的论文列表 ---
+              const combinedPapers = [...newUniquePapers, ...(existingData.papers || [])];
+              const MAX_PAPERS_TO_KEEP = 50; // 定义最多保留多少篇论文
+              const finalPapers = combinedPapers.slice(0, MAX_PAPERS_TO_KEEP);
 
-              console.log("Original search keywords:", keywords);
-              console.log("New hot keywords to add:", newHotKeywords);
-              console.log("Updated search keywords for next run:", newSearchKeywords);
+              console.log(`将保留最新的 ${finalPapers.length} 篇论文。`);
 
-              // --- FIX ENDS HERE ---
-
-
+              // --- 步骤 7: 准备并保存最终数据 ---
               const newData = {
-                papers,
+                papers: finalPapers, // 使用合并、去重、截取后的最终列表
                 lastUpdate: getBeijingTime().toISOString(),
-                keywords: keywords,
+                keywords: newSearchKeywords,
                 lastAutoUpdateDate: getBeijingTime().toLocaleDateString('zh-CN', {timeZone: 'Asia/Shanghai'})
               };
               
               await saveToGitHub(newData, existingData.sha);
-              console.log(`成功更新了 ${papers.length} 篇论文`);
+              console.log(`成功处理了 ${newUniquePapers.length} 篇新论文`);
               
             } catch (error) {
               console.error("更新过程中出错:", error);
               process.exit(1);
             }
           }
-
-          main();
-          EOL
 
       - name: Run updater
         env:
