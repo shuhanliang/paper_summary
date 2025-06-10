@@ -29,6 +29,11 @@ jobs:
           require('dotenv').config();
           const fetch = require('node-fetch');
 
+          // --- 调试模式开关 ---
+          // 设置为 true 来跳过API调用，使用已有的 academic_data.json 中的论文数据
+          // 设置为 false 以正常调用 Perplexity API
+          const DEBUG_MODE = true; 
+
           // 配置
           const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
           const GITHUB_REPO = process.env.GITHUB_REPOSITORY;
@@ -334,7 +339,18 @@ jobs:
               
               console.log(`将使用以下关键词: ${keywords.join(', ')}`);
               
-              const papers = await fetchPapers(keywords);
+              let papers; // 先声明一个空的容器，调试用
+
+
+              // --- 修改部分：根据调试模式决定如何获取论文数据 ---
+              if (DEBUG_MODE) {
+                console.log("🚀 调试模式已开启，将使用缓存数据，跳过 Perplexity API 调用。");
+                papers = existingData.papers || []; // 使用已存在的论文数据
+              } else {
+                console.log("调用 Perplexity API 获取新论文...");
+                papers = await fetchPapers(keywords);
+              }
+              // --- 修改结束 ---
               
               if (papers.length === 0) {
                 console.log("未能获取任何论文，将保留现有数据");
@@ -400,6 +416,29 @@ jobs:
               }
               
               await saveKeywordsFullToGitHub(sortedKeywordsFull);
+
+              // --- FIX STARTS HERE: 自动更新核心搜索关键词的逻辑 ---
+
+              // 1. 定义想从新热词中挑选前几个来添加
+              const TOP_N_KEYWORDS_TO_ADD = 3; 
+
+              // 2. 获取本次抓取到的最高频的N个新热词
+              const newHotKeywords = sortedKeywordsFull
+                .slice(0, TOP_N_KEYWORDS_TO_ADD)
+                .map(item => item.keyword);
+
+              // 3. 将旧的关键词和新的热词合并，并用Set数据结构去除重复项
+              const combinedKeywords = new Set([...keywords, ...newHotKeywords]);
+
+              // 4. 将Set转换回数组，作为下一次搜索要用的新关键词列表
+              const newSearchKeywords = Array.from(combinedKeywords);
+
+              console.log("Original search keywords:", keywords);
+              console.log("New hot keywords to add:", newHotKeywords);
+              console.log("Updated search keywords for next run:", newSearchKeywords);
+
+              // --- FIX ENDS HERE ---
+
 
               const newData = {
                 papers,
