@@ -1,6 +1,117 @@
 {
   "papers": [
     {
+      "id": "paper-api-1749689953007-y6zcq",
+      "title": "Large Language Model-Based Semantic Communication System for Image Transmission",
+      "url": "https://arxiv.org/html/2501.12988v1",
+      "authors": [
+        "Soheyb Ribouh",
+        "Osama Saleem"
+      ],
+      "affiliations": [
+        "Univ Rouen Normandie",
+        "INSA Rouen Normandie",
+        "Université Le Havre Normandie",
+        "Normandie Univ LITIS UR 4108, France"
+      ],
+      "journal": "arXiv",
+      "publicationDate": "2025",
+      "paperKeywords": [
+        "6G",
+        "Large Language Model",
+        "Semantic Communication",
+        "OFDM",
+        "Image Transmission",
+        "AI Communications",
+        "Semantic Encoder"
+      ],
+      "snippet": "本文提出了一种基于大语言模型（LLM）的OFDM语义通信框架，专门用于图像传输。该框架的创新之处在于设计了一个能够利用LLM提取语义信息（而非原始表示）的语义编码器，并在接收端采用LLM为核心的解码器，以理解上下文并生成最适合接受场景的表达形式。实验在包含不同速度范围的城市宏小区环境中进行评估，结果显示，该系统能够将数据规模缩减4250倍，并在数据速率上优于传统通信方法，为实现6G高效连接迈出了关键一步。",
+      "interpretation": "本论文的重要性体现在创新地将大语言模型引入6G语义通信系统，显著提高了通信效率与数据压缩比。创新点包括基于LLM的语义编码与解码设计，突破了传统通信以比特精准还原为目标的限制，将通信焦点转向信息含义和上下文相关度。该方法有望实现更高效的6G多媒体应用，尤其适用于对带宽和速率要求极高的场景，例如城市宏小区中的智能设备通信。然而，该系统主要在仿真环境下验证，实际部署中的鲁棒性和跨模态任务泛化能力仍需进一步考察。此外，大模型推理开销和实时性实现也是当前的局限，需要未来结合边缘计算和模型压缩技术进一步优化。"
+    },
+    {
+      "id": "paper-api-1749689953008-gdv2xe",
+      "title": "A Comprehensive Survey of Large AI Models for Future Communications: Foundations, Applications and Challenges",
+      "url": "https://www.arxiv.org/pdf/2505.03556",
+      "authors": [
+        "Feibo Jiang",
+        "Cunhua Pan",
+        "Li Dong",
+        "Kezhi Wang",
+        "Merouane Debbah",
+        "Dusit Niyato",
+        "Zhu Han"
+      ],
+      "affiliations": [
+        "Various (including IEEE, affiliations detailed within the paper)"
+      ],
+      "journal": "arXiv",
+      "publicationDate": "2025",
+      "paperKeywords": [
+        "Large AI Model",
+        "6G",
+        "Semantic Communication",
+        "Agent",
+        "AI-Driven Networks",
+        "Model Optimization",
+        "Survey"
+      ],
+      "snippet": "本文系统回顾了大规模人工智能模型（LAMs）在通讯领域中的基础理论、应用场景与面临的挑战。6G通信旨在打造万物智能互联世界，LAMs凭借超大参数量和强大的泛化能力，在通信各层级展现出卓越的认知能力与任务适应性。作者全面梳理了AI驱动的通信系统现状，重点介绍了LAMs在物理层设计、资源管理、语义通信等关键环节的突破，并探讨了模型定制、领域微调和减少“幻觉”问题的方法，指出LAMs将是未来智能通信系统不可或缺的核心引擎。",
+      "interpretation": "本综述的重要性在于为融合AI、6G与语义通信等前沿领域的研究人员提供了详尽的知识图谱。作者深入探讨了大模型技术如何推动智能化、极低时延和高可靠性的下一代通信网络变革。创新之处包括对LAMs下各类应用场景如智能体协作、任务驱动通信、跨模态推理等的前瞻性解读。同时，论文直面大模型部署中的挑战，如高计算功耗、实时性不足和领域数据不足等，提出了模型剪枝、知识蒸馏等可行性方案。但由于该文为综述，缺乏具体的系统实现与定量实证分析，未来需加强与实际网络的结合示范与实际效率评测。"
+    },
+    {
+      "id": "paper-api-1749689953011-ysp02l",
+      "title": "When Large Language Model Agents Meet 6G Networks",
+      "url": "https://www.eng.auburn.edu/~szm0001/papers/WCM24-when.pdf",
+      "authors": [
+        "Not fully listed (correspondence: szm0001@auburn.edu)"
+      ],
+      "affiliations": [
+        "Auburn University"
+      ],
+      "journal": "IEEE Wireless Communications Magazine (preprint)",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "6G",
+        "Large Language Model",
+        "Agent",
+        "Semantic Communication",
+        "Edge Computing",
+        "AI Assistant",
+        "Distributed Learning"
+      ],
+      "snippet": "本文提出了一种面向6G网络的分布式大语言模型智能体（LLM agent）学习系统，利用移动终端与边缘服务器协作，实现面向终端-边缘-云多层计算的民主型AI助手服务。论文深入探讨了6G网络与LLM agent集成过程中的主要问题，包括多模态感知、数字孪生决策和任务导向通信的对齐机制，并提出了优化模型缓存以提升就地学习能力、降低网络负载和时延的新框架。该研究为6G AI agent服务的智能化与高效化提供了可行技术路径。",
+      "interpretation": "该文以LLM agent为核心，推动了6G网络智能通信和边缘计算的深度融合。创新点在于采用分布式学习和模型缓存机制，最大化LLM agent的上下文学习能力并兼顾网络开销，为智能助理和语义通信服务提供了高效部署方案。其潜在影响在于加速多智能体协作、任务感知通信与智能决策在6G场景中的实际应用。但该框架目前主要为概念验证，相关大规模实验与跨域场景推广尚需进一步工作，此外模型推理资源消耗与移动终端能耗问题仍需优化。"
+    },
+    {
+      "id": "paper-api-1749689953012-10oxuj",
+      "title": "Large Language Models Empower Semantic Communication for 6G Networks",
+      "url": "https://arxiv.org/abs/2405.03266",
+      "authors": [
+        "Xinyi Xu",
+        "Hang Liu",
+        "Zixuan Zhong",
+        "Zhi Zhang",
+        "Qinghe Du"
+      ],
+      "affiliations": [
+        "Shanghai Jiao Tong University",
+        "Beijing University of Posts and Telecommunications"
+      ],
+      "journal": "arXiv",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "Large Language Model",
+        "Semantic Communication",
+        "6G",
+        "Intelligent Agent",
+        "Multimodal Reasoning",
+        "Context Awareness",
+        "AI Communications"
+      ],
+      "snippet": "本文提出以大语言模型（LLM）为核心驱动的6G语义通信新架构，深度挖掘LLM在自然语言理解与多模态推理中的能力，以实现高效、上下文感知的信息传输。通过理论分析与系统设计，作者展示了LLM模型在传输策略优化、智能信号恢复、用户意图理解等方面的独特优势。实验表明，LLM语义通信系统在带宽利用和语义准确性方面大幅优于传统通信方法，为泛在智能通信奠定了坚实基础。",
+      "interpretation": "本论文创新地将LLM与6G语义通信深度融合，推动了通信系统从以比特为中心向意义感知、智能协同的变革。其价值在于利用LLM的推理和生成能力，有效解决了传统通信在多模态、复杂场景下的效率与准确性瓶颈，极大提升了6G全链路的智能化水平。但论文主要在模拟和理论层面展开，真实大规模网络与多智能体联合应用的实证研究尚有不足。后续需关注LLM推理延迟、模型压缩，以及与6G网络协议的深度集成等关键挑战。"
+    },
+    {
       "id": "paper-api-1749613885150-xqqym",
       "title": "Semantic Edge Computing and Semantic Communications in 6G: A Comprehensive Survey",
       "url": "https://arxiv.org/abs/2411.18199",
@@ -143,7 +254,7 @@
       "interpretation": "该论文具有前瞻意义，首次将系统2机器学习（强调推理、抽象和组合性）引入6G语义通信场景，提出了基于LLM和Agent的多智能体协同通信和复杂任务规划新范式。创新点在于强调抽象化和语义层面的交互能够极大提升AI驱动的6G通信系统灵活性和智能水平，对今后智能网络打造知识驱动、自适应和可解释性强的通信体系提供了理论依据。潜在影响涵盖自动化驾驶、智能无人系统等领域，但实际部署中面临数据稀疏、模型复杂度高以及多智能体协同难度大等限制。"
     }
   ],
-  "lastUpdate": "2025-06-11T11:51:25.830Z",
+  "lastUpdate": "2025-06-12T08:59:13.685Z",
   "keywords": [
     "通信",
     "AI 6G",
@@ -154,5 +265,5 @@
     "Semantic Communication",
     "Large Language Model"
   ],
-  "lastAutoUpdateDate": "2025/6/11"
+  "lastAutoUpdateDate": "2025/6/12"
 }
