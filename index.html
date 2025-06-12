@@ -635,14 +635,6 @@
         }
 
 
-        async function deleteActiveKeyword(index) {
-            activeKeywords.splice(index, 1);
-            saveActiveKeywordsToLocalStorage();
-            renderActiveKeywords();
-            console.log("Keywords changed, fetching new papers.");
-            keywordsModified = true;
-            await loadOrFetchPapers(true);
-        }
 
         async function deleteActiveKeyword(keywordToDelete) {
             let changed = false;
