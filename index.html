@@ -354,11 +354,7 @@
             </section>
         </main>
 
-        <div class="text-center mt-8">
-            <a href="archive.html" class="bg-white text-sky-700 font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition duration-300 ease-in-out">
-                查看所有精选论文 &rarr;
-            </a>
-        </div>
+        
 
         <footer class="mt-12 text-center text-sm text-slate-500">
             <p>&copy; <span id="current-year"></span> 学术周报生成器. 保留所有权利.</p>
@@ -1040,14 +1036,15 @@
             }
 
             // 只显示前4篇论文
-            papersToRender.slice(0, 4).forEach((item, index) => {
-                const card = document.createElement('article');
-                card.className = 'report-card-poster';
-                card.dataset.index = index; // Add index as data attribute
+            const papersToShow = papersToRender.slice(0, 4);
+            papersToShow.forEach((item, index) => {
+                const card = document.createElement('article');
+                card.className = 'report-card-poster';
+                card.dataset.index = index;
 
-                let authorsHtml = item.authors.map((author, index) => `${author}<sup class="text-emerald-600">${index + 1}</sup>`).join(', ');
-                let affiliationsHtml = item.affiliations.map((aff, index) => `<span class="text-xs block"><sup class="text-emerald-600">${index + 1}</sup>${aff}</span>`).join('');
-                let keywordsHtml = item.paperKeywords.map(k => `<span class="poster-keywords-tag">${k}</span>`).join(' ');
+                let authorsHtml = item.authors.map((author, index) => `${author}<sup class="text-emerald-600">${index + 1}</sup>`).join(', ');
+                let affiliationsHtml = item.affiliations.map((aff, index) => `<span class="text-xs block"><sup class="text-emerald-600">${index + 1}</sup>${aff}</span>`).join('');
+                let keywordsHtml = item.paperKeywords.map(k => `<span class="poster-keywords-tag">${k}</span>`).join(' ');
 
                 card.innerHTML = `
                     <div class="poster-grid">
@@ -1094,8 +1091,21 @@
                 reportContentDiv.appendChild(card);
             });
 
-            // Generate pagination dots
-            renderPaginationDots(papersToRender.length);
+            // --- 新增：创建并添加“查看更多”卡片 ---
+            const moreCard = document.createElement('article');
+            moreCard.className = 'report-card-poster flex items-center justify-center'; // 使用相同样式，并用flex居中
+            moreCard.innerHTML = `
+                <a href="archive.html" class="flex flex-col items-center justify-center text-center p-8 bg-sky-50 h-full w-full rounded-lg transition hover:bg-sky-100">
+                    <h3 class="text-2xl font-bold text-sky-700">查看更多</h3>
+                    <p class="text-slate-500 mt-2">浏览所有历史精选论文</p>
+                    <span class="mt-4 text-4xl">&rarr;</span>
+                </a>
+            `;
+            reportContentDiv.appendChild(moreCard);
+
+            // --- 修改：根据卡片总数（4篇+1个链接）生成分页圆点 ---
+            renderPaginationDots(papersToShow.length + 1);
+
 
             try {
                 localStorage.setItem(LOCAL_STORAGE_PAPERS_KEY, JSON.stringify(papersToRender));
