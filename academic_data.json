@@ -255,15 +255,19 @@
     }
   ],
   "lastUpdate": "2025-06-12T08:59:13.685Z",
-  "keywords": [
-    "通信",
-    "AI 6G",
-    "Agent",
-    "LLM",
-    "语义通信",
-    "6G",
-    "Semantic Communication",
-    "Large Language Model"
-  ],
+  "keywords": {
+    "manual": [
+      "通信",
+      "AI 6G",
+      "Agent",
+      "LLM",
+      "语义通信"
+    ],
+    "hot": [
+      "6G",
+      "Semantic Communication",
+      "Large Language Model"
+    ]
+  },
   "lastAutoUpdateDate": "2025/6/12"
 }

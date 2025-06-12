@@ -395,6 +395,7 @@
             "LLM": "Large Language Model",
             "语义通信": "Semantic Communications"
         };
+        let keywordData = { manual: [], hot: [] }; // 新增: 用于存储分类后的关键词
         let activeKeywords = []; 
         let intersectionObserver;
         let autoUpdateInterval;
@@ -546,12 +547,26 @@
             if (!USE_GITHUB_STORAGE) return null;
             
             const data = await fetchFromGitHub();
-            if (data) {
-                if (data.papers) renderReport(data.papers);
-                if (data.keywords) {
-                    activeKeywords = data.keywords;
-                    renderActiveKeywords();
-                }
+            if (data) {
+                if (data.papers) renderReport(data.papers);
+                
+                // --- 新增：处理 manual 和 hot 关键词 ---
+                if (data.keywords) {
+                    const isNewStructure = typeof data.keywords === 'object' && !Array.isArray(data.keywords);
+                    if (isNewStructure) {
+                        keywordData.manual = data.keywords.manual || [];
+                        keywordData.hot = data.keywords.hot || [];
+                    } else {
+                        // 兼容旧的扁平数组结构
+                        keywordData.manual = data.keywords || [];
+                        keywordData.hot = [];
+                    }
+                    // activeKeywords 是合并后的结果，用于显示
+                    activeKeywords = Array.from(new Set([...keywordData.manual, ...keywordData.hot]));
+                    renderActiveKeywords();
+                }
+                // --- 修改结束 ---
+
                 if (data.lastUpdate) {
                     localStorage.setItem(LOCAL_STORAGE_LAST_FETCH_KEY, data.lastUpdate);
                 }
@@ -577,24 +592,48 @@
                 deleteButton.className = 'ml-2 text-sky-500 hover:text-sky-700 font-bold text-xs';
                 deleteButton.textContent = '✕';
                 deleteButton.title = `删除关键词 "${keyword}"`;
-                deleteButton.onclick = () => deleteActiveKeyword(index);
+                deleteButton.onclick = () => deleteActiveKeyword(keyword); // 不再通过索引删除，而是通过关键词文本本身
                 keywordTag.appendChild(deleteButton);
                 keywordsListDiv.appendChild(keywordTag);
             });
         }
 
-        async function addActiveKeyword(keyword) {
-            const trimmedKeyword = keyword.trim();
-            if (trimmedKeyword && !activeKeywords.includes(trimmedKeyword)) {
-                activeKeywords.push(trimmedKeyword);
-                saveActiveKeywordsToLocalStorage();
-                renderActiveKeywords();
-                console.log("Keywords changed, fetching new papers.");
-                keywordsModified = true;
-                await loadOrFetchPapers(true);
-            }
-            keywordInput.value = '';
+        // 新的帮助函数，用于将关键词对象保存到GitHub
+        async function saveKeywordsToGitHub() {
+            if (!USE_GITHUB_STORAGE) return;
+
+            loadingMessage.textContent = '正在保存关键词并刷新...';
+            loadingMessageContainer.style.display = 'flex';
+
+            const papersData = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PAPERS_KEY) || '[]');
+            const sharedData = {
+                papers: papersData,
+                lastUpdate: getBeijingTime().toISOString(),
+                keywords: keywordData, // 保存包含 manual 和 hot 的完整对象
+                lastAutoUpdateDate: localStorage.getItem(LOCAL_STORAGE_LAST_AUTO_UPDATE_DATE_KEY)
+            };
+
+            await saveToGitHub(sharedData);
+
+            // 合并显示并重新渲染
+            activeKeywords = Array.from(new Set([...keywordData.manual, ...keywordData.hot]));
+            renderActiveKeywords();
+            
+            // 重新获取论文
+            await loadOrFetchPapers(true);
         }
+
+        async function addActiveKeyword(keyword) {
+            const trimmedKeyword = keyword.trim();
+            // 检查所有关键词，避免重复添加
+            if (trimmedKeyword && !activeKeywords.includes(trimmedKeyword)) {
+                // 新增的关键词只加入 manual 列表
+                keywordData.manual.push(trimmedKeyword);
+                await saveKeywordsToGitHub();
+            }
+            keywordInput.value = '';
+        }
+
 
         async function deleteActiveKeyword(index) {
             activeKeywords.splice(index, 1);
@@ -605,17 +644,27 @@
             await loadOrFetchPapers(true);
         }
 
-        function loadActiveKeywordsFromLocalStorage() {
-            const storedKeywords = localStorage.getItem('academicReportKeywords');
-            if (storedKeywords) {
-                activeKeywords = JSON.parse(storedKeywords);
-                 if (activeKeywords.length === 0 && userKeywords.length > 0) { 
-                    activeKeywords = [...userKeywords];
-                }
-            } else if (userKeywords.length > 0) { 
-                 activeKeywords = [...userKeywords];
+        async function deleteActiveKeyword(keywordToDelete) {
+            let changed = false;
+            // 从 manual 列表尝试删除
+            const indexManual = keywordData.manual.indexOf(keywordToDelete);
+            if (indexManual > -1) {
+                keywordData.manual.splice(indexManual, 1);
+                changed = true;
             }
-        }
+            
+            // 从 hot 列表也尝试删除（允许用户临时移除热门词）
+            const indexHot = keywordData.hot.indexOf(keywordToDelete);
+            if (indexHot > -1) {
+                keywordData.hot.splice(indexHot, 1);
+                changed = true;
+            }
+            
+            if(changed) {
+                await saveKeywordsToGitHub();
+            }
+        }
+
 
         function saveActiveKeywordsToLocalStorage() {
             localStorage.setItem('academicReportKeywords', JSON.stringify(activeKeywords));
