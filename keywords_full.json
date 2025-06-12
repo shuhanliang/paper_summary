@@ -1,26 +1,18 @@
 [
   {
     "keyword": "6G",
-    "count": 5
+    "count": 4
   },
   {
     "keyword": "Semantic Communication",
-    "count": 5
+    "count": 4
   },
   {
     "keyword": "Large Language Model",
-    "count": 5
-  },
-  {
-    "keyword": "AI Agent",
     "count": 3
   },
   {
-    "keyword": "Generative AI",
-    "count": 3
-  },
-  {
-    "keyword": "Multi-agent Systems",
+    "keyword": "AI Communications",
     "count": 2
   },
   {
@@ -28,39 +20,55 @@
     "count": 2
   },
   {
-    "keyword": "Intelligent Networks",
-    "count": 2
+    "keyword": "OFDM",
+    "count": 1
+  },
+  {
+    "keyword": "Image Transmission",
+    "count": 1
+  },
+  {
+    "keyword": "Semantic Encoder",
+    "count": 1
+  },
+  {
+    "keyword": "Large AI Model",
+    "count": 1
+  },
+  {
+    "keyword": "AI-Driven Networks",
+    "count": 1
+  },
+  {
+    "keyword": "Model Optimization",
+    "count": 1
+  },
+  {
+    "keyword": "Survey",
+    "count": 1
   },
   {
     "keyword": "Edge Computing",
     "count": 1
   },
   {
-    "keyword": "AI",
+    "keyword": "AI Assistant",
     "count": 1
   },
   {
-    "keyword": "Graph Neural Network",
+    "keyword": "Distributed Learning",
     "count": 1
   },
   {
-    "keyword": "Metaverse",
+    "keyword": "Intelligent Agent",
     "count": 1
   },
   {
-    "keyword": "System Architecture",
+    "keyword": "Multimodal Reasoning",
     "count": 1
   },
   {
-    "keyword": "Automated Decision",
-    "count": 1
-  },
-  {
-    "keyword": "System 2 ML",
-    "count": 1
-  },
-  {
-    "keyword": "Reasoning",
+    "keyword": "Context Awareness",
     "count": 1
   }
 ]
