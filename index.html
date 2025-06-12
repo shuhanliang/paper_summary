@@ -274,7 +274,6 @@
         <header class="mb-10 text-center">
             <h1 class="text-4xl font-bold text-sky-700">学术周报</h1>
             <p class="text-slate-600 mt-2">每日清晨，为您定制专属学术动态</p>
-            <p><a href="keywords.html">查看全景关键词 →</a></p>
         </header>
 
         <!-- 开发者工具栏（默认隐藏） -->
@@ -301,7 +300,12 @@
         <main class="grid md:grid-cols-3 gap-8">
             <aside class="md:col-span-1 space-y-8">
                 <section id="keyword-management" class="bg-white p-6 rounded-xl shadow-lg">
-                    <h2 class="text-2xl font-semibold mb-4 text-sky-600 border-b pb-2">关键词管理</h2>
+                    <div class="flex justify-between items-center mb-4 border-b pb-2">
+                        <h2 class="text-2xl font-semibold text-sky-600">关键词管理</h2>
+                        <a href="keywords.html" class="text-sm text-sky-600 hover:text-sky-700 hover:underline transition-colors">
+                            查看全景 →
+                        </a>
+                    </div>
                     <form id="add-keyword-form" class="space-y-4">
                         <div>
                             <label for="keyword-input" class="block text-sm font-medium text-slate-700 mb-1">添加关键词:</label>
