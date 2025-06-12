@@ -4,37 +4,140 @@
     <meta charset="UTF-8">
     <title>全景关键词 - 学术周报</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        h1 { color: #333; }
-        .keyword { font-size: 18px; margin: 5px 0; }
-        .count { color: #888; font-size: 14px; }
+        /* 基础页面美化 */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8; /* 匹配主页的淡雅背景色 */
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        /* 标题样式 */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #1e3a8a; /* 深蓝色，更具科技感 */
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #4b5563;
+            margin-bottom: 30px;
+        }
+
+        /* 画布容器，用于控制词云大小和位置 */
+        #myCanvasContainer {
+            width: 90%;
+            max-width: 800px; /* 限制最大宽度 */
+            margin: 0 auto;
+        }
+
+        /* 词云画布 */
+        #myCanvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 返回链接样式 */
+        .back-link {
+            margin-top: 30px;
+            text-decoration: none;
+            color: #2563eb;
+            font-weight: bold;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #1d4ed8;
+        }
     </style>
 </head>
 <body>
     <h1>📚 全景关键词</h1>
     <p>（统计所有已抓取论文中的关键词出现频率，供参考）</p>
-    <div id="keywords-list">加载中...</div>
-    <p><a href="index.html">← 返回首页</a></p>
 
+    <div id="myCanvasContainer">
+        <canvas width="800" height="600" id="myCanvas">
+            <p>您的浏览器不支持HTML5的canvas标签。</p>
+        </canvas>
+    </div>
+
+    <ul id="tags" style="display: none;">
+        </ul>
+
+    <a href="index.html" class="back-link">← 返回首页</a>
+
+    <script src="https://www.goat1000.com/tagcanvas.min.js" type="text/javascript"></script>
     <script>
-        fetch('keywords_full.json')
-            .then(response => response.json())
-            .then(data => {
-                const listDiv = document.getElementById('keywords-list');
-                listDiv.innerHTML = '';
+        window.onload = function() {
+            // 从JSON文件获取关键词数据
+            fetch('keywords_full.json')
+                .then(response => response.json())
+                .then(data => {
+                    const tagsUl = document.getElementById('tags');
+                    
+                    if (data.length === 0) {
+                         document.getElementById('myCanvasContainer').innerText = '暂无关键词数据。';
+                         return;
+                    }
 
-                data.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'keyword';
-                    div.innerHTML = `<strong>${item.keyword}</strong> <span class="count">（出现 ${item.count} 次）</span>`;
-                    listDiv.appendChild(div);
+                    // 动态计算字体大小范围
+                    const counts = data.map(item => item.count);
+                    const minCount = Math.min(...counts);
+                    const maxCount = Math.max(...counts);
+                    const minFontSize = 12; // 最小字体
+                    const maxFontSize = 40; // 最大字体
+
+                    data.forEach(item => {
+                        const li = document.createElement('li');
+                        const a = document.createElement('a');
+                        
+                        // 根据词频计算字体大小，实现频率越高、字体越大的效果
+                        let fontSize = minFontSize;
+                        if (maxCount > minCount) {
+                            fontSize = minFontSize + ((item.count - minCount) / (maxCount - minCount)) * (maxFontSize - minFontSize);
+                        } else if (data.length > 0) {
+                            fontSize = (minFontSize + maxFontSize) / 2;
+                        }
+                        
+                        a.href = "#"; // 链接可以留空
+                        a.innerText = item.keyword;
+                        a.style.fontSize = `${fontSize}px`; // TagCanvas 会利用这个字体大小
+                        a.title = `出现 ${item.count} 次`; // 鼠标悬停时显示次数
+                        
+                        li.appendChild(a);
+                        tagsUl.appendChild(li);
+                    });
+
+                    // 数据加载完成后，启动TagCanvas
+                    try {
+                        TagCanvas.Start('myCanvas', 'tags', {
+                            textColour: '#1e3a8a', // 标签文字颜色
+                            outlineColour: '#60a5fa', // 标签轮廓颜色（发光效果）
+                            reverse: true,
+                            depth: 0.8,
+                            maxSpeed: 0.05,
+                            weight: true, // 开启权重模式，让字体大小生效
+                            weightMode: 'size',
+                            tooltip: 'title' // 使用a标签的title作为悬浮提示
+                        });
+                    } catch(e) {
+                        // 如果出错，隐藏画布并显示错误信息
+                        document.getElementById('myCanvasContainer').style.display = 'none';
+                        console.error('TagCanvas failed to start:', e);
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('myCanvasContainer').innerText = '❌ 加载关键词失败: ' + error;
+                    console.error('Error fetching keywords:', error);
                 });
-            })
-            .catch(error => {
-                document.getElementById('keywords-list').innerText = '❌ 加载关键词失败: ' + error;
-            });
-
-
+        };
     </script>
 </body>
 </html>
