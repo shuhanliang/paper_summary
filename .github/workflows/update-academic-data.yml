@@ -352,7 +352,7 @@ jobs:
               
               const existingPaperUrls = new Set((existingData.papers || []).map(p => p.url).filter(url => url && url !== "#"));
               
-              console.log(`将使用以下关键词: ${keywords.join(', ')}`);
+              console.log(`将使用以下关键词: ${searchKeywords.join(', ')}`);
               console.log(`目前已记录 ${existingPaperUrls.size} 篇论文的URL。`);
               
               // (调试模式逻辑，保持不变)
