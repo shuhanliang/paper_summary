@@ -433,7 +433,7 @@ jobs:
               
               // --- 步骤 5 & 6: 合并并截取最终的论文列表 ---
               const combinedPapers = [...newUniquePapers, ...(existingData.papers || [])];
-              const MAX_PAPERS_TO_KEEP = 50; // 定义最多保留多少篇论文
+              const MAX_PAPERS_TO_KEEP = 100; // 定义最多保留多少篇论文
               const finalPapers = combinedPapers.slice(0, MAX_PAPERS_TO_KEEP);
 
               console.log(`将保留最新的 ${finalPapers.length} 篇论文。`);
