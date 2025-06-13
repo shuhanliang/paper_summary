@@ -1,6 +1,57 @@
 {
   "papers": [
     {
+      "id": "paper-api-1749776372609-rbz7sq",
+      "title": "Large Language Model-Based Semantic Communication System for Wireless Image Transmission in 6G OFDM Networks",
+      "url": "http://arxiv.org/pdf/2501.12988",
+      "authors": [
+        "[具体作者信息需查阅原文档]"
+      ],
+      "affiliations": [
+        "[具体机构信息需查阅原文档]"
+      ],
+      "journal": "arXiv preprint",
+      "publicationDate": "2025",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "OFDM",
+        "图像传输",
+        "无线通信",
+        "智能编码  \n\n---"
+      ],
+      "snippet": "本文提出了一种创新的基于大型语言模型（LLM）的语义通信系统，专为6G OFDM无线网络中的图像传输设计。该系统采用语义编码器，有效压缩数据，实现了高效的图像传输。在不同速度范围的城市宏蜂窝环境下，系统评估表明，相比传统通信方法，所提方案可将数据量缩减4250倍，同时提升传输速率，具备较强的鲁棒性和可扩展性。此方法有望充分释放6G网络的潜力，满足未来自动驾驶、虚拟现实和远程医疗等高要求场景的通信需求。",
+      "interpretation": "该论文的最大创新在于，将大语言模型引入到无线通信的语义编码环节，实现了图像数据的极致压缩和高效还原。与传统信息论方法相比，LLM能够更好地理解和提取信息的语义层面，从而在6G大带宽、低延时的要求下，大幅度减少冗余数据传输。这不仅提升了频谱利用率，还为未来AI驱动的智能通信网络奠定了基础。该方法有望在自动驾驶、智能医疗等深度依赖信息理解的应用中发挥关键作用。然而，论文也指出，现有语义通信度量体系仍需完善，LLM在不同数据模态和大规模实际场景下的泛化能力还有待进一步验证。"
+    },
+    {
+      "id": "paper-api-1749776372614-lqmzwt",
+      "title": "Large Language Models for Semantic Communication: Principles, Designs, and Open Problems",
+      "url": "https://arxiv.org/abs/2402.06179",
+      "authors": [
+        "[需查阅原文]"
+      ],
+      "affiliations": [
+        "[需查阅原文]"
+      ],
+      "journal": "arXiv preprint",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "大语言模型",
+        "语义通信",
+        "6G",
+        "智能体",
+        "语义压缩",
+        "通信模型",
+        "泛化能力  \n\n---\n\n以上五篇论文均聚焦于大语言模型",
+        "智能体",
+        "AI 6G",
+        "语义通信等多个领域交叉前沿，既有理论综述也有工程实证，为未来智能通信网络的设计与研究提供了前沿参考。"
+      ],
+      "snippet": "本论文系统分析了大语言模型（LLM）在语义通信中的作用与潜力，提出了基于LLM的语义传输新架构，并探讨其在6G、智能体通信等场景下的应用优势。论文介绍了LLM驱动的语义编码、推理与纠错机制，有效提升端到端通信效率与任务完成精度。文中还总结了当前面临的主要挑战，包括模型效率、实时性、语义量化标准与跨模态语义对齐等，并对未来研究方向提出展望。",
+      "interpretation": "该文在理论与工程两方面对“LLM+语义通信+6G”模式进行了深入剖析，强调了大模型能够理解上下文和复杂意图，是推动下一代智能通信的关键技术。创新点包括利用LLM进行语义压缩、跨域推理和实时纠错，有望极大减少带宽消耗并提升通信鲁棒性。然而，目前LLM的算力需求和泛化能力仍是研发障碍，如何在能耗、延迟与效果间寻求平衡是未来研究重点。本文为开发高效智能通信系统提供了重要理论基础和技术路线。"
+    },
+    {
       "id": "paper-api-1749689953007-y6zcq",
       "title": "Large Language Model-Based Semantic Communication System for Image Transmission",
       "url": "https://arxiv.org/html/2501.12988v1",
@@ -254,7 +305,7 @@
       "interpretation": "该论文具有前瞻意义，首次将系统2机器学习（强调推理、抽象和组合性）引入6G语义通信场景，提出了基于LLM和Agent的多智能体协同通信和复杂任务规划新范式。创新点在于强调抽象化和语义层面的交互能够极大提升AI驱动的6G通信系统灵活性和智能水平，对今后智能网络打造知识驱动、自适应和可解释性强的通信体系提供了理论依据。潜在影响涵盖自动化驾驶、智能无人系统等领域，但实际部署中面临数据稀疏、模型复杂度高以及多智能体协同难度大等限制。"
     }
   ],
-  "lastUpdate": "2025-06-12T08:59:13.685Z",
+  "lastUpdate": "2025-06-13T08:59:33.395Z",
   "keywords": {
     "manual": [
       "通信",
@@ -264,10 +315,10 @@
       "语义通信"
     ],
     "hot": [
+      "语义通信",
       "6G",
-      "Semantic Communication",
-      "Large Language Model"
+      "大语言模型"
     ]
   },
-  "lastAutoUpdateDate": "2025/6/12"
+  "lastAutoUpdateDate": "2025/6/13"
 }
