@@ -203,9 +203,20 @@ jobs:
                 allLabels.filter(l => !["in-depth analysis", "深入解读与分析", "深入解读"].includes(l.toLowerCase())));
               if (interpretation) paper.interpretation = interpretation;
               
-              const keywordsText = extractField(content, ["keywords", "关键词"]);
+              let keywordsText = extractField(content, ["keywords", "关键词"]);
               if (keywordsText) {
-                paper.paperKeywords = [...keywordsText.split(/,|、/).map(k => k.trim()).filter(k => k.length > 0)]; // <--- 修改后，移除了 originalKeyword
+                // --- 新增：清理逻辑，只取第一行并过滤无效内容 ---
+                // 1. 按换行符分割，只取第一行，防止抓取到后面的总结性文字
+                let cleanText = keywordsText.split('\n')[0];
+                
+                // 2. 移除可能存在 "---" 等分隔符及其后的内容
+                cleanText = cleanText.split('---')[0];
+                
+                // 3. 分割并增加长度限制，过滤掉可能混入的长句子
+                paper.paperKeywords = [...cleanText.split(/,|、/)
+                    .map(k => k.trim())
+                    .filter(k => k.length > 0 && k.length < 50)]; 
+                // --- 修改结束 ---
               }
               
               // 验证必要字段是否有效
