@@ -1,6 +1,34 @@
 {
   "papers": [
     {
+      "id": "paper-api-1749780708917-2qxq2c",
+      "title": "Foundation Large Language Model-Driven Semantic Communication for Multi-Modal Metaverse over 6G",
+      "url": "https://arxiv.org/abs/2405.14816",
+      "authors": [
+        "Zhenguo Li",
+        "Lei Yang",
+        "Zhaoyang Zhang",
+        "Yifan Chen"
+      ],
+      "affiliations": [
+        "Zhejiang University",
+        "University of Electronic Science and Technology of China"
+      ],
+      "journal": "arXiv preprint",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "大语言模型",
+        "语义通信",
+        "6G",
+        "多模态",
+        "元宇宙",
+        "智能体",
+        "AI 6G"
+      ],
+      "snippet": "本文提出了一种基于基础大语言模型驱动的多模态元宇宙6G语义通信框架。该方法通过深度整合大语言模型的理解与生成能力，实现多智能体间的高效语义交互。论文设计了端到端语义编解码机制，将异构多模态数据在6G网络中压缩、传输与理解，大幅降低带宽消耗并提升语义准确性。仿真实验结果展示了所提方法在元宇宙智能体、虚拟协作等场景中的显著优势。",
+      "interpretation": "该工作将大语言模型（如GPT）与6G语义通信深度结合，面向多模态元宇宙环境，提出了创新性的端到端大模型语义传输架构。其最大贡献在于赋能多智能体实现跨模态语义协作和高效通信，为未来AI 6G元宇宙应用提供了新范式。该方法兼顾了带宽效率和语义表达，还揭示了现实部署中面临的时延与分布式训练难题，为该交叉领域提供了理论和技术创新基础。"
+    },
+    {
       "id": "paper-api-1749776372609-rbz7sq",
       "title": "Large Language Model-Based Semantic Communication System for Wireless Image Transmission in 6G OFDM Networks",
       "url": "http://arxiv.org/pdf/2501.12988",
@@ -305,7 +333,7 @@
       "interpretation": "该论文具有前瞻意义，首次将系统2机器学习（强调推理、抽象和组合性）引入6G语义通信场景，提出了基于LLM和Agent的多智能体协同通信和复杂任务规划新范式。创新点在于强调抽象化和语义层面的交互能够极大提升AI驱动的6G通信系统灵活性和智能水平，对今后智能网络打造知识驱动、自适应和可解释性强的通信体系提供了理论依据。潜在影响涵盖自动化驾驶、智能无人系统等领域，但实际部署中面临数据稀疏、模型复杂度高以及多智能体协同难度大等限制。"
     }
   ],
-  "lastUpdate": "2025-06-13T08:59:33.395Z",
+  "lastUpdate": "2025-06-13T10:11:49.545Z",
   "keywords": {
     "manual": [
       "通信",
@@ -315,9 +343,9 @@
       "语义通信"
     ],
     "hot": [
+      "大语言模型",
       "语义通信",
-      "6G",
-      "大语言模型"
+      "6G"
     ]
   },
   "lastAutoUpdateDate": "2025/6/13"
