@@ -1,22 +1,18 @@
 [
   {
-    "keyword": "6G",
-    "count": 4
-  },
-  {
-    "keyword": "Semantic Communication",
-    "count": 4
-  },
-  {
-    "keyword": "Large Language Model",
-    "count": 3
-  },
-  {
-    "keyword": "AI Communications",
+    "keyword": "语义通信",
     "count": 2
   },
   {
-    "keyword": "Agent",
+    "keyword": "6G",
+    "count": 2
+  },
+  {
+    "keyword": "大语言模型",
+    "count": 2
+  },
+  {
+    "keyword": "智能体",
     "count": 2
   },
   {
@@ -24,51 +20,35 @@
     "count": 1
   },
   {
-    "keyword": "Image Transmission",
+    "keyword": "图像传输",
     "count": 1
   },
   {
-    "keyword": "Semantic Encoder",
+    "keyword": "无线通信",
     "count": 1
   },
   {
-    "keyword": "Large AI Model",
+    "keyword": "智能编码  \n\n---",
     "count": 1
   },
   {
-    "keyword": "AI-Driven Networks",
+    "keyword": "语义压缩",
     "count": 1
   },
   {
-    "keyword": "Model Optimization",
+    "keyword": "通信模型",
     "count": 1
   },
   {
-    "keyword": "Survey",
+    "keyword": "泛化能力  \n\n---\n\n以上五篇论文均聚焦于大语言模型",
     "count": 1
   },
   {
-    "keyword": "Edge Computing",
+    "keyword": "AI 6G",
     "count": 1
   },
   {
-    "keyword": "AI Assistant",
-    "count": 1
-  },
-  {
-    "keyword": "Distributed Learning",
-    "count": 1
-  },
-  {
-    "keyword": "Intelligent Agent",
-    "count": 1
-  },
-  {
-    "keyword": "Multimodal Reasoning",
-    "count": 1
-  },
-  {
-    "keyword": "Context Awareness",
+    "keyword": "语义通信等多个领域交叉前沿，既有理论综述也有工程实证，为未来智能通信网络的设计与研究提供了前沿参考。",
     "count": 1
   }
 ]
