@@ -1,6 +1,67 @@
 {
   "papers": [
     {
+      "id": "paper-api-1750208381207-d34uh",
+      "title": "Federated Learning and Semantic Communication for the Metaverse",
+      "url": "https://www.mdpi.com/2079-9292/14/5/868",
+      "authors": [
+        "Zhaohui Yang",
+        "Wenqiang Pu",
+        "Zehui Xiong",
+        "Dusit Niyato"
+      ],
+      "affiliations": [
+        "Zhejiang University",
+        "Nanyang Technological University",
+        "King Abdullah University of Science and Technology",
+        "National University of Singapore"
+      ],
+      "journal": "Electronics (MDPI)",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大模型",
+        "联邦学习",
+        "元宇宙",
+        "智能体",
+        "多主体协同"
+      ],
+      "snippet": "本论文探讨了在元宇宙背景下，结合联邦学习和语义通信以实现高质量大规模数据处理、沉浸式体验及智能代理间互操作性的关键技术。论文提出了基于大语言模型（LLM）、语义编码和联邦学习的6G通信框架，提升了多主体智能协作中的数据隐私、安全性与泛化能力。实验结果验证了所提方法在高并发、低延迟和高保真元宇宙场景中的有效性。",
+      "interpretation": "该研究聚焦于AI大模型、语义通信和6G网络在元宇宙大场景下的协同创新，首次将语义编码、生成式AI与联邦学习深度融合，显著提升了虚拟世界中智能体间通信效率及数据可信度。论文突出创新点在于端到端的语义分布式学习和跨主体泛在通信的新范式，对保障数据安全和提升系统可扩展性具有重要意义。局限性体现在资源受限设备部署中的复杂性以及跨域数据一致性处理的进一步优化空间。"
+    },
+    {
+      "id": "paper-api-1750208381208-p0e8ih",
+      "title": "Large Language Model Empowered 6G Semantic Communication: Vision, Architecture, and Challenges",
+      "url": "https://arxiv.org/abs/2403.10241",
+      "authors": [
+        "Zhijin Qin",
+        "Yuanwei Liu",
+        "Lina Bariah",
+        "Octavia A. Dobre",
+        "Geoffrey Ye Li"
+      ],
+      "affiliations": [
+        "Queen Mary University of London",
+        "Memorial University",
+        "Imperial College London",
+        "Southern University of Science and Technology"
+      ],
+      "journal": "arXiv preprint",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "6G",
+        "大语言模型",
+        "语义通信",
+        "智能代理",
+        "通信架构",
+        "多主体",
+        "AI通信"
+      ],
+      "snippet": "本论文首次从愿景、体系结构和挑战全景阐述了大语言模型赋能的6G语义通信系统。作者提出了以LLM为核心的智能代理架构，系统描述大模型在6G网络节点中的部署与协同机制，探讨了语义级别的信息压缩、推理与知识迁移能力，并分析了大模型驱动下人机、机机通信的潜在变革。论文剖析了当前技术瓶颈及未来研究方向。",
+      "interpretation": "该文在AI大模型与6G语义通信融合领域具开创性意义，提出以智能体为载体、以大语言模型为核心的下一代通信网络体系，有效提升语义层通信效率与泛化能力。创新点在于首次系统性梳理了LLM赋能通信系统的开放问题，包括知识迁移、模型压缩和自适应语义协同。论文提出的架构和挑战为6G网络的可解释性、智能化与多主体协作指明了清晰方向，为推动超大规模智能通信网络落地提供理论基础。局限性在于当前大模型资源消耗较高，实际部署和落地实施需进一步优化模型轻量化和安全性。"
+    },
+    {
       "id": "paper-api-1750035701463-gp2ui7j",
       "title": "Overview of AI and Communication for 6G Network",
       "url": "https://arxiv.org/abs/2412.14538",
@@ -388,7 +449,7 @@
       "interpretation": "该论文具有前瞻意义，首次将系统2机器学习（强调推理、抽象和组合性）引入6G语义通信场景，提出了基于LLM和Agent的多智能体协同通信和复杂任务规划新范式。创新点在于强调抽象化和语义层面的交互能够极大提升AI驱动的6G通信系统灵活性和智能水平，对今后智能网络打造知识驱动、自适应和可解释性强的通信体系提供了理论依据。潜在影响涵盖自动化驾驶、智能无人系统等领域，但实际部署中面临数据稀疏、模型复杂度高以及多智能体协同难度大等限制。"
     }
   ],
-  "lastUpdate": "2025-06-16T09:01:42.275Z",
+  "lastUpdate": "2025-06-18T08:59:41.933Z",
   "keywords": {
     "manual": [
       "通信",
@@ -398,10 +459,10 @@
       "语义通信"
     ],
     "hot": [
+      "语义通信",
       "6G",
-      "semantic communication",
-      "large language model"
+      "大模型"
     ]
   },
-  "lastAutoUpdateDate": "2025/6/16"
+  "lastAutoUpdateDate": "2025/6/18"
 }
