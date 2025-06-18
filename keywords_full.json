@@ -1,38 +1,50 @@
 [
   {
+    "keyword": "语义通信",
+    "count": 2
+  },
+  {
     "keyword": "6G",
     "count": 2
   },
   {
-    "keyword": "semantic communication",
-    "count": 2
-  },
-  {
-    "keyword": "large language model",
-    "count": 2
-  },
-  {
-    "keyword": "AI",
+    "keyword": "大模型",
     "count": 1
   },
   {
-    "keyword": "agent",
+    "keyword": "联邦学习",
     "count": 1
   },
   {
-    "keyword": "network intelligence",
+    "keyword": "元宇宙",
     "count": 1
   },
   {
-    "keyword": "AI agent",
+    "keyword": "智能体",
     "count": 1
   },
   {
-    "keyword": "knowledge reasoning",
+    "keyword": "多主体协同",
     "count": 1
   },
   {
-    "keyword": "intelligent communication",
+    "keyword": "大语言模型",
+    "count": 1
+  },
+  {
+    "keyword": "智能代理",
+    "count": 1
+  },
+  {
+    "keyword": "通信架构",
+    "count": 1
+  },
+  {
+    "keyword": "多主体",
+    "count": 1
+  },
+  {
+    "keyword": "AI通信",
     "count": 1
   }
 ]
