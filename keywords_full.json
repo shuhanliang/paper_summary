@@ -1,38 +1,14 @@
 [
   {
+    "keyword": "大语言模型",
+    "count": 2
+  },
+  {
     "keyword": "语义通信",
     "count": 2
   },
   {
     "keyword": "6G",
-    "count": 2
-  },
-  {
-    "keyword": "大模型",
-    "count": 1
-  },
-  {
-    "keyword": "联邦学习",
-    "count": 1
-  },
-  {
-    "keyword": "元宇宙",
-    "count": 1
-  },
-  {
-    "keyword": "智能体",
-    "count": 1
-  },
-  {
-    "keyword": "多主体协同",
-    "count": 1
-  },
-  {
-    "keyword": "大语言模型",
-    "count": 1
-  },
-  {
-    "keyword": "智能代理",
     "count": 1
   },
   {
@@ -40,11 +16,35 @@
     "count": 1
   },
   {
-    "keyword": "多主体",
+    "keyword": "AI智能体",
     "count": 1
   },
   {
-    "keyword": "AI通信",
+    "keyword": "计算协同",
+    "count": 1
+  },
+  {
+    "keyword": "AI互联",
+    "count": 1
+  },
+  {
+    "keyword": "AI 6G",
+    "count": 1
+  },
+  {
+    "keyword": "智能体",
+    "count": 1
+  },
+  {
+    "keyword": "无线通信",
+    "count": 1
+  },
+  {
+    "keyword": "6G架构",
+    "count": 1
+  },
+  {
+    "keyword": "网络智能化",
     "count": 1
   }
 ]
