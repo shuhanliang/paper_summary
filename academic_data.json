@@ -1,6 +1,57 @@
 {
   "papers": [
     {
+      "id": "paper-api-1750294781663-y7ozun",
+      "title": "Large Language Models in the 6G-Enabled Computing Continuum: a White Paper",
+      "url": "https://www.6gflagship.com/llm-white-paper/",
+      "authors": [
+        "Lauri Lovén",
+        "Maria Bordallo López",
+        "Mourad Morabit 等"
+      ],
+      "affiliations": [
+        "University of Oulu",
+        "6G Flagship"
+      ],
+      "journal": "6G Research Visions Series (White Paper No. 14)",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "大语言模型",
+        "6G",
+        "通信架构",
+        "AI智能体",
+        "语义通信",
+        "计算协同",
+        "AI互联"
+      ],
+      "snippet": "本白皮书阐述了大语言模型（LLM）在6G系统中的集成及其对通信体系结构的深远影响。LLM具备理解意图、推理、规划与执行的能力，将推动网络功能与交互方式变革。提出的AI互联框架促进AI在6G网络内部高效协作，构建以AI为核心的新型通信架构。报告系统梳理了6G与LLM融合的最新进展、应用案例和未来展望。",
+      "interpretation": "该白皮书创新性地提出了AI驱动、LLM赋能的6G通信新范式，强调大模型作为网络智能体不仅处理数据，还将深度参与网络的自治与优化决策。其贡献包括明确AI互联架构设计思路，为如何在实际6G网络中高效部署和管理大模型提供理论与工程指导。此外，文中展望多种AI、ML技术与传统通信的融合路径，推动6G智能通信系统的落地。但同时指出模型算力消耗与网络部署复杂性等现实瓶颈，值得学界持续关注和攻关。"
+    },
+    {
+      "id": "paper-api-1750294781665-4wwa15",
+      "title": "Artificial Intelligence In 6G: More Than Large-Language Models",
+      "url": "https://www.microwavejournal.com/articles/41917-artificial-intelligence-in-6g-more-than-large-language-models",
+      "authors": [
+        "Gary Lerude"
+      ],
+      "affiliations": [
+        "Microwave Journal"
+      ],
+      "journal": "Microwave Journal",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "AI 6G",
+        "大语言模型",
+        "智能体",
+        "语义通信",
+        "无线通信",
+        "6G架构",
+        "网络智能化"
+      ],
+      "snippet": "本文综述了AI，尤其是大语言模型和其它AI方法，在6G无线通信系统中的多层次应用。作者指出，尽管LLM带来范式变革，6G通信还需融合多种AI模型，包括基于信号、业务和物理层特征的数据驱动模型，实现智能体自治、资源调度及语义通信。文章还分析了大模型在无线通信中的技术瓶颈，如数据泛化、标准制定及能耗问题。",
+      "interpretation": "本文创新地将大语言模型与AI、6G无线通信系统的多层技术需求结合，系统阐述了智能体控制、资源管理和语义通信等关键任务中AI模型的适配路径。文章强调，单一LLM无法覆盖无线通信全部挑战，未来需混合多类大模型与小模型，通过语义压缩和协作智能体实现系统智能化。尽管全面，论文也坦言当前AI 6G领域尚需更多应用级落地和标准化推进，是理论和工程结合的典范综述。"
+    },
+    {
       "id": "paper-api-1750208381207-d34uh",
       "title": "Federated Learning and Semantic Communication for the Metaverse",
       "url": "https://www.mdpi.com/2079-9292/14/5/868",
@@ -449,7 +500,7 @@
       "interpretation": "该论文具有前瞻意义，首次将系统2机器学习（强调推理、抽象和组合性）引入6G语义通信场景，提出了基于LLM和Agent的多智能体协同通信和复杂任务规划新范式。创新点在于强调抽象化和语义层面的交互能够极大提升AI驱动的6G通信系统灵活性和智能水平，对今后智能网络打造知识驱动、自适应和可解释性强的通信体系提供了理论依据。潜在影响涵盖自动化驾驶、智能无人系统等领域，但实际部署中面临数据稀疏、模型复杂度高以及多智能体协同难度大等限制。"
     }
   ],
-  "lastUpdate": "2025-06-18T08:59:41.933Z",
+  "lastUpdate": "2025-06-19T08:59:42.373Z",
   "keywords": {
     "manual": [
       "通信",
@@ -459,10 +510,10 @@
       "语义通信"
     ],
     "hot": [
+      "大语言模型",
       "语义通信",
-      "6G",
-      "大模型"
+      "6G"
     ]
   },
-  "lastAutoUpdateDate": "2025/6/18"
+  "lastAutoUpdateDate": "2025/6/19"
 }
