@@ -1,46 +1,42 @@
 [
   {
     "keyword": "语义通信",
-    "count": 2
+    "count": 3
   },
   {
     "keyword": "6G",
-    "count": 2
+    "count": 3
   },
   {
     "keyword": "大语言模型",
-    "count": 2
-  },
-  {
-    "keyword": "AI",
-    "count": 1
-  },
-  {
-    "keyword": "多接入",
-    "count": 1
-  },
-  {
-    "keyword": "卫星通信",
-    "count": 1
-  },
-  {
-    "keyword": "多模态",
-    "count": 1
+    "count": 3
   },
   {
     "keyword": "智能体",
+    "count": 3
+  },
+  {
+    "keyword": "AI通信",
+    "count": 3
+  },
+  {
+    "keyword": "端到端",
+    "count": 2
+  },
+  {
+    "keyword": "体系架构",
     "count": 1
   },
   {
-    "keyword": "基础模型",
+    "keyword": "协同优化",
     "count": 1
   },
   {
-    "keyword": "通信优化",
+    "keyword": "Agent",
     "count": 1
   },
   {
-    "keyword": "多智能体",
+    "keyword": "语义路由",
     "count": 1
   }
 ]
