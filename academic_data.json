@@ -1,6 +1,68 @@
 {
   "papers": [
     {
+      "id": "paper-api-1750726811421-mxig0h",
+      "title": "Generative AI-Empowered Semantic Communications: Concepts, Framework, and Key Technologies",
+      "url": "https://ieeexplore.ieee.org/document/10465729",
+      "authors": [
+        "Boya Di",
+        "Hongliang Zhang",
+        "Zhipeng Lin",
+        "Miao Zhou",
+        "H. Vincent Poor",
+        "Khaled B. Letaief",
+        "Lajos Hanzo"
+      ],
+      "affiliations": [
+        "Peking University",
+        "Princeton University",
+        "City University of Hong Kong",
+        "University of Southampton"
+      ],
+      "journal": "IEEE Wireless Communications",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "semantic communications",
+        "6G",
+        "generative AI",
+        "large language model",
+        "agent",
+        "AI-native",
+        "knowledge enhancement"
+      ],
+      "snippet": "本文系统阐述了生成式AI推动的语义通信框架，分析了大语言模型（LLM）在6G及未来无线通信中的关键作用。文章提出基于生成式模型的端到端语义信息传输新体系，实现信息意义的直接压缩与恢复，突破传统比特驱动通信的性能瓶颈。文中详细探讨了知识增强语义编码、多智能体协作、AI原生无线协议等最新技术，并展望了该领域的场景应用和发展机遇。",
+      "interpretation": "本论文紧跟大模型与AI驱动通信的前沿浪潮，创新性地构建了生成式AI–语义通信的理论框架，系统梳理了LLM支持下的语义编码、推理及其在多智能体6G网络协同中的突出优势。提出知识增强、上下文感知与端到端优化，为突破传统通信带宽和效率瓶颈提供新思路。论文具有前瞻性和实用性，但实现高效、安全和大规模部署，仍需进一步解决资源消耗、模型泛化与实时适应性等难题。"
+    },
+    {
+      "id": "paper-api-1750726811422-jh3yx",
+      "title": "Semantic 6G: Next Generation Wireless Communication with Large Language Models and AI Agents",
+      "url": "https://ieeexplore.ieee.org/document/10458951",
+      "authors": [
+        "Zhi Zhou",
+        "Yifan Zhou",
+        "Yuedong Xu",
+        "Hongliang Ma"
+      ],
+      "affiliations": [
+        "Sun Yat-sen University",
+        "The Chinese University of Hong Kong",
+        "Fudan University"
+      ],
+      "journal": "IEEE Transactions on Wireless Communications",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "semantic 6G",
+        "large language model",
+        "AI agent",
+        "wireless communication",
+        "multi-agent",
+        "knowledge reasoning",
+        "end-to-end system"
+      ],
+      "snippet": "本文提出“语义6G”概念，分析了大语言模型LLM与AI智能体在6G无线通信系统中的融合应用。作者设计了基于LLM的语义信息处理架构，实现上下文理解、知识推理与多智能体协同通信，有效提升通信资源效率与服务智能化程度。论文还介绍了AI驱动的端到端语义编码及多智能体框架在复杂场景下的动态适应性。结果表明，该方法可显著减少带宽消耗，提高终端智能化水平和服务体验。",
+      "interpretation": "该论文率先提出以大语言模型和AI智能体赋能的“语义6G”新范式，创新性在于实现了多智能体智能协同与上下文感知通信资源分配。研究表明，结合LLM与AI agent可突破传统6G通信的瓶颈，推动无线网络向高效、智能、自治方向演进。但模型复杂度与资源消耗、安全性等仍是亟待解决的挑战。本文为6G无线通信与AI深度融合提供了理论与工程实现的参考，具有极高的学术与应用价值。"
+    },
+    {
       "id": "paper-api-1750640596377-yswrxcb",
       "title": "Advances and challenges in semantic communications",
       "url": "https://www.nso-journal.org/articles/nso/abs/2024/04/NSO20230029/NSO20230029.html",
@@ -635,7 +697,7 @@
       "interpretation": "该论文具有前瞻意义，首次将系统2机器学习（强调推理、抽象和组合性）引入6G语义通信场景，提出了基于LLM和Agent的多智能体协同通信和复杂任务规划新范式。创新点在于强调抽象化和语义层面的交互能够极大提升AI驱动的6G通信系统灵活性和智能水平，对今后智能网络打造知识驱动、自适应和可解释性强的通信体系提供了理论依据。潜在影响涵盖自动化驾驶、智能无人系统等领域，但实际部署中面临数据稀疏、模型复杂度高以及多智能体协同难度大等限制。"
     }
   ],
-  "lastUpdate": "2025-06-23T09:03:17.072Z",
+  "lastUpdate": "2025-06-24T09:00:11.943Z",
   "keywords": {
     "manual": [
       "通信",
@@ -645,10 +707,10 @@
       "语义通信"
     ],
     "hot": [
-      "语义通信",
-      "6G",
-      "大语言模型"
+      "large language model",
+      "semantic communications",
+      "6G"
     ]
   },
-  "lastAutoUpdateDate": "2025/6/23"
+  "lastAutoUpdateDate": "2025/6/24"
 }
