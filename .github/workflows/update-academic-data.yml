@@ -32,7 +32,7 @@ jobs:
           // --- 调试模式开关 ---
           // 设置为 true 来跳过API调用，使用已有的 academic_data.json 中的论文数据
           // 设置为 false 以正常调用 Perplexity API
-          const DEBUG_MODE = false; 
+          const DEBUG_MODE = true; 
 
           // 配置
           const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
@@ -492,7 +492,7 @@ jobs:
             仓库：${{ github.repository }}
             
             此邮件由GitHub Actions自动发送，请勿回复。
-          to: blumanchu111@gmail.com, chenhui.a.ye@nokia-sbell.com
+          to: blumanchu111@gmail.com
           from: 学术周报自动更新 <13937372851@163.com>
           nodemailerlog: true
           nodemailerdebug: true
