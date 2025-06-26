@@ -1,54 +1,38 @@
 [
   {
-    "keyword": "large language model",
+    "keyword": "语义通信",
     "count": 2
   },
   {
-    "keyword": "semantic communications",
-    "count": 1
-  },
-  {
     "keyword": "6G",
+    "count": 2
+  },
+  {
+    "keyword": "大语言模型",
+    "count": 2
+  },
+  {
+    "keyword": "智能体",
+    "count": 2
+  },
+  {
+    "keyword": "AI通信",
+    "count": 2
+  },
+  {
+    "keyword": "协同优化",
     "count": 1
   },
   {
-    "keyword": "generative AI",
+    "keyword": "端到端",
     "count": 1
   },
   {
-    "keyword": "agent",
+    "keyword": "Agent",
     "count": 1
   },
   {
-    "keyword": "AI-native",
-    "count": 1
-  },
-  {
-    "keyword": "knowledge enhancement",
-    "count": 1
-  },
-  {
-    "keyword": "semantic 6G",
-    "count": 1
-  },
-  {
-    "keyword": "AI agent",
-    "count": 1
-  },
-  {
-    "keyword": "wireless communication",
-    "count": 1
-  },
-  {
-    "keyword": "multi-agent",
-    "count": 1
-  },
-  {
-    "keyword": "knowledge reasoning",
-    "count": 1
-  },
-  {
-    "keyword": "end-to-end system",
+    "keyword": "语义路由",
     "count": 1
   }
 ]
