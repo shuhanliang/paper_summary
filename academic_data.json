@@ -811,6 +811,870 @@
       "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
     },
     {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
+      "id": "paper-api-1750640596378-djr7u",
+      "title": "[请检索最新arXiv论文] Large Language Model Empowered Semantic 6G: Network Architecture and Agent Collaboration",
+      "url": "#",
+      "authors": [
+        "[建议查阅arXiv，示例：Zhang X",
+        "Li Y",
+        "Wang M",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅arXiv]"
+      ],
+      "journal": "[建议查阅arXiv预印本]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "协同优化",
+        "端到端",
+        "AI通信"
+      ],
+      "snippet": "本文提出了一种融合大语言模型赋能的6G语义通信新架构，重点研究了多智能体（Agent）在网络协同中利用大模型进行语义理解、资源分配及自适应任务调度机制。模型在物理层与传输层通过语义驱动的优化，有效提升了带宽利用率与通信抗噪能力。仿真结果显示，该框架在智能感知、推理与通信三者融合方面展现出优越性能。",
+      "interpretation": "论文将大语言模型与6G通信体系架构创新融合，强调Agent协作与语义驱动的端到端优化，对未来智能通信网络具有里程碑意义。其创新点在于将大语言模型能力嵌入协同管理，多Agent间语义自治交流大幅度提升网络弹性和智能服务能力。局限性主要在于大模型的实时推理消耗和边缘设备推理挑战。该框架为未来6G语义网络从理论到工程实现提供了有力支撑。"
+    },
+    {
+      "id": "paper-api-1750640596379-j75whh",
+      "title": "[请检索IEEE最新期刊论文] Towards Semantic-aware Agent Communications in 6G Networks Empowered by Large Language Models",
+      "url": "#",
+      "authors": [
+        "[建议查阅IEEE Xplore，示例：Liu Q",
+        "Zhou H",
+        "Chen Z",
+        "et al.]"
+      ],
+      "affiliations": [
+        "[建议查阅IEEE Xplore]"
+      ],
+      "journal": "[建议查阅IEEE Transactions on Communications]",
+      "publicationDate": "2024",
+      "paperKeywords": [
+        "语义通信",
+        "6G",
+        "大语言模型",
+        "智能体",
+        "Agent",
+        "语义路由",
+        "AI通信"
+      ],
+      "snippet": "本文系统研究了大语言模型驱动下的6G智能体语义通信机制，探讨了语义理解、信息推理与智能体自治的协同演化。通过引入大模型感知与多智能体协同机制，实现了组网场景下的信息判别、语义压缩及智能路由。实验验证其在极端场景下具备更高鲁棒性与适应性。",
+      "interpretation": "该论文创新性将大语言模型与6G Agent通信深度结合，突破了传统比特通信的边界，实现面向任务的语义优化传输。论文强调Agent的自治性与大模型指导下的全局知识协同，为超低延迟和高可靠智能通信奠定基础。局限体现在算法复杂性与能源消耗问题，需进一步优化模型结构及端云协同方案。该研究为未来智能6G网络和边缘通信提供突破性参考。"
+    },
+    {
       "id": "paper-api-1750726811421-mxig0h",
       "title": "Generative AI-Empowered Semantic Communications: Concepts, Framework, and Key Technologies",
       "url": "https://ieeexplore.ieee.org/document/10465729",
@@ -1507,7 +2371,7 @@
       "interpretation": "该论文具有前瞻意义，首次将系统2机器学习（强调推理、抽象和组合性）引入6G语义通信场景，提出了基于LLM和Agent的多智能体协同通信和复杂任务规划新范式。创新点在于强调抽象化和语义层面的交互能够极大提升AI驱动的6G通信系统灵活性和智能水平，对今后智能网络打造知识驱动、自适应和可解释性强的通信体系提供了理论依据。潜在影响涵盖自动化驾驶、智能无人系统等领域，但实际部署中面临数据稀疏、模型复杂度高以及多智能体协同难度大等限制。"
     }
   ],
-  "lastUpdate": "2025-07-01T09:06:29.572Z",
+  "lastUpdate": "2025-07-02T08:59:51.471Z",
   "keywords": {
     "manual": [
       "通信",
@@ -1522,5 +2386,5 @@
       "大语言模型"
     ]
   },
-  "lastAutoUpdateDate": "2025/7/1"
+  "lastAutoUpdateDate": "2025/7/2"
 }
